@@ -5,3 +5,17 @@
   --color-main2: #eb427b33;
   --color-main3: #eb427b14;
 }
+
+body {
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 444px;
+  max-width: 444px;
+  height: 100vh;
+  background-color: white;
+}
