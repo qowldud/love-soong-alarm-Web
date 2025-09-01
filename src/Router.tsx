@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Test } from "./pages/Test";
 import { PrivateLayout } from "./components/PrivateLayout";
 import { Onboarding_Profile } from "./pages/Onboarding_Profile";
+import { Onboarding_Extra } from "./pages/Onboarding_Extra";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
   {
     path: "/onboarding/profile",
     element: <Onboarding_Profile />,
+  },
+  {
+    path: "/onboarding/extra",
+    element: <Onboarding_Extra />,
   },
   {
     element: <PrivateLayout />,
