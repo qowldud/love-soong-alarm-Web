@@ -50,20 +50,28 @@ export const Entry = () => {
           className="h-full w-full flex flex-col items-center justify-between px-4 pb-11"
         >
           <div className="flex flex-col gap-y-4 justify-center items-center h-full ">
-            <img src={Color_Logo} alt="로고" className="w-20 h-20"/>
+            <img src={Color_Logo} alt="로고" className="w-20 h-20" />
             <div className="flex flex-col gap-y-2">
               <div className="flex flex-col font-[500] justify-center items-center text-[40px]">
-                <div><span className="text-main1">5,197명</span> 중</div>
-                <div><span className="font-[700]">당신의 운명</span>은</div>
+                <div>
+                  <span className="text-main1">5,197명</span> 중
+                </div>
+                <div>
+                  <span className="font-[700]">당신의 운명</span>은
+                </div>
                 <div>누구일까요?</div>
               </div>
-                <div className="flex flex-col font-[400] justify-center items-center text-[#331D24CC]">
+              <div className="flex flex-col font-[400] justify-center items-center text-[#331D24CC]">
                 <div>좋아하면 숭리는에서</div>
                 <div>당신과 딱 맞는 운명을 찾아보세요!</div>
               </div>
             </div>
           </div>
-          <Button variant="primary" children="시작하기" onClick={()=> navigate("/auth")}/>
+          <Button
+            variant="primary"
+            children="시작하기"
+            onClick={() => navigate("/auth/input")}
+          />
         </motion.div>
       )}
     </AnimatePresence>
