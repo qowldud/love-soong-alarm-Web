@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface AuthState {
-  isWelcomeModalOpen: boolean;
   telNumber: number | null;
 
   validationNumber: (phoneNumber: number) => boolean;

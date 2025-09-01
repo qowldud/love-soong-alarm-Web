@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Test } from "./pages/Test";
+
 import { PrivateLayout } from "./components/PrivateLayout";
+import { Entry } from "./pages/Entry";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Test />,
+    element: <Entry />,
   },
   {
     path: "/signup",
