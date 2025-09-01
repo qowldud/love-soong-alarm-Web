@@ -27,7 +27,7 @@ export const Entry = () => {
   const [isSplash, setIsSplash] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setIsSplash(false), 2000);
+    const t = setTimeout(() => setIsSplash(false), 3000);
     return () => clearTimeout(t);
   }, []);
 
