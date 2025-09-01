@@ -4,10 +4,12 @@
   --color-main1: #eb427b;
   --color-main2: #eb427b33;
   --color-main3: #eb427b14;
-  --color-base: #231d33;
+  --color-content-base: #231d33;
+  --color-content-disabled: rgba(35, 29, 51, 0.4);
   --color-additive: rgba(35, 29, 51, 0.8);
   --color-assistive: rgba(35, 29, 51, 0.6);
   --color-fill-regular: rgba(154, 146, 173, 0.08);
+  --color-outline-regular: rgba(154, 146, 173, 0.16);
 }
 
 body {
