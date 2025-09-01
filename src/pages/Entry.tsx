@@ -3,7 +3,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import Logo from "@/assets/icons/ic_lovin.svg";
 import Color_Logo from "@/assets/icons/ic_color_lovin.svg";
+
 import { Button } from "../common/Button";
+import { useNavigate } from "react-router-dom";
 
 const Splash = () => (
   <motion.div
@@ -27,6 +29,7 @@ const Splash = () => (
 
 export const Entry = () => {
   const [isSplash, setIsSplash] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const t = setTimeout(() => setIsSplash(false), 3000);
@@ -60,7 +63,7 @@ export const Entry = () => {
               </div>
             </div>
           </div>
-          <Button variant="primary" children="시작하기"/>
+          <Button variant="primary" children="시작하기" onClick={()=> navigate("/auth")}/>
         </motion.div>
       )}
     </AnimatePresence>

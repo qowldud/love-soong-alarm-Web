@@ -1,12 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { PrivateLayout } from "./components/PrivateLayout";
 import { Entry } from "./pages/Entry";
+import { Auth } from "./pages/Auth";
+
+import { PrivateLayout } from "./components/PrivateLayout";
+import { AuthInput } from "./components/auth/Input";
+import { AuthValid } from "./components/auth/Valid";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Entry />,
+  },
+  {
+    path: "/auth",
+    element: <Auth />,
+    children: [
+      {
+        path: "input",
+        element: <AuthInput />,
+      },
+      {
+        path: "valid",
+        element: <AuthValid />,
+      },
+    ],
   },
   {
     path: "/signup",
