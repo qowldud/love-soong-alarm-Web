@@ -14,3 +14,16 @@ export const AUTH_CONST = {
     error: "잘못된 인증번호를 입력하셨어요!",
   },
 };
+
+export const HOME_CONST = {
+  no: {
+    key: "no",
+    title: `😢 아직 일치하는 이성이 없어요ㅠ`,
+    label: "원래 찐사랑은 갑자기 나타나지 않아요..",
+  },
+  yes: {
+    key: "yes",
+    title: ["근처에 일치하는 이성이", "명 있어요"],
+    label: "클릭하여 확인하기",
+  },
+};

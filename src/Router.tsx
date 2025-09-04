@@ -6,6 +6,7 @@ import { Auth } from "./pages/Auth";
 import { PrivateLayout } from "./components/PrivateLayout";
 import { AuthInput } from "./components/auth/Input";
 import { AuthValid } from "./components/auth/Valid";
+import { Home } from "./pages/Home";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/home",
+        element: <Home />,
       },
       {
         path: "/chat/:id",
