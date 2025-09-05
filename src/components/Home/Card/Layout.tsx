@@ -55,7 +55,7 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => onClose}
+            onClick={() => onClose(false)}
           />
           <motion.div
             role="dialog"
@@ -69,7 +69,7 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
             dragConstraints={{ top: 0, bottom: 0 }}
             dragElastic={0.12}
             onDragEnd={(_, info) => {
-              if (info.offset.y > 120 || info.velocity.y > 800) onClose;
+              if (info.offset.y > 120 || info.velocity.y > 800) onClose(false);
             }}
           >
             <div
