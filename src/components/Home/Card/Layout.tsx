@@ -8,7 +8,7 @@ type BottomSheetProps = {
   maxHeightPct?: number;
 };
 
-export const CheckProfile = ({
+export const CardLayout = ({
   isOpen,
   onClose,
   children,

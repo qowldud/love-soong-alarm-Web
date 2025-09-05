@@ -50,3 +50,30 @@ export const HOME_PROFILE_CONST = {
     category: PROFILE_MOCK,
   },
 };
+
+export const CHAT_PROFILE_CONST = [
+  {
+    emoji: "🎧",
+    name: "김숭실",
+    recent: "긴 세월에 변하지 않을 그런 사랑 하면 되죠",
+    time: "1시간 전",
+    isRecent: true,
+    isChecked: true,
+  },
+  {
+    emoji: "💐",
+    name: "한시오분",
+    recent: "죄송해요 팀베이비 좋아하시는 여자분은 딱히... ",
+    time: "2시간 전",
+    isRecent: false,
+    isChecked: false,
+  },
+  {
+    emoji: "🥺",
+    name: "링링",
+    recent: "혹시 펫사 다니세요????",
+    time: "5시간 전",
+    isRecent: false,
+    isChecked: true,
+  },
+];

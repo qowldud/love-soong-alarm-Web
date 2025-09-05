@@ -11,12 +11,11 @@ import Map from "@/assets/icons/ic_mock_map.svg";
 import { HomeBottom } from "../components/Home/Bottom";
 import { ProfileCard } from "../components/Home/Profile";
 
-import { CheckProfile } from "../components/Home/Card/CheckProfile";
-
 import { useHomeStore } from "../store/homeStore";
-import { ProfilePreview } from "../components/Home/ProfilePreview";
+import { ProfilePreview } from "../components/Home/Card/ProfilePreview";
 import { AlramPreview } from "../components/Home/Card/Alram";
 import { ChatPreview } from "../components/Home/Card/ChatPreview";
+import { CardLayout } from "../components/Home/Card/Layout";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -77,29 +76,29 @@ export const Home = () => {
         </Button>
       </div>
 
-      <CheckProfile
+      <CardLayout
         isOpen={checkProfile}
         onClose={() => setCheckProfile(false)}
         maxHeightPct={72}
       >
         <ProfilePreview />
-      </CheckProfile>
+      </CardLayout>
 
-      <CheckProfile
+      <CardLayout
         isOpen={checkAlarm}
         onClose={() => setCheckAlarm(false)}
         maxHeightPct={95.5}
       >
         <AlramPreview onClose={() => setCheckAlarm(false)} />
-      </CheckProfile>
+      </CardLayout>
 
-      <CheckProfile
+      <CardLayout
         isOpen={checkChat}
         onClose={() => setCheckChat(false)}
         maxHeightPct={75.5}
       >
-        <ChatPreview onClose={() => setCheckChat(false)} />
-      </CheckProfile>
+        <ChatPreview />
+      </CardLayout>
     </div>
   );
 };

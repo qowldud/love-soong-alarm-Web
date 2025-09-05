@@ -1,6 +1,6 @@
-import { Button } from "../../common/Button";
-import { PROFILE_MOCK } from "../../hooks/mocks";
-import { CardHeader, hashtag, ProfileLabel } from "./Common";
+import { Button } from "../../../common/Button";
+import { PROFILE_MOCK } from "../../../hooks/mocks";
+import { CardHeader, hashtag, ProfileLabel } from "../Common";
 
 export const ProfilePreview = () => {
   return (
