@@ -15,7 +15,7 @@ export const Header = ({ title, onClick }: Props) => {
           className="size-6"
           onClick={onClick}
         />
-        <span className="text-lg font-medium text-base">{title}</span>
+        <span className="text-lg font-medium text-content-base">{title}</span>
         <span className="size-6"></span>
       </div>
     </div>

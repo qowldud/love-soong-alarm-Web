@@ -4,6 +4,7 @@ import { PrivateLayout } from "./components/PrivateLayout";
 import { Onboarding_Profile } from "./pages/Onboarding_Profile";
 import { Onboarding_Extra } from "./pages/Onboarding_Extra";
 import { Onboarding_Interests } from "./pages/Onboarding_Interests";
+import { Onboarding_Preference } from "./pages/Onboarding_Preference";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
   {
     path: "/onboarding/interests",
     element: <Onboarding_Interests />,
+  },
+  {
+    path: "/onboarding/preference",
+    element: <Onboarding_Preference />,
   },
   {
     element: <PrivateLayout />,

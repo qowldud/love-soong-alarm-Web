@@ -1,8 +1,10 @@
 import { Button } from "../common/Button";
-import { Header } from "../common/Header";
 import { Chip } from "../components/Onboarding/Chip";
+import { Header } from "../common/Header";
+
 import { Description } from "../components/Onboarding/Description";
 import { ProgressBar } from "../components/Onboarding/ProgressBar";
+import { useState } from "react";
 
 const INTEREST_OPTIONS = [
   { label: "🎧 음악", value: "음악" },
@@ -17,6 +19,17 @@ const INTEREST_OPTIONS = [
 ];
 
 export const Onboarding_Interests = () => {
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
+  const handleSelect = (value: string) => {
+    if (selectedInterests.includes(value)) {
+      setSelectedInterests(selectedInterests.filter((item) => item !== value));
+    } else {
+      if (selectedInterests.length >= 2) return;
+      setSelectedInterests([...selectedInterests, value]);
+    }
+  };
+
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="flex flex-col">
@@ -29,9 +42,21 @@ export const Onboarding_Interests = () => {
         />
 
         <div className="flex justify-center">
-          <div className="px-4 py-2.5 gap-2 flex flex-wrap">
+          <div
+            className="px-4 py-2.5 grid gap-2 justify-center w-full"
+            style={{
+              gridTemplateColumns: "repeat(auto-fit, minmax(65px, 1fr))",
+            }}
+          >
             {INTEREST_OPTIONS.map((option) => (
-              <Chip label={option.label} />
+              <Chip
+                key={option.value}
+                variant="interest"
+                selected={selectedInterests.includes(option.value)}
+                label={option.label}
+                className="w-full justify-center"
+                onClick={() => handleSelect(option.value)}
+              />
             ))}
           </div>
         </div>
