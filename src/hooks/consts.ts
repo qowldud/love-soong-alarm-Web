@@ -1,3 +1,5 @@
+import { PROFILE_MOCK } from "./mocks";
+
 export const AUTH_CONST = {
   input: {
     key: "input",
@@ -25,5 +27,26 @@ export const HOME_CONST = {
     key: "yes",
     title: ["근처에 일치하는 이성이", "명 있어요"],
     label: "클릭하여 확인하기",
+  },
+};
+
+export const HOME_PROFILE_CONST = {
+  jo: {
+    key: 1,
+    emoji: "🌿",
+    name: "조휴일",
+    age: 20,
+    dept: "경영학부",
+    height: 182,
+    category: PROFILE_MOCK,
+  },
+  kim: {
+    key: 2,
+    emoji: "🎧",
+    name: "김숭실",
+    age: 22,
+    dept: "컴퓨터학부",
+    height: 163,
+    category: PROFILE_MOCK,
   },
 };
