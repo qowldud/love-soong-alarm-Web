@@ -1,21 +1,47 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useHomeStore } from "../../../store/homeStore";
 
 type BottomSheetProps = {
-  isOpen: boolean;
-  onClose: () => void;
+  branch: "profile" | "alarm" | "chat";
   children: React.ReactNode;
-  maxHeightPct?: number;
 };
 
-export const CardLayout = ({
-  isOpen,
-  onClose,
-  children,
-  maxHeightPct = 70,
-}: BottomSheetProps) => {
+const BRANCH_CONST = {
+  profile: {
+    maxHeightPct: 72,
+  },
+  alarm: {
+    maxHeightPct: 95.5,
+  },
+  chat: {
+    maxHeightPct: 75.5,
+  },
+};
+
+export const CardLayout = ({ branch, children }: BottomSheetProps) => {
+  const maxHeightPct = BRANCH_CONST[branch].maxHeightPct;
+
+  const profile = useHomeStore((state) => state.checkProfile);
+  const alarm = useHomeStore((state) => state.checkAlarm);
+  const chat = useHomeStore((state) => state.checkChat);
+
+  const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
+  const setCheckAlarm = useHomeStore((state) => state.setCheckAlarm);
+  const setCheckChat = useHomeStore((state) => state.setCheckChat);
+
+  const isOpen =
+    branch === "profile" ? profile : branch === "alarm" ? alarm : chat;
+
+  const onClose =
+    branch === "profile"
+      ? setCheckProfile
+      : branch === "alarm"
+      ? setCheckAlarm
+      : setCheckChat;
+
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose;
     if (isOpen) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, onClose]);
@@ -29,7 +55,7 @@ export const CardLayout = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={() => onClose}
           />
           <motion.div
             role="dialog"
@@ -43,7 +69,7 @@ export const CardLayout = ({
             dragConstraints={{ top: 0, bottom: 0 }}
             dragElastic={0.12}
             onDragEnd={(_, info) => {
-              if (info.offset.y > 120 || info.velocity.y > 800) onClose();
+              if (info.offset.y > 120 || info.velocity.y > 800) onClose;
             }}
           >
             <div

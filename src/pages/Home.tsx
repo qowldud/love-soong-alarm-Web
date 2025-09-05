@@ -1,4 +1,4 @@
-// import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 
@@ -33,72 +33,70 @@ const Button = ({ children, ...props }: ButtonProps) => {
   );
 };
 
-export const Home = () => {
-  const checkProfile = useHomeStore((state) => state.checkProfile);
-  const checkAlarm = useHomeStore((state) => state.checkAlarm);
-  const checkChat = useHomeStore((state) => state.checkChat);
+const RenderCard = () => (
+  <>
+    <CardLayout branch="profile">
+      <ProfilePreview />
+    </CardLayout>
 
+    <CardLayout branch="alarm">
+      <AlramPreview />
+    </CardLayout>
+
+    <CardLayout branch="chat">
+      <ChatPreview />
+    </CardLayout>
+  </>
+);
+
+export const Home = () => {
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckAlarm = useHomeStore((state) => state.setCheckAlarm);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
 
   return (
-    <div className="relative w-full h-screen bg-gray-200 overflow-hidden">
-      <img
-        src={Map}
-        alt="map background"
-        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
-      />
-
-      <div className="absolute top-15.5 left-4 right-4 z-30">
-        <ProfileCard />
-      </div>
-
-      <div className="absolute flex flex-row gap-x-2 left-4 right-4 top-57 z-30 justify-between">
-        <Button>
-          <img src={Setting} alt={"setting"} />
-        </Button>
-        <Button onClick={() => setCheckAlarm(true)}>
-          <img src={Alarm} alt={"alarm"} />
-        </Button>
-      </div>
-
-      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
-        <Button>
-          <img src={Location} alt={"location"} />
-        </Button>
-        <HomeBottom
-          count={CORRECT_COUNT}
-          onClick={() => setCheckProfile(true)}
+    <AnimatePresence>
+      <motion.div
+        key="main"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="relative w-full h-screen bg-gray-200 overflow-hidden"
+      >
+        <img
+          src={Map}
+          alt="map background"
+          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
         />
-        <Button onClick={() => setCheckChat(true)}>
-          <img src={Chat} alt={"chat"} />
-        </Button>
-      </div>
 
-      <CardLayout
-        isOpen={checkProfile}
-        onClose={() => setCheckProfile(false)}
-        maxHeightPct={72}
-      >
-        <ProfilePreview />
-      </CardLayout>
+        <div className="absolute top-15.5 left-4 right-4 z-30">
+          <ProfileCard />
+        </div>
 
-      <CardLayout
-        isOpen={checkAlarm}
-        onClose={() => setCheckAlarm(false)}
-        maxHeightPct={95.5}
-      >
-        <AlramPreview onClose={() => setCheckAlarm(false)} />
-      </CardLayout>
+        <div className="absolute flex flex-row gap-x-2 left-4 right-4 top-57 z-30 justify-between">
+          <Button>
+            <img src={Setting} alt={"setting"} />
+          </Button>
+          <Button onClick={() => setCheckAlarm(true)}>
+            <img src={Alarm} alt={"alarm"} />
+          </Button>
+        </div>
 
-      <CardLayout
-        isOpen={checkChat}
-        onClose={() => setCheckChat(false)}
-        maxHeightPct={75.5}
-      >
-        <ChatPreview />
-      </CardLayout>
-    </div>
+        <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
+          <Button>
+            <img src={Location} alt={"location"} />
+          </Button>
+          <HomeBottom
+            count={CORRECT_COUNT}
+            onClick={() => setCheckProfile(true)}
+          />
+          <Button onClick={() => setCheckChat(true)}>
+            <img src={Chat} alt={"chat"} />
+          </Button>
+        </div>
+        <RenderCard />
+      </motion.div>
+    </AnimatePresence>
   );
 };

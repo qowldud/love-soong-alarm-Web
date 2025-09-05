@@ -44,9 +44,11 @@ export const ChatPreview = () => {
   return (
     <div className="relative">
       <CardHeader branch="chat" title="채팅" />
-      {CHAT_PROFILE_CONST.map((item, index) => (
-        <List key={index} item={item} />
-      ))}
+      <div className=" flex flex-col overflow-y-scroll">
+        {CHAT_PROFILE_CONST.map((item, index) => (
+          <List key={index} item={item} />
+        ))}
+      </div>
     </div>
   );
 };
