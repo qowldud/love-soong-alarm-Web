@@ -1,0 +1,63 @@
+import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+type BottomSheetProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  maxHeightPct?: number;
+};
+
+export const CheckProfile = ({
+  isOpen,
+  onClose,
+  children,
+  maxHeightPct = 70,
+}: BottomSheetProps) => {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    if (isOpen) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            className="absolute inset-0 z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          <motion.div
+            role="dialog"
+            aria-modal
+            className="absolute left-0 right-0 bottom-0 z-50"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", stiffness: 430, damping: 36 }}
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={0.12}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 120 || info.velocity.y > 800) onClose();
+            }}
+          >
+            <div
+              className="mx-auto w-full rounded-t-2xl bg-white "
+              style={{ maxHeight: `calc(${maxHeightPct}vh)` }}
+            >
+              <div className="flex items-center justify-center py-2">
+                <div className="h-1.5 w-12 rounded-full bg-gray-300" />
+              </div>
+              <div className="overflow-y-auto px-4 pb-6">{children}</div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};

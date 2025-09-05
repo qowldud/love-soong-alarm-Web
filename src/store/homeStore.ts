@@ -2,35 +2,42 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface HomeState {
-  checkProfile: string | null;
+  checkProfile: boolean;
   checkAlarm: boolean;
   checkChat: boolean;
 
-  setCheckProfile: (id: string) => void;
-  setCheckAlaram: (flag: boolean) => void;
+  setCheckProfile: (flag: boolean) => void;
+  setCheckAlarm: (flag: boolean) => void;
   setCheckChat: (flag: boolean) => void;
 }
 
 export const useHomeStore = create<HomeState>()(
   persist(
     (set) => ({
-      checkProfile: null,
+      checkProfile: false,
       checkAlarm: false,
       checkChat: false,
 
-      setCheckProfile: (id: string | null) => {
-        set({ checkProfile: id });
+      setCheckProfile: (flag) => {
+        set({ checkProfile: false, checkAlarm: false, checkChat: false });
+        set({ checkProfile: flag });
       },
-      setCheckAlaram: (flag: boolean) => {
+      setCheckAlarm: (flag: boolean) => {
+        set({ checkProfile: false, checkAlarm: false, checkChat: false });
         set({ checkAlarm: flag });
       },
       setCheckChat: (flag: boolean) => {
+        set({ checkProfile: false, checkAlarm: false, checkChat: false });
         set({ checkChat: flag });
       },
     }),
     {
       name: "home-store",
-      partialize: (state) => ({}),
+      partialize: (state) => ({
+        checkProfile: state.checkProfile,
+        checkAlarm: state.checkAlarm,
+        checkChat: state.checkChat,
+      }),
     }
   )
 );

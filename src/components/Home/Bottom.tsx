@@ -1,6 +1,12 @@
+import type { ButtonHTMLAttributes } from "react";
+
 import { HOME_CONST } from "../../hooks/consts";
 
-export const HomeBottom = ({ count, ...props }: { count: number }) => {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  count: number;
+}
+
+export const HomeBottom = ({ count, ...props }: ButtonProps) => {
   if (count) {
     return (
       <button

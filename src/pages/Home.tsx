@@ -11,6 +11,13 @@ import Map from "@/assets/icons/ic_mock_map.svg";
 import { HomeBottom } from "../components/Home/Bottom";
 import { ProfileCard } from "../components/Home/Profile";
 
+import { CheckProfile } from "../components/Home/CheckProfile";
+
+import { useHomeStore } from "../store/homeStore";
+import { ProfilePreview } from "../components/Home/ProfilePreview";
+import { AlramPreview } from "../components/Home/Alram";
+import { ChatPreview } from "../components/Home/ChatPreview";
+
 // TEST DATA
 // const CORRECT_COUNT = 0;
 const CORRECT_COUNT = 1;
@@ -20,8 +27,16 @@ const Button = ({ children }: { children: ReactNode }) => {
 };
 
 export const Home = () => {
+  const checkProfile = useHomeStore((state) => state.checkProfile);
+  const checkAlarm = useHomeStore((state) => state.checkAlarm);
+  const checkChat = useHomeStore((state) => state.checkChat);
+
+  const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
+  const setCheckAlarm = useHomeStore((state) => state.setCheckAlarm);
+  const setCheckChat = useHomeStore((state) => state.setCheckChat);
+
   return (
-    <div className="relative w-[444px] max-w-[444px] h-screen bg-gray-200 overflow-hidden ">
+    <div className="relative w-full h-screen bg-gray-200 overflow-hidden">
       <img
         src={Map}
         alt="map background"
@@ -37,7 +52,7 @@ export const Home = () => {
           <img src={Setting} alt={"setting"} />
         </Button>
         <Button>
-          <img src={Alarm} alt={"alarm"} />
+          <img src={Alarm} alt={"alarm"} onClick={() => setCheckAlarm(true)} />
         </Button>
       </div>
 
@@ -45,11 +60,38 @@ export const Home = () => {
         <Button>
           <img src={Location} alt={"location"} />
         </Button>
-        <HomeBottom count={CORRECT_COUNT} />
+        <HomeBottom
+          count={CORRECT_COUNT}
+          onClick={() => setCheckProfile(true)}
+        />
         <Button>
-          <img src={Chat} alt={"chat"} />
+          <img src={Chat} alt={"chat"} onClick={() => setCheckChat(true)} />
         </Button>
       </div>
+
+      <CheckProfile
+        isOpen={checkProfile}
+        onClose={() => setCheckProfile(false)}
+        maxHeightPct={70}
+      >
+        <ProfilePreview onClose={() => setCheckProfile(false)} />
+      </CheckProfile>
+
+      <CheckProfile
+        isOpen={checkAlarm}
+        onClose={() => setCheckAlarm(false)}
+        maxHeightPct={70}
+      >
+        <AlramPreview onClose={() => setCheckAlarm(false)} />
+      </CheckProfile>
+
+      <CheckProfile
+        isOpen={checkChat}
+        onClose={() => setCheckChat(false)}
+        maxHeightPct={70}
+      >
+        <ChatPreview onClose={() => setCheckChat(false)} />
+      </CheckProfile>
     </div>
   );
 };

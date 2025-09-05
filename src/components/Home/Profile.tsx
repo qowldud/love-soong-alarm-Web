@@ -1,5 +1,3 @@
-import Edit from "@/assets/icons/ic_edit.svg";
-
 import { PROFILE_MOCK } from "../../hooks/mocks";
 import { Button_v2 } from "../../common/Button";
 
