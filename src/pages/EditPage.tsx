@@ -22,7 +22,7 @@ export const EditPage = () => {
         onChange={setSelectedTab}
       />
 
-      <div className="px-4 h-full">
+      <div className="h-full">
         {selectedTab === "프로필" && <ProfileTab />}
         {selectedTab === "취향 1" && <Interest1Tab />}
         {selectedTab === "취향 2" && <Interest2Tab />}

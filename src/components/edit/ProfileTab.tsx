@@ -10,7 +10,7 @@ export const ProfileTab = () => {
   const [select, setSelect] = useState<string | null>(null);
   return (
     <div className="h-full flex flex-col overflow-y-auto justify-between relative">
-      <div className="flex flex-col">
+      <div className="flex flex-col px-4">
         <SectionHeader title="필수 프로필" className="pt-4 pb-2.5" />
 
         <div className="flex flex-col gap-4">
@@ -47,7 +47,7 @@ export const ProfileTab = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 max-w-[444px] w-full flex flex-col bg-white pb-8">
+      <div className="absolute bottom-0 max-w-[444px] w-full flex px-4 flex-col bg-white pb-8 shadow-dim-weak backdrop-blur-40">
         <div className="w-full pt-2.5 pb-0.5"></div>
         <div className="py-2.5">
           <Button variant="primary">수정하기</Button>

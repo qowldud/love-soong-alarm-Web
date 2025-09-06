@@ -35,6 +35,7 @@ export const Onboarding_Preference = () => {
       setSelectedGenre(genre);
     }
   };
+
   return (
     <div className="flex flex-col h-full justify-between">
       <div className="flex flex-col">
@@ -85,7 +86,7 @@ export const Onboarding_Preference = () => {
         </div>
       </div>
 
-      <div className="mb-8 px-4 py-2.5">
+      <div className="mb-8 px-4 py-2.5 ">
         <Button>다음으로</Button>
       </div>
     </div>

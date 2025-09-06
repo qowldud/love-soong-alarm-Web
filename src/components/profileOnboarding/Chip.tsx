@@ -45,7 +45,11 @@ export const Chip = ({
       </span>
       {removable && (
         <button className="ml-1" onClick={handleRemove}>
-          <img src={CloseIcon} alt="close_icon" className="size-5" />
+          <img
+            src={CloseIcon}
+            alt="close_icon"
+            className="size-5 cursor-pointer"
+          />
         </button>
       )}
     </div>
