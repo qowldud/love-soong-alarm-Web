@@ -6,6 +6,7 @@ import { Onboarding_Extra } from "./pages/onboarding/Onboarding_Extra";
 import { Onboarding_Interests } from "./pages/onboarding/Onboarding_Interests";
 import { Onboarding_Preference } from "./pages/onboarding/Onboarding_Preference";
 import { EditPage } from "./pages/EditPage";
+import { TermsPage } from "./pages/TermsPage";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
   {
     path: "/onboarding/preference",
     element: <Onboarding_Preference />,
+  },
+  {
+    path: "/term",
+    element: <TermsPage />,
   },
   {
     element: <PrivateLayout />,

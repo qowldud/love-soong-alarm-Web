@@ -25,7 +25,7 @@ export const RailTab = ({ tabs, selectedTab, onChange }: Props) => {
               : "text-disabled font-normal"
           )}
         >
-          <span>{tab.label}</span>
+          <span className="whitespace-nowrap">{tab.label}</span>
           {tab.chip && (
             <span className="py-0.5 px-1.5 rounded-sm bg-fill-regular text-xs font-medium">
               {tab.chip}
