@@ -16,15 +16,6 @@ const genres = [
   { label: "클래식", value: "클래식" },
 ];
 
-const recommendHashTags = [
-  { label: "검정치마", value: "검정치마" },
-  { label: "쏜애플", value: "쏜애플" },
-  { label: "오아시스", value: "오아시스" },
-  { label: "데이식스", value: "데이식스" },
-  { label: "블러", value: "블러" },
-  { label: "잔나비", value: "잔나비" },
-];
-
 export const Onboarding_Preference = () => {
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
@@ -68,21 +59,6 @@ export const Onboarding_Preference = () => {
           />
 
           <HashtagInput />
-
-          <div className="pt-2 pb-1">
-            <span className="px-0.5 text-additive text-sm font-normal">
-              고르기 어렵다면, 추천 항목에서 골라봐요
-            </span>
-          </div>
-          <ChipStack>
-            {recommendHashTags.map((hashTag) => (
-              <Chip
-                variant="detail"
-                label={hashTag.label}
-                className="!text-additive font-medium"
-              />
-            ))}
-          </ChipStack>
         </div>
       </div>
 
