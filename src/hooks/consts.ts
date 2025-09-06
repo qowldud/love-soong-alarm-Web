@@ -77,3 +77,25 @@ export const CHAT_PROFILE_CONST = [
     isChecked: true,
   },
 ];
+
+export const ALARM_CONST = {
+  before: [
+    {
+      title: "새로운 이성이 왔어요!",
+      content: "내 주변 50m에 #밴드 #검정치마를 좋아하는 그녀가 있어요!",
+      time: "30분 전",
+    },
+    {
+      title: "새로운 이성이 왔어요!",
+      content: "내 주변 24m에 #영화 #드마카를 좋아하는 그녀가 있어요!",
+      time: "1시간 전",
+    },
+  ],
+  after: [
+    {
+      title: "새로운 이성이 왔어요!",
+      content: "내 주변 50m에 #밴드 #쏜애플을 좋아하는 그녀가 있어요!",
+      time: "5시간 전",
+    },
+  ],
+};

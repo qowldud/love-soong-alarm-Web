@@ -1,41 +1,66 @@
-import { CHAT_PROFILE_CONST } from "../../../hooks/consts";
+import { ALARM_CONST } from "../../../hooks/consts";
 import { CardHeader } from "../Common";
 
+import Close from "@/assets/icons/ic_close.svg";
+import Check from "@/assets/icons/ic_check.svg";
+import { useHomeStore } from "../../../store/homeStore";
+
 type ListProps = {
-  emoji: string;
-  name: string;
-  recent: string;
+  title: string;
+  content: string;
   time: string;
-  isRecent: boolean;
-  isChecked: boolean;
 };
 
-const List = ({ item }: { item: ListProps }) => {
+const CheckLabel = (type: "before" | "after") => {
+  if (type === "before")
+    return { title: "새 알림", button: "모두 읽기", img: Check };
+  else return { title: "읽은 알림", button: "모두 지우기", img: Close };
+};
+
+const Title = ({ type }: { type: "before" | "after" }) => {
+  const LABEL = CheckLabel(type);
+
   return (
-    <div className="flex flex-row justify-between items-center px-4 py-2.5">
-      <div className="flex flex-row justify-center items-center gap-x-3">
-        <div>{item.emoji}</div>
-        <div className="flex flex-col">
-          <div className="text-[16px] text-[#231D33] ">{item.name}</div>
-          <div className="flex flex-row gap-x-1 justify-center items-center text-[12px]">
-            <div
-              className={`${
-                item.isRecent ? "text-main1 font-bold" : "text-[#231D33]/80"
-              }`}
-            >
-              {item.recent}
-            </div>
-            <div className="text-[#231D33]/60 font-light">| {item.time}</div>
-          </div>
+    <div className="flex flex-row justify-between items-center py-2">
+      <div className="text-[18px] font-bold">{LABEL.title}</div>
+      <div className="flex flex-row gap-x-1">
+        <img src={LABEL.img} />
+        <div className="text-[#231D33]/60 text-[14px]">{LABEL.button}</div>
+      </div>
+    </div>
+  );
+};
+
+const List = ({
+  item,
+  type,
+}: {
+  item: ListProps;
+  type: "before" | "after";
+}) => {
+  const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
+
+  return (
+    <div
+      className="w-full py-2.5 flex flex-row justify-between items-center"
+      onClick={() => setCheckProfile(true)}
+    >
+      <div className="flex flex-col">
+        <div className="text-[16px]">{item.title}</div>
+        <div className="text-[12px] font-light text-[#231D33]/80">
+          {item.content}
         </div>
       </div>
-      {item.isRecent ? (
-        <div className="rounded-full w-1.5 h-1.5 bg-main1" />
-      ) : item.isChecked ? (
-        <div className="text-[#231D33]/60 font-light text-[12px]">읽음</div>
-      ) : (
-        <div className="text-[#231D33]/60 font-light text-[12px]">안읽음</div>
-      )}
+      <div className="flex flex-row gap-x-2 items-center">
+        <div className="text-[12px] font-light text-[#231D33]/60">
+          {item.time}
+        </div>
+        {type === "before" ? (
+          <div className="bg-main1 w-1.5 h-1.5 rounded-full" />
+        ) : (
+          <img src={Close} className="w-4 h-4" />
+        )}
+      </div>
     </div>
   );
 };
@@ -45,8 +70,14 @@ export const AlramPreview = () => {
     <div className="relative">
       <CardHeader branch="alarm" title="알림" />
       <div className=" flex flex-col overflow-y-scroll">
-        {CHAT_PROFILE_CONST.map((item, index) => (
-          <List key={index} item={item} />
+        <Title type="before" />
+        {ALARM_CONST.before.map((item, index) => (
+          <List key={index} item={item} type="before" />
+        ))}
+
+        <Title type="after" />
+        {ALARM_CONST.after.map((item, index) => (
+          <List key={index} item={item} type="after" />
         ))}
       </div>
     </div>
