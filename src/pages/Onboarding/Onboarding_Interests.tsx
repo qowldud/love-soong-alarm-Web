@@ -1,9 +1,9 @@
-import { Button } from "../common/Button";
-import { Chip } from "../components/Onboarding/Chip";
-import { Header } from "../common/Header";
+import { Button } from "../../common/Button";
+import { Chip } from "../../components/Onboarding/Chip";
+import { Header } from "../../common/Header";
 
-import { Description } from "../components/Onboarding/Description";
-import { ProgressBar } from "../components/Onboarding/ProgressBar";
+import { Description } from "../../components/Onboarding/Description";
+import { ProgressBar } from "../../components/Onboarding/ProgressBar";
 import { useState } from "react";
 
 const INTEREST_OPTIONS = [

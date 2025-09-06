@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Header } from "../common/Header";
-import { Input } from "../common/Input";
-import { OptionButton } from "../components/Onboarding/OptionButton";
-import { ProgressBar } from "../components/Onboarding/ProgressBar";
-import { Button } from "../common/Button";
-import { Description } from "../components/Onboarding/Description";
+import { Header } from "../../common/Header";
+import { ProgressBar } from "../../components/Onboarding/ProgressBar";
+import { Description } from "../../components/Onboarding/Description";
+import { Input } from "../../common/Input";
+import { Button } from "../../common/Button";
+import { OptionButton } from "../../components/Onboarding/OptionButton";
 
 const GENDER_OPTIONS = ["남성", "여성"];
 
