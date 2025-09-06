@@ -19,7 +19,7 @@ export const RailTab = ({ tabs, selectedTab, onChange }: Props) => {
           key={tab.label}
           onClick={() => onChange(tab.label)}
           className={clsx(
-            "flex-1 px-4 py-4 flex justify-center items-center gap-2 text-base cursor-pointer",
+            "flex-1  py-4 flex justify-center items-center gap-2 text-base cursor-pointer",
             selectedTab === tab.label
               ? "text-content-base font-bold border-b-2 border-content-base"
               : "text-disabled font-normal"
@@ -27,7 +27,7 @@ export const RailTab = ({ tabs, selectedTab, onChange }: Props) => {
         >
           <span className="whitespace-nowrap">{tab.label}</span>
           {tab.chip && (
-            <span className="py-0.5 px-1.5 rounded-sm bg-fill-regular text-xs font-medium">
+            <span className="py-0.5 px-1.5 rounded-sm bg-fill-regular text-xs font-medium whitespace-nowrap">
               {tab.chip}
             </span>
           )}
