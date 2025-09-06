@@ -99,3 +99,46 @@ export const ALARM_CONST = {
     },
   ],
 };
+
+export const CHAT_CONST = [
+  {
+    isMine: false,
+    content: "이번에 추가콘 막콘 갔다왔어요",
+  },
+  {
+    isMine: true,
+    content: "오 저도 거기 갔다왔어요 거기 맨 앞자리",
+  },
+  {
+    isMine: true,
+    content: "누나는 검정치마 최애 앨범 뭐에요",
+  },
+  {
+    isMine: false,
+    content: "떨스티랑 201 좋아해요 대신 팀베이비 혐오함",
+  },
+  {
+    isMine: true,
+    content: "테토녀에요 에겐녀에요",
+  },
+  {
+    isMine: false,
+    content: "테토녀요",
+  },
+  {
+    isMine: true,
+    content: "제가 집이랑 차 해올테니까 결혼하시죠",
+  },
+  {
+    isMine: true,
+    content: "우리 근데 우리가 마지막 세대면 어떡하죠",
+  },
+  {
+    isMine: false,
+    content: "긴 세월에 변하지 않을 그런 사랑 하면 되죠",
+  },
+  {
+    isMine: true,
+    content: "그런가요",
+  },
+];

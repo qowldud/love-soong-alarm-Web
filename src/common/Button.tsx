@@ -2,7 +2,7 @@ import clsx from "clsx";
 import type { ButtonHTMLAttributes } from "react";
 
 import Edit from "@/assets/icons/ic_edit.svg";
-import Alert from "@/assets/icons/ic_alarm.svg";
+import Alert from "@/assets/icons/ic_alert.svg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "disabled" | "secondary";

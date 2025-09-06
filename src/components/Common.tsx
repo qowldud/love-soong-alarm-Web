@@ -1,5 +1,5 @@
-import { HOME_PROFILE_CONST } from "../../hooks/consts";
-import { useHomeStore } from "../../store/homeStore";
+import { HOME_PROFILE_CONST } from "../hooks/consts";
+import { useHomeStore } from "../store/homeStore";
 
 import Close from "@/assets/icons/ic_close.svg";
 

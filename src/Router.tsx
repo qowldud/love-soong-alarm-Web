@@ -6,45 +6,62 @@ import { Auth } from "./pages/Auth";
 import { PrivateLayout } from "./components/PrivateLayout";
 import { AuthInput } from "./components/auth/Input";
 import { AuthValid } from "./components/auth/Valid";
+
 import { Home } from "./pages/Home";
+import { Chat } from "./pages/Chat";
+import { Layout } from "./components/Layout";
+import { ChatLayout } from "./components/chat/Layout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Entry />,
-  },
-  {
-    path: "/auth",
-    element: <Auth />,
+    element: <Layout />,
     children: [
       {
-        path: "input",
-        element: <AuthInput />,
+        path: "",
+        element: <Entry />,
       },
       {
-        path: "valid",
-        element: <AuthValid />,
-      },
-    ],
-  },
-  {
-    path: "/signup",
-  },
-  {
-    path: "/help",
-  },
-  {
-    element: <PrivateLayout />,
-    children: [
-      {
-        path: "/home",
-        element: <Home />,
+        path: "/auth",
+        element: <Auth />,
+        children: [
+          {
+            path: "input",
+            element: <AuthInput />,
+          },
+          {
+            path: "valid",
+            element: <AuthValid />,
+          },
+        ],
       },
       {
-        path: "/chat/:id",
+        path: "/signup",
       },
       {
-        path: "/edit",
+        path: "/help",
+      },
+      {
+        element: <PrivateLayout />,
+        children: [
+          {
+            path: "/home",
+            element: <Home />,
+          },
+          {
+            path: "/chat",
+            element: <ChatLayout />,
+            children: [
+              {
+                path: ":id",
+                element: <Chat />,
+              },
+            ],
+          },
+          {
+            path: "/edit",
+          },
+        ],
       },
     ],
   },

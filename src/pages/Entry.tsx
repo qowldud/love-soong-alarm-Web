@@ -41,14 +41,7 @@ export const Entry = () => {
       {isSplash ? (
         <Splash />
       ) : (
-        <motion.div
-          key="main"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-          className="h-full w-full flex flex-col items-center justify-between px-4 pb-11"
-        >
+        <div className="h-full w-full flex flex-col items-center justify-between px-4 pb-11">
           <div className="flex flex-col gap-y-4 justify-center items-center h-full ">
             <img src={Color_Logo} alt="로고" className="w-20 h-20" />
             <div className="flex flex-col gap-y-2">
@@ -72,7 +65,7 @@ export const Entry = () => {
             children="시작하기"
             onClick={() => navigate("/auth/input")}
           />
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

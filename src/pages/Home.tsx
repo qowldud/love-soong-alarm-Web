@@ -1,5 +1,3 @@
-import { AnimatePresence, motion } from "framer-motion";
-
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 
 import Alarm from "@/assets/icons/ic_alarm.svg";
@@ -8,14 +6,14 @@ import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
 import Map from "@/assets/icons/ic_mock_map.svg";
 
-import { HomeBottom } from "../components/Home/Bottom";
-import { ProfileCard } from "../components/Home/Profile";
+import { HomeBottom } from "../components/home/Bottom";
+import { ProfileCard } from "../components/home/Profile";
 
 import { useHomeStore } from "../store/homeStore";
-import { ProfilePreview } from "../components/Home/Card/ProfilePreview";
-import { AlramPreview } from "../components/Home/Card/Alram";
-import { ChatPreview } from "../components/Home/Card/ChatPreview";
-import { CardLayout } from "../components/Home/Card/Layout";
+import { ProfilePreview } from "../components/home/Card/ProfilePreview";
+import { AlramPreview } from "../components/home/Card/Alram";
+import { ChatPreview } from "../components/home/Card/ChatPreview";
+import { CardLayout } from "../components/home/Card/Layout";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -55,48 +53,39 @@ export const Home = () => {
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        key="main"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-        className="relative w-full h-screen bg-gray-200 overflow-hidden"
-      >
-        <img
-          src={Map}
-          alt="map background"
-          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+    <div>
+      <img
+        src={Map}
+        alt="map background"
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+      />
+
+      <div className="absolute top-15.5 left-4 right-4 z-30">
+        <ProfileCard />
+      </div>
+
+      <div className="absolute flex flex-row gap-x-2 left-4 right-4 top-57 z-30 justify-between">
+        <Button>
+          <img src={Setting} alt={"setting"} />
+        </Button>
+        <Button onClick={() => setCheckAlarm(true)}>
+          <img src={Alarm} alt={"alarm"} />
+        </Button>
+      </div>
+
+      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
+        <Button>
+          <img src={Location} alt={"location"} />
+        </Button>
+        <HomeBottom
+          count={CORRECT_COUNT}
+          onClick={() => setCheckProfile(true)}
         />
-
-        <div className="absolute top-15.5 left-4 right-4 z-30">
-          <ProfileCard />
-        </div>
-
-        <div className="absolute flex flex-row gap-x-2 left-4 right-4 top-57 z-30 justify-between">
-          <Button>
-            <img src={Setting} alt={"setting"} />
-          </Button>
-          <Button onClick={() => setCheckAlarm(true)}>
-            <img src={Alarm} alt={"alarm"} />
-          </Button>
-        </div>
-
-        <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
-          <Button>
-            <img src={Location} alt={"location"} />
-          </Button>
-          <HomeBottom
-            count={CORRECT_COUNT}
-            onClick={() => setCheckProfile(true)}
-          />
-          <Button onClick={() => setCheckChat(true)}>
-            <img src={Chat} alt={"chat"} />
-          </Button>
-        </div>
-        <RenderCard />
-      </motion.div>
-    </AnimatePresence>
+        <Button onClick={() => setCheckChat(true)}>
+          <img src={Chat} alt={"chat"} />
+        </Button>
+      </div>
+      <RenderCard />
+    </div>
   );
 };

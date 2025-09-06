@@ -1,5 +1,5 @@
 import { ALARM_CONST } from "../../../hooks/consts";
-import { CardHeader } from "../Common";
+import { CardHeader } from "../../Common";
 
 import Close from "@/assets/icons/ic_close.svg";
 import Check from "@/assets/icons/ic_check.svg";

@@ -1,5 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import { CHAT_PROFILE_CONST } from "../../../hooks/consts";
-import { CardHeader } from "../Common";
+import { CardHeader } from "../../Common";
 
 type ListProps = {
   emoji: string;
@@ -11,8 +12,13 @@ type ListProps = {
 };
 
 const List = ({ item }: { item: ListProps }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex flex-row justify-between items-center px-4 py-2.5">
+    <div
+      className="flex flex-row justify-between items-center px-4 py-2.5"
+      onClick={() => navigate("/chat/1")}
+    >
       <div className="flex flex-row justify-center items-center gap-x-3">
         <div>{item.emoji}</div>
         <div className="flex flex-col">
@@ -44,7 +50,7 @@ export const ChatPreview = () => {
   return (
     <div className="relative">
       <CardHeader branch="chat" title="채팅" />
-      <div className=" flex flex-col overflow-y-scroll">
+      <div className="flex flex-col overflow-y-scroll">
         {CHAT_PROFILE_CONST.map((item, index) => (
           <List key={index} item={item} />
         ))}
