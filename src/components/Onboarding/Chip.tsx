@@ -18,6 +18,7 @@ interface Props {
   variant?: keyof typeof variantStyles;
   removable?: boolean;
   className?: string;
+  handleRemove?: () => void;
 }
 
 export const Chip = ({
@@ -27,20 +28,24 @@ export const Chip = ({
   variant = "interest",
   removable = false,
   className,
+  handleRemove,
 }: Props) => {
   return (
     <div
       className={clsx(
-        "px-2 py-1.5 text-sm font-bold flex rounded-lg cursor-pointer",
+        "px-2 py-1.5 text-sm font-bold flex rounded-lg cursor-pointer items-center",
         selected ? variantSelectedStyles[variant] : variantStyles[variant],
         className
       )}
       onClick={onClick}
     >
-      <span className="px-0.5 whitespace-nowrap">{label}</span>
+      <span className="px-0.5 whitespace-nowrap">
+        {variant === "detail" && "#"}
+        {label}
+      </span>
       {removable && (
-        <button className="ml-1">
-          <img src={CloseIcon} />
+        <button className="ml-1" onClick={handleRemove}>
+          <img src={CloseIcon} alt="close_icon" className="size-5" />
         </button>
       )}
     </div>

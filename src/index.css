@@ -9,9 +9,10 @@
   --color-assistive: rgba(35, 29, 51, 0.6);
   --color-fill-regular: rgba(154, 146, 173, 0.08);
   --color-outline-regular: rgba(154, 146, 173, 0.16);
-  --color-fill-inverted: "#141112";
-  --color-inverted: "#f2ebed";
+  --color-fill-inverted: #141112;
+  --color-inverted: #f2ebed;
   --color-disabled: rgba(51, 29, 36, 0.4);
+  --color-divider-regular: rgba(173, 146, 155, 0.2);
 }
 
 body {
