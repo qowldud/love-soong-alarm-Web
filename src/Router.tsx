@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Test } from "./pages/Test";
 import { PrivateLayout } from "./components/PrivateLayout";
-import { Onboarding_Profile } from "./pages/Onboarding/Onboarding_Profile";
-import { Onboarding_Extra } from "./pages/Onboarding/Onboarding_Extra";
-import { Onboarding_Interests } from "./pages/Onboarding/Onboarding_Interests";
-import { Onboarding_Preference } from "./pages/Onboarding/Onboarding_Preference";
+import { Onboarding_Profile } from "./pages/onboarding/Onboarding_Profile";
+import { Onboarding_Extra } from "./pages/onboarding/Onboarding_Extra";
+import { Onboarding_Interests } from "./pages/onboarding/Onboarding_Interests";
+import { Onboarding_Preference } from "./pages/onboarding/Onboarding_Preference";
+import { EditPage } from "./pages/EditPage";
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/edit",
+        element: <EditPage />,
       },
     ],
   },

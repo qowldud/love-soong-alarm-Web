@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Header } from "../../common/Header";
-import { Chip } from "../../components/Onboarding/Chip";
-import { ChipStack } from "../../components/Onboarding/ChipStack";
-import { Description } from "../../components/Onboarding/Description";
-import { ProgressBar } from "../../components/Onboarding/ProgressBar";
-import { SectionHeader } from "../../components/Onboarding/SectionHeader";
+import { Chip } from "../../components/profileOnboarding/Chip";
+import { ChipStack } from "../../components/profileOnboarding/ChipStack";
+import { Description } from "../../components/profileOnboarding/Description";
+import { ProgressBar } from "../../components/profileOnboarding/ProgressBar";
+import { SectionHeader } from "../../components/profileOnboarding/SectionHeader";
 import { Divider } from "../../common/Divider";
 import { Button } from "../../common/Button";
-import { HashtagInput } from "../../components/Onboarding/HashtagInput";
+import { HashtagInput } from "../../components/profileOnboarding/HashtagInput";
 
 const genres = [
   { label: "밴드", value: "밴드" },

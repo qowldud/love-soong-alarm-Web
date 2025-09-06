@@ -1,28 +1,20 @@
 import { useState } from "react";
-import { Header } from "../../common/Header";
-import { ProgressBar } from "../../components/profileOnboarding/ProgressBar";
-import { Description } from "../../components/profileOnboarding/Description";
 import { Input } from "../../common/Input";
+import { OptionButton } from "../profileOnboarding/OptionButton";
+import { SectionHeader } from "../profileOnboarding/SectionHeader";
 import { Button } from "../../common/Button";
-import { OptionButton } from "../../components/profileOnboarding/OptionButton";
 
 const GENDER_OPTIONS = ["남성", "여성"];
 
-export const Onboarding_Profile = () => {
+export const ProfileTab = () => {
   const [select, setSelect] = useState<string | null>(null);
   return (
-    <div className="flex flex-col h-full justify-between">
-      <div>
-        <Header title="30% 작성 완료" />
-        <ProgressBar per="30%" />
+    <div className="h-full flex flex-col overflow-y-auto justify-between relative">
+      <div className="flex flex-col">
+        <SectionHeader title="필수 프로필" className="pt-4 pb-2.5" />
 
-        <Description
-          title="필수 프로필을 입력해주세요"
-          subTitle="이곳은 누구나 볼 수 있는 프로필이에요."
-        />
-
-        <div className="flex flex-col px-4 py-2 gap-4">
-          <div className="flex flex-col">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col pt-2">
             <Input label="나를 표현하는 이모티콘" placeholder="예시) 🥰" />
             <div className="px-1 py-2.5 text-assistive text-xs font-normal">
               키보드에서 이모티콘을 자유롭게 입력해주세요!
@@ -45,18 +37,21 @@ export const Onboarding_Profile = () => {
                 />
               ))}
             </div>
-          </div>
 
-          <div className="py-2">
-            <span className="px-1 pb-2 text-sm text-additive font-medium">
-              생년월일
-            </span>
+            <div className="py-2">
+              <span className="px-1 pb-2 text-sm text-additive font-medium">
+                생년월일
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="py-2.5 mb-8 px-4">
-        <Button>다음</Button>
+      <div className="absolute bottom-0 max-w-[444px] w-full flex flex-col bg-white pb-8">
+        <div className="w-full pt-2.5 pb-0.5"></div>
+        <div className="py-2.5">
+          <Button variant="primary">수정하기</Button>
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import { Button } from "../../common/Button";
 import { Header } from "../../common/Header";
 import { Input } from "../../common/Input";
-import { Description } from "../../components/Onboarding/Description";
-import { ProgressBar } from "../../components/Onboarding/ProgressBar";
+import { Description } from "../../components/profileOnboarding/Description";
+import { ProgressBar } from "../../components/profileOnboarding/ProgressBar";
 
 export const Onboarding_Extra = () => {
   return (
