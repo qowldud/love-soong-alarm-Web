@@ -1,13 +1,33 @@
+@import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css");
 @import "tailwindcss";
 
 @theme {
   --color-main1: #eb427b;
-  --color-main2: #eb427b33;
   --color-main3: #eb427b14;
-  --color-base: #231d33;
+  --color-content-base: #231d33;
+  --color-content-disabled: rgba(35, 29, 51, 0.4);
   --color-additive: rgba(35, 29, 51, 0.8);
   --color-assistive: rgba(35, 29, 51, 0.6);
   --color-fill-regular: rgba(154, 146, 173, 0.08);
+  --color-outline-regular: rgba(154, 146, 173, 0.16);
+  --color-fill-inverted: #141112;
+  --color-inverted: #f2ebed;
+  --color-disabled: rgba(51, 29, 36, 0.4);
+  --color-divider-regular: rgba(173, 146, 155, 0.2);
+
+  --shadow-dim-weak: 0 0 16px 0 rgba(51, 29, 36, 0.08);
+}
+@layer utilities {
+  .shadow-dim-weak {
+    box-shadow: var(--shadow-dim-weak);
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 body {
@@ -15,6 +35,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "SUIT Variable", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
 #root {

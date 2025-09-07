@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
+//   onClick?: () => void;
 }
 
 export const Header = ({ title }: Props) => {
   const navigate = useNavigate();
-
+  
   return (
     <div className="w-full p-4">
       <div className="flex justify-between items-center">

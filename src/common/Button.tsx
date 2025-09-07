@@ -22,7 +22,7 @@ export const Button = ({
   return (
     <button
       className={clsx(
-        "w-full h-14 flex items-center justify-center rounded-xl text-base font-medium",
+        "w-full h-14 flex items-center justify-center rounded-xl text-base font-medium cursor-pointer",
         variants[variant],
         className
       )}

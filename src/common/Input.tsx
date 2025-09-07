@@ -16,7 +16,7 @@ export const Input = ({ label, className, onClear, ...props }: InputProps) => {
         </div>
       )}
 
-      <div className="flex gap-2 items-center rounded-xl w-full px-4 py-3 bg-fill-regular backdrop-blur-md placeholder:text-assistive text-base">
+      <div className="flex gap-2 items-center rounded-xl w-full px-4 py-3 bg-fill-regular backdrop-blur-md placeholder:text-assistive text-base text-content-base">
         <input {...props} className={clsx("flex-1 outline-none", className)} />
         <img
           src={Close}
