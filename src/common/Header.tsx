@@ -1,11 +1,14 @@
 import Arrow_Back from "@/assets/icons/arrow_back.svg?url";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
-  onClick?: () => void;
+//   onClick?: () => void;
 }
 
-export const Header = ({ title, onClick }: Props) => {
+export const Header = ({ title }: Props) => {
+  const navigate = useNavigate();
+  
   return (
     <div className="w-full p-4">
       <div className="flex justify-between items-center">
@@ -13,9 +16,9 @@ export const Header = ({ title, onClick }: Props) => {
           src={Arrow_Back}
           alt="arrow_back"
           className="size-6"
-          onClick={onClick}
+          onClick={() => navigate(-1)}
         />
-        <span className="text-lg font-medium text-content-base">{title}</span>
+        <span className="text-lg font-medium text-base]">{title}</span>
         <span className="size-6"></span>
       </div>
     </div>
