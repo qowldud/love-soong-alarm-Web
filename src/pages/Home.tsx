@@ -14,7 +14,7 @@ import { ProfilePreview } from "../components/home/Card/ProfilePreview";
 import { AlramPreview } from "../components/home/Card/Alram";
 import { ChatPreview } from "../components/home/Card/ChatPreview";
 import { CardLayout } from "../components/home/Card/Layout";
-import { LoginModal } from "../hooks/Modal";
+import { LoginModal } from "../hooks/modal";
 import { useAuthStore } from "../store/authStore";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -71,7 +71,11 @@ export const Home = () => {
         <ProfileCard />
       </div>
 
-      <div className="absolute flex flex-row gap-x-2 left-4 right-4 top-57 z-30 justify-between">
+      <div
+        className={`absolute flex flex-row gap-x-2 left-4 right-4 ${
+          isAuth ? "top-57" : "top-62"
+        } z-30 justify-between`}
+      >
         <Button>
           <img src={Coin} alt={"coin"} />
         </Button>

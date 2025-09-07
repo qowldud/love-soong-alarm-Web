@@ -1,18 +1,16 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 interface AuthState {
   loginType: "chat" | "edit";
   isModalOpen: boolean;
   isAuth: boolean;
 
-  setIsModalOpen: ({
-    flag,
-    type,
-  }: {
-    flag: boolean;
-    type?: "chat" | "edit";
-  }) => void;
+  setIsModalOpen: (args: { flag: boolean; type?: "chat" | "edit" }) => void;
+  setAuth: (flag: boolean) => void;
+
+  login: (token: string) => void;
+  logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -20,23 +18,30 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       loginType: "edit",
       isModalOpen: false,
-      isAuth: localStorage.getItem("token") ? true : false,
+      isAuth: false,
 
-      setIsModalOpen: ({
-        flag,
-        type,
-      }: {
-        flag: boolean;
-        type?: "chat" | "edit";
-      }) => {
-        set({ isModalOpen: flag, loginType: type });
+      setIsModalOpen: ({ flag, type }) =>
+        set((s) => ({
+          isModalOpen: flag,
+          loginType: type ?? s.loginType,
+        })),
+
+      setAuth: (flag) => set({ isAuth: flag }),
+
+      login: (token) => {
+        sessionStorage.setItem("token", token);
+        set({ isAuth: true });
+      },
+
+      logout: () => {
+        sessionStorage.removeItem("token");
+        set({ isAuth: false });
       },
     }),
     {
       name: "auth-store",
-      partialize: (state) => ({
-        isAuth: state.isAuth,
-      }),
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: (s) => ({ isAuth: s.isAuth, loginType: s.loginType }),
     }
   )
 );

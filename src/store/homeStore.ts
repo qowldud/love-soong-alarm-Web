@@ -6,7 +6,7 @@ interface HomeState {
   checkAlarm: boolean;
   checkChat: boolean;
 
-  setReset: (branch: "profile" | "alarm" | "chat") => void;
+  setReset: (branch?: "profile" | "alarm" | "chat") => void;
   setCheckProfile: (flag: boolean) => void;
   setCheckAlarm: (flag: boolean) => void;
   setCheckChat: (flag: boolean) => void;
@@ -31,6 +31,7 @@ export const useHomeStore = create<HomeState>()(
             set({ checkChat: false });
             return;
           default:
+            set({ checkProfile: false, checkAlarm: false, checkChat: false });
             return;
         }
       },

@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import Kakao from "@/assets/icons/ic_kakao.svg";
 import { useAuthStore } from "../store/authStore";
 
 export const LoginModal = ({ type }: { type: "chat" | "edit" }) => {
+  const navigate = useNavigate();
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
 
   const CONST_LOGIN_TEXT = () => {
@@ -36,7 +38,10 @@ export const LoginModal = ({ type }: { type: "chat" | "edit" }) => {
         <div className="text-[20px] font-semibold text-black px-3">
           {CONST_LOGIN_TEXT()}
         </div>
-        <div className="flex flex-row gap-x-3.5 justify-center items-center bg-[#FDE500] rounded-[16px] py-4 px-12.5 cursor-pointer">
+        <div
+          className="flex flex-row gap-x-3.5 justify-center items-center bg-[#FDE500] rounded-[16px] py-4 px-12.5 cursor-pointer"
+          onClick={() => navigate("/redirect")}
+        >
           <img src={Kakao} alt={"kakao"} className="w-6.5 h-6.5" />
           <div className="text-[20px] font-semibold">카카오톡 간편 로그인</div>
         </div>

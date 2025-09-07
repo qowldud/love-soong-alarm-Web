@@ -1,11 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { Entry } from "./pages/Entry";
-import { Auth } from "./pages/Auth";
+import { Redirect } from "./pages/Redirect";
 
 import { PrivateLayout } from "./components/PrivateLayout";
-import { AuthInput } from "./components/auth/Input";
-import { AuthValid } from "./components/auth/Valid";
 
 import { Home } from "./pages/Home";
 import { Chat } from "./pages/Chat";
@@ -19,21 +16,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Entry />,
-      },
-      {
-        path: "/auth",
-        element: <Auth />,
-        children: [
-          {
-            path: "input",
-            element: <AuthInput />,
-          },
-          {
-            path: "valid",
-            element: <AuthValid />,
-          },
-        ],
+        element: <Home />,
       },
       {
         path: "/signup",
@@ -45,8 +28,8 @@ export const router = createBrowserRouter([
         element: <PrivateLayout />,
         children: [
           {
-            path: "/home",
-            element: <Home />,
+            path: "/redirect",
+            element: <Redirect />,
           },
           {
             path: "/chat",
