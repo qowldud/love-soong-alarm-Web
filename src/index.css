@@ -30,6 +30,13 @@
   }
 }
 
+@layer base {
+  html,
+  body {
+    @apply overscroll-none;
+  }
+}
+
 body {
   background-color: lightgray;
   display: flex;
