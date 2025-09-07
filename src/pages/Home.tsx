@@ -1,7 +1,7 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 
 import Alarm from "@/assets/icons/ic_alarm.svg";
-import Setting from "@/assets/icons/ic_setting.svg";
+import Coin from "@/assets/icons/ic_coin.svg";
 import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
 import Map from "@/assets/icons/ic_mock_map.svg";
@@ -14,6 +14,8 @@ import { ProfilePreview } from "../components/home/Card/ProfilePreview";
 import { AlramPreview } from "../components/home/Card/Alram";
 import { ChatPreview } from "../components/home/Card/ChatPreview";
 import { CardLayout } from "../components/home/Card/Layout";
+import { LoginModal } from "../hooks/Modal";
+import { useAuthStore } from "../store/authStore";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -48,6 +50,11 @@ const RenderCard = () => (
 );
 
 export const Home = () => {
+  const loginType = useAuthStore((state) => state.loginType);
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const isModalOpen = useAuthStore((state) => state.isModalOpen);
+  const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
+
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckAlarm = useHomeStore((state) => state.setCheckAlarm);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
@@ -66,7 +73,7 @@ export const Home = () => {
 
       <div className="absolute flex flex-row gap-x-2 left-4 right-4 top-57 z-30 justify-between">
         <Button>
-          <img src={Setting} alt={"setting"} />
+          <img src={Coin} alt={"coin"} />
         </Button>
         <Button onClick={() => setCheckAlarm(true)}>
           <img src={Alarm} alt={"alarm"} />
@@ -77,15 +84,25 @@ export const Home = () => {
         <Button>
           <img src={Location} alt={"location"} />
         </Button>
+
         <HomeBottom
           count={CORRECT_COUNT}
-          onClick={() => setCheckProfile(true)}
+          onClick={() => {
+            if (!isAuth) {
+              setIsModalOpen({ flag: true, type: "edit" });
+              return;
+            }
+            setCheckProfile(true);
+          }}
         />
+
         <Button onClick={() => setCheckChat(true)}>
           <img src={Chat} alt={"chat"} />
         </Button>
       </div>
       <RenderCard />
+
+      {isModalOpen && <LoginModal type={loginType} />}
     </div>
   );
 };

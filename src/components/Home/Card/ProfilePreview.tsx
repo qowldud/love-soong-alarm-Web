@@ -2,9 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../../common/Button";
 import { PROFILE_MOCK } from "../../../hooks/mocks";
 import { CardHeader, hashtag, ProfileLabel } from "../../Common";
+import { useAuthStore } from "../../../store/authStore";
 
 export const ProfilePreview = () => {
   const navigate = useNavigate();
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
 
   return (
     <div className="relative">
@@ -18,7 +21,16 @@ export const ProfilePreview = () => {
         ))}
       </div>
       <div className="flex py-2.5">
-        <Button children="채팅하기" onClick={() => navigate("/chat/1")} />
+        <Button
+          children="채팅하기"
+          onClick={() => {
+            if (!isAuth) {
+              setIsModalOpen({ flag: true, type: "chat" });
+              return;
+            }
+            navigate("/chat/1");
+          }}
+        />
       </div>
     </div>
   );
