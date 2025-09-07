@@ -62,8 +62,13 @@ export const Onboarding_Preference = () => {
         </div>
       </div>
 
-      <div className="mb-8 px-4 py-2.5 ">
+      <div className="mb-8 px-4 py-2.5 flex flex-col gap-2">
         <Button>다음으로</Button>
+        <div className="px-1 pt-0.5 text-assistive text-xs font-normal text-center">
+          "시작하기" 버튼을 통해 서비스를 시작하였을 경우,
+          <span className="text-additive font-bold underline">약관의 내용</span>
+          을 모두 읽고 이를 충분히 이해하였으며, 그 적용에 동의한 것으로 봅니다.
+        </div>
       </div>
     </div>
   );

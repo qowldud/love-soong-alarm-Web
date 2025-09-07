@@ -5,25 +5,32 @@ import { Description } from "../../components/profileOnboarding/Description";
 import { Input } from "../../common/Input";
 import { Button } from "../../common/Button";
 import { OptionButton } from "../../components/profileOnboarding/OptionButton";
+import { Link } from "react-router-dom";
 
 const GENDER_OPTIONS = ["남성", "여성"];
 
 export const Onboarding_Profile = () => {
   const [select, setSelect] = useState<string | null>(null);
   return (
-    <div className="flex flex-col h-full justify-between">
+    <div className="flex flex-col h-full relative">
       <div>
         <Header title="30% 작성 완료" />
         <ProgressBar per="30%" />
+      </div>
 
+      <div className="overflow-y-auto pb-35 scrollbar-none">
         <Description
           title="필수 프로필을 입력해주세요"
-          subTitle="이곳은 누구나 볼 수 있는 프로필이에요."
+          subTitle="이곳은 누구나 볼 수 있는. 프로필이에요."
         />
 
-        <div className="flex flex-col px-4 py-2 gap-4">
+        <div className="flex flex-col px-4 py-2 gap-4 ">
           <div className="flex flex-col">
-            <Input label="나를 표현하는 이모티콘" placeholder="예시) 🥰" />
+            <Input
+              label="나를 표현하는 이모티콘"
+              placeholder="예시) 🥰"
+              maxLength={1}
+            />
             <div className="px-1 py-2.5 text-assistive text-xs font-normal">
               키보드에서 이모티콘을 자유롭게 입력해주세요!
             </div>
@@ -45,18 +52,25 @@ export const Onboarding_Profile = () => {
                 />
               ))}
             </div>
-          </div>
 
-          <div className="py-2">
-            <span className="px-1 pb-2 text-sm text-additive font-medium">
-              생년월일
-            </span>
+            <div className="py-2">
+              <span className="px-1 pb-2 text-sm text-additive font-medium">
+                생년월일
+              </span>
+            </div>
+
+            <Input
+              label="(선택) 학과(혹은 학부)"
+              placeholder="예시) 컴퓨터학부"
+            />
           </div>
         </div>
       </div>
 
-      <div className="py-2.5 mb-8 px-4">
-        <Button>다음</Button>
+      <div className="w-full py-2.5 mb-8 px-4 absolute bottom-0 bg-white">
+        <Link to="/onboarding/interests">
+          <Button>다음</Button>
+        </Link>
       </div>
     </div>
   );

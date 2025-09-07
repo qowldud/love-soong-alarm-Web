@@ -5,6 +5,7 @@ import { Header } from "../../common/Header";
 import { Description } from "../../components/profileOnboarding/Description";
 import { ProgressBar } from "../../components/profileOnboarding/ProgressBar";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const INTEREST_OPTIONS = [
   { label: "🎧 음악", value: "음악" },
@@ -31,7 +32,7 @@ export const Onboarding_Interests = () => {
   };
 
   return (
-    <div className="h-full flex flex-col justify-between">
+    <div className="h-full flex flex-col justify-between relative">
       <div className="flex flex-col">
         <Header title="60% 작성 완료" />
         <ProgressBar per="60%" />
@@ -62,8 +63,10 @@ export const Onboarding_Interests = () => {
         </div>
       </div>
 
-      <div className="mb-8 px-4 py-2.5">
-        <Button>다음으로</Button>
+      <div className="w-full mb-8 px-4 py-2.5 absolute bottom-0 bg-white">
+        <Link to="/onboarding/preference">
+          <Button>다음으로</Button>
+        </Link>
       </div>
     </div>
   );
