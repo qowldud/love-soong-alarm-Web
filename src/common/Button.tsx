@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import type { ButtonHTMLAttributes } from "react";
 
+import Edit from "@/assets/icons/ic_edit.svg";
+import Alert from "@/assets/icons/ic_alert.svg";
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "disabled" | "secondary";
 }
@@ -29,4 +32,25 @@ export const Button = ({
       {children}
     </button>
   );
+};
+
+export const Button_v2 = ({ branch }: { branch: string }) => {
+  switch (branch) {
+    case "EDIT":
+      return (
+        <button className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5">
+          <img src={Edit} alt={"edit"} />
+          수정
+        </button>
+      );
+    case "ALERT":
+      return (
+        <button className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5">
+          <img src={Alert} alt={"alert"} />
+          신고
+        </button>
+      );
+    default:
+      return <></>;
+  }
 };

@@ -22,4 +22,5 @@ body {
   max-width: 444px;
   height: 100vh;
   background-color: white;
+  position: relative;
 }
