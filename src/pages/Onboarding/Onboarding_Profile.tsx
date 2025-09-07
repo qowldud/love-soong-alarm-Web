@@ -67,10 +67,14 @@ export const Onboarding_Profile = () => {
         </div>
       </div>
 
-      <div className="w-full py-2.5 mb-8 px-4 absolute bottom-0 bg-white">
+      <div className="w-full pt-2.5 pb-10.5 px-4 flex flex-col gap-2 absolute bottom-0 bg-white">
         <Link to="/onboarding/interests">
           <Button>다음</Button>
         </Link>
+
+        <span className="text-center text-assistive text-xs font-normal">
+          필수 정보들을 입력해야 다음으로 넘어갈 수 있어요.
+        </span>
       </div>
     </div>
   );
