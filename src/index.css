@@ -23,26 +23,43 @@
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+    overscroll-behavior: none;
   }
   .scrollbar-none {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    overscroll-behavior: none;
   }
 }
 
+@layer base {
+  html,
+  body {
+    @apply overscroll-none;
+  }
+}
+
+html,
 body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100dvh;
   background-color: lightgray;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "SUIT Variable", -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+  height: 100%;
 }
 
 #root {
   width: 444px;
   max-width: 444px;
-  height: 100vh;
+  height: 100%;
   background-color: white;
   position: relative;
 }
