@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
         element: <Onboarding_Interests />,
       },
       {
-        path: "/onboarding/preference",
+        path: "/onboarding/preference/:step",
         element: <Onboarding_Preference />,
       },
       {

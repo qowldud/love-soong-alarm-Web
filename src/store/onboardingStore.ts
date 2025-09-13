@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface OnboardingState {
   emoji: string;
@@ -8,7 +9,7 @@ interface OnboardingState {
   department: string;
 
   interests: string[];
-  interestDetail: string;
+  interestDetail: string | null;
   hashtags: string[];
 
   // 개별 함수 업데이트
@@ -19,28 +20,37 @@ interface OnboardingState {
   setDepartment: (department: string) => void;
 
   setInterests: (interests: string[]) => void;
-  setInterestDetail: (detail: string) => void;
+  setInterestDetail: (detail: string | null) => void;
   setHashtags: (hashtags: string[]) => void;
 }
 
-export const useOnboardingStore = create<OnboardingState>((set) => ({
-  emoji: "",
-  nickname: "",
-  gender: null,
-  birthYear: "",
-  department: "",
+export const useOnboardingStore = create<OnboardingState>()(
+  persist(
+    (set) => ({
+      emoji: "",
+      nickname: "",
+      gender: null,
+      birthYear: "",
+      department: "",
 
-  interests: [],
-  interestDetail: "",
-  hashtags: [],
+      interests: [],
+      interestDetail: null,
+      hashtags: [],
 
-  setEmoji: (emoji) => set({ emoji }),
-  setNickname: (nickname) => set({ nickname }),
-  setGender: (gender) => set({ gender }),
-  setBirthYear: (birthYear) => set({ birthYear }),
-  setDepartment: (department) => set({ department }),
+      setEmoji: (emoji: string) => set({ emoji }),
+      setNickname: (nickname: string) => set({ nickname }),
+      setGender: (gender: "남성" | "여성") => set({ gender }),
+      setBirthYear: (birthYear: string) => set({ birthYear }),
+      setDepartment: (department: string) => set({ department }),
 
-  setInterests: (interests) => set({ interests }),
-  setInterestDetail: (detail) => set({ interestDetail: detail }),
-  setHashtags: (hashtags) => set({ hashtags }),
-}));
+      setInterests: (interests: string[]) => set({ interests }),
+      setInterestDetail: (detail: string | null) =>
+        set({ interestDetail: detail }),
+      setHashtags: (hashtags: string[]) => set({ hashtags }),
+    }),
+    {
+      name: "onboarding-storage",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);

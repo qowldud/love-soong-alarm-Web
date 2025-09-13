@@ -4,32 +4,23 @@ import { Header } from "../../common/Header";
 
 import { Description } from "../../components/profileOnboarding/Description";
 import { ProgressBar } from "../../components/profileOnboarding/ProgressBar";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-
-const INTEREST_OPTIONS = [
-  { label: "🎧 음악", value: "음악" },
-  { label: "🎬 미디어", value: "미디어" },
-  { label: "🎮 게임", value: "게임" },
-  { label: "🏋🏻‍♂️ 운동", value: "운동" },
-  { label: "⚽️ 스포츠", value: "스포츠" },
-  { label: "📚 독서", value: "독서" },
-  { label: "👔 패션", value: "패션" },
-  { label: "🍔 식도락", value: "식도락" },
-  { label: "✈️ 여행", value: "여행" },
-];
+import { useOnboardingStore } from "../../store/onboardingStore";
+import { INTEREST_OPTIONS } from "../../constants/interests";
 
 export const Onboarding_Interests = () => {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const { interests, setInterests } = useOnboardingStore();
 
   const handleSelect = (value: string) => {
-    if (selectedInterests.includes(value)) {
-      setSelectedInterests(selectedInterests.filter((item) => item !== value));
+    if (interests.includes(value)) {
+      setInterests(interests.filter((item) => item !== value));
     } else {
-      if (selectedInterests.length >= 2) return;
-      setSelectedInterests([...selectedInterests, value]);
+      if (interests.length >= 2) return;
+      setInterests([...interests, value]);
     }
   };
+
+  const isFilled = interests.length;
 
   return (
     <div className="h-full flex flex-col justify-between relative">
@@ -44,19 +35,19 @@ export const Onboarding_Interests = () => {
 
         <div className="flex justify-center">
           <div
-            className="px-4 py-2.5 grid gap-2 justify-center w-full"
-            style={{
-              gridTemplateColumns: "repeat(auto-fit, minmax(65px, 1fr))",
-            }}
+            className="px-4 py-2.5 flex flex-wrap gap-2 w-full"
+            // style={{
+            //   gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
+            // }}
           >
             {INTEREST_OPTIONS.map((option) => (
               <Chip
                 key={option.value}
                 variant="interest"
-                selected={selectedInterests.includes(option.value)}
+                selected={interests.includes(option.value)}
                 label={option.label}
-                className="w-full justify-center"
                 onClick={() => handleSelect(option.value)}
+                className="justify-center"
               />
             ))}
           </div>
@@ -64,8 +55,8 @@ export const Onboarding_Interests = () => {
       </div>
 
       <div className="w-full mb-8 px-4 py-2.5 absolute bottom-0 bg-white">
-        <Link to="/onboarding/preference">
-          <Button>다음으로</Button>
+        <Link to="/onboarding/preference/0">
+          <Button variant={isFilled ? "primary" : "disabled"}>다음으로</Button>
         </Link>
       </div>
     </div>

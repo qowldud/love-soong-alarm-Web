@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Header } from "../common/Header";
 import { RailTab } from "../common/RailTab";
 import { ProfileTab } from "../components/edit/ProfileTab";
-import { Interest1Tab } from "../components/edit/Interest1Tab";
-import { Interest2Tab } from "../components/edit/Interest2Tab";
+import { InterestTab } from "../components/edit/InterestTab";
 
 const EditTab = [
   { label: "프로필" },
@@ -24,8 +23,8 @@ export const EditPage = () => {
 
       <div className="h-full">
         {selectedTab === "프로필" && <ProfileTab />}
-        {selectedTab === "취향 1" && <Interest1Tab />}
-        {selectedTab === "취향 2" && <Interest2Tab />}
+        {selectedTab === "취향 1" && <InterestTab />}
+        {selectedTab === "취향 2" && <InterestTab />}
       </div>
     </div>
   );

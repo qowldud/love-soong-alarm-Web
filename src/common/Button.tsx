@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import type { ButtonHTMLAttributes } from "react";
-
 import Edit from "@/assets/icons/ic_edit.svg";
 import Alert from "@/assets/icons/ic_alert.svg";
 
@@ -16,7 +15,7 @@ export const Button = ({
 }: ButtonProps) => {
   const variants = {
     primary: "bg-main1 text-white",
-    disabled: "bg-main2 text-white",
+    disabled: "bg-main1 text-white opacity-32",
     secondary: "bg-main3 text-main1",
   };
   return (
