@@ -14,6 +14,9 @@ import { Home } from "./pages/Home";
 import { Chat } from "./pages/Chat";
 import { Layout } from "./components/Layout";
 import { ChatLayout } from "./components/chat/Layout";
+import { Coin } from "./pages/Coin";
+import { Setting } from "./pages/Setting";
+import { Alarm } from "./pages/Alarm";
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +33,7 @@ export const router = createBrowserRouter([
       {
         path: "/help",
       },
-      
+
       {
         path: "/onboarding/profile",
         element: <Onboarding_Profile />,
@@ -63,6 +66,18 @@ export const router = createBrowserRouter([
             element: <Redirect />,
           },
           {
+            path: "/coin",
+            element: <Coin />,
+          },
+          {
+            path: "/alarm",
+            element: <Alarm />,
+          },
+          {
+            path: "/setting",
+            element: <Setting />,
+          },
+          {
             path: "/chat",
             element: <ChatLayout />,
             children: [
@@ -76,7 +91,6 @@ export const router = createBrowserRouter([
             path: "/edit",
           },
         ],
-
       },
     ],
   },

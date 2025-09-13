@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useHomeStore } from "../../../store/homeStore";
+import { useAuthStore } from "../../../store/authStore";
 
 type BottomSheetProps = {
-  branch: "profile" | "alarm" | "chat";
+  branch: "profile" | "alarm" | "chat" | "login";
   children: React.ReactNode;
 };
 
@@ -17,27 +18,30 @@ const BRANCH_CONST = {
   chat: {
     maxHeightPct: 75.5,
   },
+  login: {
+    maxHeightPct: 72,
+  },
 };
 
 export const CardLayout = ({ branch, children }: BottomSheetProps) => {
   const maxHeightPct = BRANCH_CONST[branch].maxHeightPct;
 
+  const login = useAuthStore((state) => state.isModalOpen);
   const profile = useHomeStore((state) => state.checkProfile);
-  const alarm = useHomeStore((state) => state.checkAlarm);
   const chat = useHomeStore((state) => state.checkChat);
 
+  const setLogin = useAuthStore((state) => state.setModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
-  const setCheckAlarm = useHomeStore((state) => state.setCheckAlarm);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
 
   const isOpen =
-    branch === "profile" ? profile : branch === "alarm" ? alarm : chat;
+    branch === "login" ? login : branch === "profile" ? profile : chat;
 
   const onClose =
-    branch === "profile"
+    branch === "login"
+      ? setLogin
+      : branch === "profile"
       ? setCheckProfile
-      : branch === "alarm"
-      ? setCheckAlarm
       : setCheckChat;
 
   useEffect(() => {

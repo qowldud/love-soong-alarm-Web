@@ -7,6 +7,7 @@ interface AuthState {
   isAuth: boolean;
 
   setIsModalOpen: (args: { flag: boolean; type?: "chat" | "edit" }) => void;
+  setModalOpen: (flag: boolean) => void;
   setAuth: (flag: boolean) => void;
 
   login: (token: string) => void;
@@ -25,6 +26,8 @@ export const useAuthStore = create<AuthState>()(
           isModalOpen: flag,
           loginType: type ?? s.loginType,
         })),
+
+      setModalOpen: (flag) => set({ isModalOpen: flag }),
 
       setAuth: (flag) => set({ isAuth: flag }),
 

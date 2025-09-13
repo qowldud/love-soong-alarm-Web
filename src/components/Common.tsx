@@ -7,7 +7,7 @@ export const CardHeader = ({
   branch,
   title,
 }: {
-  branch: "profile" | "alarm" | "chat";
+  branch: "profile" | "chat";
   title: string;
 }) => {
   const setReset = useHomeStore((state) => state.setReset);
