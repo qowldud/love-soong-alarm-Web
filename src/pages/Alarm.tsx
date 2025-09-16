@@ -73,7 +73,7 @@ const List = ({
   );
 };
 
-const ERROR_VALID = true;
+const ERROR_VALID = false;
 
 export const Alarm = () => {
   if (ERROR_VALID) {

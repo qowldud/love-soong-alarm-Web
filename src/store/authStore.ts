@@ -4,10 +4,15 @@ import { persist, createJSONStorage } from "zustand/middleware";
 interface AuthState {
   loginType: "chat" | "edit";
   isModalOpen: boolean;
+  isMemberOutOpen: boolean;
+  isLogoutOpen: boolean;
   isAuth: boolean;
 
   setIsModalOpen: (args: { flag: boolean; type?: "chat" | "edit" }) => void;
   setModalOpen: (flag: boolean) => void;
+  setIsMemberOutOpen: (flag: boolean) => void;
+  setIsLogoutOpen: (flag: boolean) => void;
+  setReset: () => void;
   setAuth: (flag: boolean) => void;
 
   login: (token: string) => void;
@@ -19,6 +24,8 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       loginType: "edit",
       isModalOpen: false,
+      isMemberOutOpen: false,
+      isLogoutOpen: false,
       isAuth: false,
 
       setIsModalOpen: ({ flag, type }) =>
@@ -26,8 +33,16 @@ export const useAuthStore = create<AuthState>()(
           isModalOpen: flag,
           loginType: type ?? s.loginType,
         })),
-
       setModalOpen: (flag) => set({ isModalOpen: flag }),
+
+      setIsMemberOutOpen: (flag) => set({ isMemberOutOpen: flag }),
+      setIsLogoutOpen: (flag) => set({ isLogoutOpen: flag }),
+      setReset: () =>
+        set({
+          isModalOpen: false,
+          isMemberOutOpen: false,
+          isLogoutOpen: false,
+        }),
 
       setAuth: (flag) => set({ isAuth: flag }),
 

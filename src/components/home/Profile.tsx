@@ -71,7 +71,7 @@ export const ProfileCard = () => {
               6명의 사용자가 표시되고 있어요
             </div>
           </div>
-          <div className="flex flex-row items-center gap-x-x cursor-pointer">
+          <div className="flex flex-row items-center gap-x-1 cursor-pointer">
             <img src={Reload} alt={"Reload"} className="w-5 h-5" />
             <div
               className="text-[14px] font-normal text-additive underline"

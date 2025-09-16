@@ -1,4 +1,5 @@
 import { HOME_PROFILE_CONST } from "../hooks/consts";
+import { useAuthStore } from "../store/authStore";
 import { useHomeStore } from "../store/homeStore";
 
 import Close from "@/assets/icons/ic_close.svg";
@@ -7,15 +8,21 @@ export const CardHeader = ({
   branch,
   title,
 }: {
-  branch: "profile" | "chat";
+  branch?: "profile" | "chat";
   title: string;
 }) => {
-  const setReset = useHomeStore((state) => state.setReset);
+  const setResetHome = useHomeStore((state) => state.setReset);
+  const setResetAuth = useAuthStore((state) => state.setReset);
+
+  const handleReset = () => {
+    setResetHome(branch);
+    setResetAuth();
+  };
 
   return (
     <>
       <button
-        onClick={() => setReset(branch)}
+        onClick={() => handleReset()}
         className="absolute right-0 top-0 rounded-full p-2 text-gray-500 hover:bg-gray-100"
         aria-label="닫기"
       />
@@ -24,7 +31,7 @@ export const CardHeader = ({
         <img
           src={Close}
           alt={"close"}
-          onClick={() => setReset(branch)}
+          onClick={() => handleReset()}
           className="cursor-pointer"
         />
       </div>

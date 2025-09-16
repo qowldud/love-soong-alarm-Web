@@ -8,12 +8,12 @@ import { ProfileCard } from "../components/home/Profile";
 
 import { useHomeStore } from "../store/homeStore";
 import { ProfilePreview } from "../components/home/Card/ProfilePreview";
-import { AlramPreview } from "../components/home/Card/Alram";
 import { ChatPreview } from "../components/home/Card/ChatPreview";
 import { CardLayout } from "../components/home/Card/Layout";
 import { useAuthStore } from "../store/authStore";
 import { MapCanvas } from "../components/home/Map";
 import { LoginCard } from "../components/home/Card/LoginCard";
+import { useLoaderData } from "react-router-dom";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -41,10 +41,6 @@ const RenderCard = () => (
       <ProfilePreview />
     </CardLayout>
 
-    <CardLayout branch="alarm">
-      <AlramPreview />
-    </CardLayout>
-
     <CardLayout branch="chat">
       <ChatPreview />
     </CardLayout>
@@ -52,11 +48,15 @@ const RenderCard = () => (
 );
 
 export const Home = () => {
+  const { locationData, chatLists } = useLoaderData();
+
   const isAuth = useAuthStore((state) => state.isAuth);
 
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
+
+  console.log(locationData, chatLists);
 
   return (
     <>

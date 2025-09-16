@@ -4,7 +4,7 @@ import { useHomeStore } from "../../../store/homeStore";
 import { useAuthStore } from "../../../store/authStore";
 
 type BottomSheetProps = {
-  branch: "profile" | "alarm" | "chat" | "login";
+  branch: "profile" | "alarm" | "chat" | "login" | "logout" | "memberout";
   children: React.ReactNode;
 };
 
@@ -21,6 +21,12 @@ const BRANCH_CONST = {
   login: {
     maxHeightPct: 72,
   },
+  logout: {
+    maxHeightPct: 72,
+  },
+  memberout: {
+    maxHeightPct: 72,
+  },
 };
 
 export const CardLayout = ({ branch, children }: BottomSheetProps) => {
@@ -29,20 +35,36 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
   const login = useAuthStore((state) => state.isModalOpen);
   const profile = useHomeStore((state) => state.checkProfile);
   const chat = useHomeStore((state) => state.checkChat);
+  const logout = useAuthStore((state) => state.isLogoutOpen);
+  const memberout = useAuthStore((state) => state.isMemberOutOpen);
 
   const setLogin = useAuthStore((state) => state.setModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
+  const setLogout = useAuthStore((state) => state.setIsLogoutOpen);
+  const setMemberout = useAuthStore((state) => state.setIsMemberOutOpen);
 
   const isOpen =
-    branch === "login" ? login : branch === "profile" ? profile : chat;
+    branch === "login"
+      ? login
+      : branch === "profile"
+      ? profile
+      : branch === "chat"
+      ? chat
+      : branch === "logout"
+      ? logout
+      : memberout;
 
   const onClose =
     branch === "login"
       ? setLogin
       : branch === "profile"
       ? setCheckProfile
-      : setCheckChat;
+      : branch === "chat"
+      ? setCheckChat
+      : branch === "logout"
+      ? setLogout
+      : setMemberout;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose;

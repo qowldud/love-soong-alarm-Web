@@ -6,7 +6,7 @@ export const PrivateLayout = () => {
   const { pathname } = useLocation();
 
   const HEADER_TEXT = pathname.includes("coin")
-    ? "충전"
+    ? "결제"
     : pathname.includes("alarm")
     ? "알림"
     : pathname.includes("setting")
