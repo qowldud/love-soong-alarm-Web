@@ -42,8 +42,7 @@
 
   @media all and (display-mode: standalone) {
     body {
-      /* ios pwa 인식 */
-      padding-bottom: 200px;
+      /* pwa 인식 */
     }
   }
 }
