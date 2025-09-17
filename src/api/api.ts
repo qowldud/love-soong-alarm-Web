@@ -8,19 +8,35 @@ interface BasicResponse<T> {
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  headers: {
-    Authorization: `Bearer ${import.meta.env.VITE_MASTER_TOKEN}`,
-  },
+  withCredentials: true,
+  headers: import.meta.env.DEV
+    ? {
+        Authorization: `Bearer ${import.meta.env.VITE_MASTER_TOKEN}`,
+      }
+    : {},
   timeout: 180000,
-  // TODO: 토큰을 쿠키에 저장할때
-  // withCredentials: true, // Allow sending cookies in cross-origin requests
 });
+
+if (import.meta.env.PROD) {
+  axiosInstance.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+}
 
 export const useApi = () => {
   const getData = async <T>(
     url: string,
     params?: Record<string, any>
-  ): Promise<T> => {
+  ): Promise<BasicResponse<T>> => {
     try {
       const response: AxiosResponse<BasicResponse<T>> = await axiosInstance.get(
         url,
@@ -29,14 +45,7 @@ export const useApi = () => {
         }
       );
 
-      return response.data.data;
-
-      // TODO: statusCode 가 생기면 추가할 로직
-      //   if (response.status === 200) {
-      //     return response.data;
-      //   } else {
-      //     throw new Error("Failed to fetch data");
-      //   }
+      return response.data;
     } catch (error: any) {
       handleApiError(error);
       throw error;
@@ -46,20 +55,12 @@ export const useApi = () => {
   const patchData = async <T>(
     url: string,
     data: Record<string, any>
-  ): Promise<T> => {
+  ): Promise<BasicResponse<T>> => {
     try {
       const response: AxiosResponse<BasicResponse<T>> =
         await axiosInstance.patch(url, data);
 
-      return response.data.data;
-      // TODO: statusCode 가 생기면 추가할 로직
-      //   if (response.status === 200 || response.status === 201) {
-      //     return response.data;
-      //   } else if (response.status === 302) {
-      //     return { ...response.data, status: 302 };
-      //   } else {
-      //     return response.data;
-      //   }
+      return response.data;
     } catch (error: any) {
       handleApiError(error);
       throw error;
@@ -69,22 +70,14 @@ export const useApi = () => {
   const putData = async <T>(
     url: string,
     data: Record<string, any>
-  ): Promise<T> => {
+  ): Promise<BasicResponse<T>> => {
     try {
       const response: AxiosResponse<BasicResponse<T>> = await axiosInstance.put(
         url,
         data
       );
 
-      return response.data.data;
-      // TODO: statusCode 가 생기면 추가할 로직
-      //   if (response.status === 200 || response.status === 201) {
-      //     return response.data;
-      //   } else if (response.status === 302) {
-      //     return { ...response.data, status: 302 };
-      //   } else {
-      //     return response.data;
-      //   }
+      return response.data;
     } catch (error: any) {
       handleApiError(error);
       throw error;
@@ -94,40 +87,24 @@ export const useApi = () => {
   const postData = async <T>(
     url: string,
     data: Record<string, any>
-  ): Promise<T> => {
+  ): Promise<BasicResponse<T>> => {
     try {
       const response: AxiosResponse<BasicResponse<T>> =
         await axiosInstance.post(url, data);
 
-      return response.data.data;
-
-      // TODO: statusCode 가 생기면 추가할 로직
-      //   if (response.status === 200 || response.status === 201) {
-      //     return response.data;
-      //   } else if (response.status === 302) {
-      //     return { ...response.data, status: 302 };
-      //   } else {
-      //     return response.data;
-      //   }
-      //   if (response.status === 200 || response.status === 201) {
-      //     return response.data;
-      //   } else if (response.status === 302) {
-      //     return { ...response.data, status: 302 };
-      //   } else {
-      //     throw new Error("Failed to post data");
-      //   }
+      return response.data;
     } catch (error: any) {
       handleApiError(error);
       throw error;
     }
   };
 
-  const deleteData = async <T>(url: string): Promise<T> => {
+  const deleteData = async <T>(url: string): Promise<BasicResponse<T>> => {
     try {
       const response: AxiosResponse<BasicResponse<T>> =
         await axiosInstance.delete(url);
 
-      return response.data.data;
+      return response.data;
     } catch (error: any) {
       handleApiError(error);
       throw error;

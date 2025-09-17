@@ -9,35 +9,65 @@ import { HashtagInput } from "../../components/profileOnboarding/HashtagInput";
 import { useOnboardingStore } from "../../store/onboardingStore";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { GENRE_OPTIONS } from "../../constants/genres";
+import { useEffect } from "react";
+import { useApi } from "../../api/api";
 
 export const Onboarding_Preference = () => {
   const { step } = useParams();
   const navigate = useNavigate();
-  const { interests, interestDetail, setInterestDetail, hashtags } =
-    useOnboardingStore();
+  const {
+    currentLabels,
+    setCurrentLabel,
+    currentDetail,
+    currentHashtags,
+    setCurrentDetail,
+    addCurrentInterest,
+  } = useOnboardingStore();
 
   const currentStep = Number(step || 0);
-  const currentInterest = interests[currentStep];
-  const genres = GENRE_OPTIONS[currentInterest] || [];
+  const isLast = currentStep === currentLabels.length - 1;
+  const label = currentLabels[currentStep];
+  const genres = GENRE_OPTIONS[label] || [];
 
-  const handleGenreClick = (genre: string) => {
-    if (interestDetail === genre) {
-      setInterestDetail(null);
-    } else {
-      setInterestDetail(genre);
+  useEffect(() => {
+    setCurrentLabel(label);
+  }, [label]);
+
+  const isFilled = !!(currentDetail && currentHashtags.length > 0);
+
+  const { patchData } = useApi();
+
+  const sendOnboarding = async () => {
+    const state = useOnboardingStore.getState();
+
+    const payload = {
+      nickname: state.nickname,
+      major: state.major,
+      birthDate: Number(state.birthDate),
+      gender: state.gender,
+      emoji: state.emoji,
+      interests: state.interests,
+    };
+
+    try {
+      const data = await patchData("/api/users/on-boarding", payload);
+      if (data.success) {
+        navigate("/splash");
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const isFilled = !!(interestDetail && hashtags.length > 0);
-  const isLast = currentStep === interests.length - 1;
-
   const handleNext = () => {
     if (!isFilled) return;
+    addCurrentInterest();
 
     if (isLast) {
-      // 시작하기(온보딩 api) 호출
+      // api 연동
+      sendOnboarding();
     } else {
-      navigate("/onboarding/preference/1");
+      navigate(`/onboarding/preference/${currentStep + 1}`);
     }
   };
 
@@ -47,29 +77,26 @@ export const Onboarding_Preference = () => {
         <Header title="80% 작성 완료" />
         <ProgressBar per="80%" />
 
-        <Description
-          title="휴멸님의 음악 취향에 대해 알려주세요"
-          subTitle="더 자세히 적을수록 나와 맞는 소울메이트가 찾아와요!"
-        />
+        <Description title="휴멸님의 음악 취향에 대해 알려주세요">
+          더 자세히 적을수록 나와 맞는 소울메이트가 찾아와요!
+        </Description>
 
         <div className="px-4">
           <SectionHeader title="자세한 취향 분류" />
           <ChipStack>
             {genres.map((genre) => (
               <Chip
+                key={genre.label}
                 variant="detail"
-                selected={interestDetail === genre.value}
+                selected={currentDetail === genre.value}
                 label={genre.label}
-                onClick={() => handleGenreClick(genre.value)}
+                onClick={() => setCurrentDetail(genre.value)}
               />
             ))}
           </ChipStack>
 
-          {interestDetail && (
-            <HashtagInput
-              interest={currentInterest}
-              interestDetail={interestDetail}
-            />
+          {currentDetail && (
+            <HashtagInput interest={label} interestDetail={currentDetail} />
           )}
         </div>
       </div>
@@ -78,6 +105,7 @@ export const Onboarding_Preference = () => {
         <Button
           variant={isFilled ? "primary" : "disabled"}
           onClick={handleNext}
+          type="button"
         >
           {isLast ? "시작하기" : "다음으로"}
         </Button>

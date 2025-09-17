@@ -1,7 +1,6 @@
 import Close from "@/assets/icons/ic_close.svg";
 import { useAuthStore } from "../../../store/authStore";
 import { Button } from "../../../common/Button";
-import { useNavigate } from "react-router-dom";
 
 const CONST_LOGIN_TEXT = ({ type }: { type: "chat" | "edit" }) => {
   if (type === "chat")
@@ -46,8 +45,6 @@ const Header = () => {
 };
 
 export const LoginCard = () => {
-  const navigate = useNavigate();
-
   const loginType = useAuthStore((state) => state.loginType);
 
   return (
@@ -65,9 +62,14 @@ export const LoginCard = () => {
 
       <Button
         variant="primary"
-        children="카카오톡으로 로그인"
-        onClick={() => navigate("/redirect")}
-      />
+        onClick={() =>
+          (window.location.href = `${
+            import.meta.env.VITE_BASE_URL
+          }/oauth2/authorization/kakao`)
+        }
+      >
+        카카오톡으로 로그인
+      </Button>
     </div>
   );
 };

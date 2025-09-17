@@ -14,6 +14,8 @@
   --color-inverted: #f2ebed;
   --color-disabled: rgba(51, 29, 36, 0.4);
   --color-divider-regular: rgba(173, 146, 155, 0.2);
+  --color-danger-strong: #ff244b;
+  --color-success-strong: #16b874;
 
   --shadow-dim-weak: 0 0 16px 0 rgba(51, 29, 36, 0.08);
 }

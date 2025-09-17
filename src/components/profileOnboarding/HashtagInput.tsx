@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const HashtagInput = ({ interest, interestDetail }: Props) => {
-  const { hashtags, setHashtags } = useOnboardingStore();
+  const { currentHashtags, setCurrentHashtags } = useOnboardingStore();
   const [inputValue, setInputValue] = useState("");
   const ContainerRef = useRef<HTMLDivElement>(null);
 
@@ -26,14 +26,18 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
 
   const addHashtag = () => {
     const trimmed = inputValue.trim();
-    if (trimmed && !hashtags.includes(trimmed) && hashtags.length < 2) {
-      setHashtags([...hashtags, trimmed]);
+    if (
+      trimmed &&
+      !currentHashtags.includes(trimmed) &&
+      currentHashtags.length < 2
+    ) {
+      setCurrentHashtags([...currentHashtags, trimmed]);
       setInputValue("");
     }
   };
 
   const removeHashtag = (tag: string) => {
-    setHashtags(hashtags.filter((t) => t !== tag));
+    setCurrentHashtags(currentHashtags.filter((t) => t !== tag));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -44,8 +48,8 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
   };
 
   const onClickHashTag = (tag: string) => {
-    if (hashtags.length >= 2) return;
-    setHashtags([...hashtags, tag]);
+    if (currentHashtags.length >= 2) return;
+    setCurrentHashtags([...currentHashtags, tag]);
   };
 
   return (
@@ -56,7 +60,7 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
         subTitle="10자 이내로 작성해주세요"
       />
       <div className="flex flex-wrap items-center gap-2 py-2.5">
-        {hashtags.map((tag) => (
+        {currentHashtags.map((tag) => (
           <Chip
             key={tag}
             variant="detail"
@@ -67,7 +71,7 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
           />
         ))}
 
-        {hashtags.length < 2 && (
+        {currentHashtags.length < 2 && (
           <div
             className="px-2 py-1.5 flex items-center gap-1 bg-fill-regular rounded-lg"
             ref={ContainerRef}
@@ -103,6 +107,7 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
       <ChipStack>
         {hashtag_suggestions.map((hashTag) => (
           <Chip
+            key={hashTag.label}
             variant="detail"
             label={hashTag.label}
             className="!text-additive font-medium"

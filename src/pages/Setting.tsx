@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
 import { CardLayout } from "../components/home/Card/Layout";
@@ -30,7 +30,7 @@ const List = ({
   img,
   title,
 }: {
-  onClick: () => void;
+  onClick?: () => void;
   img: string;
   title: string;
 }) => {
@@ -66,16 +66,13 @@ export const Setting = () => {
     <>
       <div className="flex flex-col w-full h-full justify-between">
         <div className="w-full flex flex-col ">
-          <List
-            onClick={() => navigate("/")}
-            img={Edit}
-            title="내 프로필 수정"
-          />
-          <List
-            onClick={() => navigate("/")}
-            img={Info}
-            title="개인정보 이용약관"
-          />
+          <Link to="/edit">
+            <List img={Edit} title="내 프로필 수정" />
+          </Link>
+
+          <Link to="/term">
+            <List img={Info} title="개인정보 이용약관" />
+          </Link>
 
           <div className="w-full h-1 bg-divider-regular my-2.5" />
 

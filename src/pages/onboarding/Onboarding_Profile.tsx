@@ -9,22 +9,27 @@ import { useOnboardingStore } from "../../store/onboardingStore";
 import type { ChangeEvent } from "react";
 import GraphemeSplitter from "grapheme-splitter";
 
-const GENDER_OPTIONS: ("남성" | "여성")[] = ["남성", "여성"];
+const GENDER_OPTIONS = [
+  { label: "남성", value: "MALE" },
+  { label: "여성", value: "FEMALE" },
+] as const;
 
 export const Onboarding_Profile = () => {
   const {
     emoji,
     nickname,
     gender,
-    department,
+    major,
+    birthDate,
     setEmoji,
     setNickname,
     setGender,
-    setDepartment,
+    setMajor,
+    setBirthDate,
   } = useOnboardingStore();
 
-  const isFilled = emoji && nickname && gender && department;
-  console.log(isFilled);
+  const isFilled =
+    emoji && nickname && gender && major && birthDate && birthDate.length === 4;
 
   const onChangeEmoji = (e: ChangeEvent<HTMLInputElement>) => {
     const splitter = new GraphemeSplitter();
@@ -41,10 +46,9 @@ export const Onboarding_Profile = () => {
       </div>
 
       <div className="overflow-y-auto pb-35 scrollbar-none">
-        <Description
-          title="필수 프로필을 입력해주세요"
-          subTitle="이곳은 누구나 볼 수 있는. 프로필이에요."
-        />
+        <Description title="필수 프로필을 입력해주세요">
+          이곳은 누구나 볼 수 있는 프로필이에요.
+        </Description>
 
         <div className="flex flex-col px-4 py-2 gap-4 ">
           <div className="flex flex-col">
@@ -56,7 +60,7 @@ export const Onboarding_Profile = () => {
               onChange={onChangeEmoji}
               maxLength={4}
             />
-            <div className="px-1 py-2.5 text-assistive text-xs font-normal">
+            <div className="px-1 pt-2.5 text-assistive text-xs font-normal">
               키보드에서 이모티콘을 자유롭게 입력해주세요!
             </div>
           </div>
@@ -76,31 +80,39 @@ export const Onboarding_Profile = () => {
             <div className="flex gap-2">
               {GENDER_OPTIONS.map((option) => (
                 <OptionButton
-                  key={option}
-                  label={option}
-                  select={gender === option}
-                  onClick={() => setGender(option)}
+                  key={option.label}
+                  label={option.label}
+                  select={gender === option.value}
+                  onClick={() => setGender(option.value)}
                 />
               ))}
             </div>
-
-            <div className="py-2">
-              <span className="px-1 pb-2 text-sm text-additive font-medium">
-                생년월일
-              </span>
-            </div>
-
-            <Input
-              label="(선택) 학과(혹은 학부)"
-              placeholder="예시) 컴퓨터학부"
-              value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-            />
           </div>
+
+          <Input
+            label="생년월일"
+            placeholder="예시) 2006"
+            value={birthDate}
+            onChange={(e) => {
+              const onlyNums = e.target.value.replace(/\D/g, "");
+              if (onlyNums.length <= 4) {
+                setBirthDate(onlyNums);
+              }
+            }}
+            maxLength={4}
+            inputMode="numeric"
+          />
+
+          <Input
+            label="학과(혹은 학부)"
+            placeholder="예시) 컴퓨터학부"
+            value={major}
+            onChange={(e) => setMajor(e.target.value)}
+          />
         </div>
       </div>
 
-      <div className="w-full pt-2.5 pb-10.5 px-4 flex flex-col gap-2 absolute bottom-0 bg-white">
+      <div className="w-full py-2.5 px-4 flex flex-col gap-2 absolute bottom-0 bg-white">
         <Link to="/onboarding/interests">
           <Button variant={isFilled ? "primary" : "disabled"}>다음</Button>
         </Link>

@@ -9,18 +9,18 @@ import { useOnboardingStore } from "../../store/onboardingStore";
 import { INTEREST_OPTIONS } from "../../constants/interests";
 
 export const Onboarding_Interests = () => {
-  const { interests, setInterests } = useOnboardingStore();
+  const { currentLabels, setCurrentLabels } = useOnboardingStore();
 
   const handleSelect = (value: string) => {
-    if (interests.includes(value)) {
-      setInterests(interests.filter((item) => item !== value));
+    if (currentLabels.includes(value)) {
+      setCurrentLabels(currentLabels.filter((item) => item !== value));
     } else {
-      if (interests.length >= 2) return;
-      setInterests([...interests, value]);
+      if (currentLabels.length >= 2) return;
+      setCurrentLabels([...currentLabels, value]);
     }
   };
 
-  const isFilled = interests.length;
+  const isFilled = currentLabels.length;
 
   return (
     <div className="h-full flex flex-col justify-between relative">
@@ -28,10 +28,9 @@ export const Onboarding_Interests = () => {
         <Header title="60% 작성 완료" />
         <ProgressBar per="60%" />
 
-        <Description
-          title="내 취향 2개를 선택해주세요"
-          subTitle="이 정보를 바탕으로 운명의 이성이 매치돼요!"
-        />
+        <Description title="내 취향 2개를 선택해주세요">
+          이 정보를 바탕으로 운명의 이성이 매치돼요!
+        </Description>
 
         <div className="flex justify-center">
           <div
@@ -44,7 +43,7 @@ export const Onboarding_Interests = () => {
               <Chip
                 key={option.value}
                 variant="interest"
-                selected={interests.includes(option.value)}
+                selected={currentLabels.includes(option.value)}
                 label={option.label}
                 onClick={() => handleSelect(option.value)}
                 className="justify-center"

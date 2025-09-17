@@ -10,10 +10,9 @@ export const Onboarding_Extra = () => {
       <div className="flex flex-col ">
         <Header title="40% 작성 완료" />
         <ProgressBar per="40%" />
-        <Description
-          title="선택 정보를 입력해주세요"
-          subTitle="이 정보는 입력하고 싶지 않으면 건너뛰어도 괜찮아요."
-        />
+        <Description title="선택 정보를 입력해주세요">
+          이 정보는 입력하고 싶지 않으면 건너뛰어도 괜찮아요.
+        </Description>
 
         <div className="flex flex-col px-4 py-2 gap-4">
           <Input label="키" placeholder="예시) 165cm" />

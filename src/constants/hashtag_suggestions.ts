@@ -1,26 +1,26 @@
 export const HASHTAG_SUGGESTIONS = {
-  음악: {
-    밴드: [
+  MUSIC: {
+    BAND: [
       { label: "검정치마", value: "검정치마" },
       { label: "쏜애플", value: "쏜애플" },
       { label: "오아시스", value: "오아시스" },
       { label: "블러", value: "블러" },
       { label: "잔나비", value: "잔나비" },
     ],
-    힙합: [
+    HIPHOP: [
       { label: "국내힙합", value: "국내힙합" },
       { label: "해외힙합", value: "해외힙합" },
       { label: "빈지노", value: "빈지노" },
       { label: "타일러더크리에이터", value: "타일러더크리에이터" },
     ],
-    케이팝: [
+    KPOP: [
       { label: "보넥도", value: "보넥도" },
       { label: "뉴진스", value: "뉴진스" },
       { label: "에스파", value: "에스파" },
       { label: "세븐틴", value: "세븐틴" },
       { label: "엔시티", value: "엔시티" },
     ],
-    클래식: [
+    CLASSICAL: [
       { label: "교향곡", value: "교향곡" },
       { label: "협주곡", value: "협주곡" },
       { label: "오페라", value: "오페라" },
@@ -28,28 +28,28 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "바흐", value: "바흐" },
     ],
   },
-  미디어: {
-    영화: [
+  MEDIA: {
+    MOVIE: [
       { label: "PTA", value: "PTA" },
       { label: "박찬욱", value: "박찬욱" },
       { label: "노트북", value: "노트북" },
       { label: "누벨바그", value: "누벨바그" },
       { label: "이터널선샤인", value: "이터널선샤인" },
     ],
-    드라마: [
+    DRAMA: [
       { label: "폭싹속았수다", value: "폭싹속았수다" },
       { label: "브래이킹배드", value: "브래이킹배드" },
       { label: "체르노빌", value: "체르노빌" },
       { label: "왕좌의 게임", value: "왕좌의 게임" },
     ],
-    예능: [
+    ENTERTAINMENT: [
       { label: "연애예능", value: "연애예능" },
       { label: "대탈출", value: "대탈출" },
       { label: "여고추리반", value: "여고추리반" },
       { label: "최강야구", value: "최강야구" },
       { label: "더지니어스", value: "더지니어스" },
     ],
-    다큐멘터리: [
+    DOCUMENTARY: [
       { label: "환경다큐", value: "환경다큐" },
       { label: "사회다큐", value: "사회다큐" },
       { label: "동물다큐", value: "동물다큐" },
@@ -57,22 +57,22 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "범죄/실화다큐", value: "범죄/실화다큐" },
     ],
   },
-  게임: {
-    모바일게임: [
+  GAME: {
+    MOBILE_GAME: [
       { label: "브롤스타즈", value: "브롤스타즈" },
       { label: "쿠키런킹덤", value: "쿠키런킹덤" },
       { label: "롤토체스", value: "롤토체스" },
       { label: "원신", value: "원신" },
       { label: "블루아카이브", value: "블루아카이브" },
     ],
-    콘솔게임: [
+    CONSOLE_GAME: [
       { label: "젤다의 전설", value: "젤다의 전설" },
       { label: "포켓몬", value: "포켓몬" },
       { label: "스플래툰", value: "스플래툰" },
       { label: "동물의 숲", value: "동물의 숲" },
       { label: "레데리", value: "레데리" },
     ],
-    "PC 게임": [
+    PC_GAME: [
       { label: "리그오브레전드", value: "리그오브레전드" },
       { label: "오버워치", value: "오버워치" },
       { label: "메이플스토리", value: "메이플스토리" },
@@ -81,38 +81,38 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "마인크래프트", value: "마인크래프트" },
     ],
   },
-  운동: {
-    런닝: [
+  EXERCISE: {
+    RUNNING: [
       { label: "마라톤", value: "마라톤" },
       { label: "인터벌러닝", value: "인터벌러닝" },
       { label: "산악", value: "산악" },
       { label: "조깅", value: "조깅" },
       { label: "산책", value: "산책" },
     ],
-    헬스: [
+    FITNESS: [
       { label: "크로스핏", value: "크로스핏" },
       { label: "파워리프팅", value: "파워리프팅" },
       { label: "피트니스", value: "피트니스" },
       { label: "필라테스", value: "필라테스" },
     ],
-    클라이밍: [
+    CLIMBING: [
       { label: "볼더링", value: "볼더링" },
       { label: "자연클", value: "자연클" },
       { label: "리드클라이밍", value: "리드클라이밍" },
     ],
-    격투기: [
+    MMA: [
       { label: "복싱", value: "복싱" },
       { label: "주짓수", value: "주짓수" },
       { label: "무에타이", value: "무에타이" },
       { label: "태권도", value: "태권도" },
     ],
-    보드: [
+    BOARD: [
       { label: "롱보드", value: "롱보드" },
       { label: "스케이트보드", value: "스케이트보드" },
       { label: "스노보드", value: "스노보드" },
       { label: "서핑", value: "서핑" },
     ],
-    "기타 운동": [
+    ETC_SPORTS: [
       { label: "수영", value: "수영" },
       { label: "요가", value: "요가" },
       { label: "골프", value: "골프" },
@@ -120,7 +120,7 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "검도", value: "검도" },
     ],
   },
-  스포츠관람: {
+  SPORTS: {
     KBO: [
       { label: "LG트윈스", value: "LG트윈스" },
       { label: "기아타이거즈", value: "기아타이거즈" },
@@ -128,21 +128,21 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "롯데자이언츠", value: "롯데자이언츠" },
       { label: "삼성라이온즈", value: "삼성라이온즈" },
     ],
-    K리그: [
+    KLEAGUE: [
       { label: "전북현대", value: "전북현대" },
       { label: "FC서울", value: "FC서울" },
       { label: "수원FC", value: "수원FC" },
       { label: "FC안양", value: "FC안양" },
       { label: "수원삼성", value: "수원삼성" },
     ],
-    해외축구: [
+    OVERSEAS_SOCCER: [
       { label: "토트넘", value: "토트넘" },
       { label: "리버풀", value: "리버풀" },
       { label: "레알마드리드", value: "레알마드리드" },
       { label: "바르셀로나", value: "바르셀로나" },
       { label: "파리생제르맹", value: "파리생제르맹" },
     ],
-    e스포츠: [
+    ESPORTS: [
       { label: "T1", value: "T1" },
       { label: "젠지", value: "젠지" },
       { label: "한화", value: "한화" },
@@ -154,7 +154,7 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "정관장", value: "정관장" },
       { label: "KCC", value: "KCC" },
     ],
-    "V-리그": [
+    V_LEAGUE: [
       { label: "삼성화재", value: "삼성화재" },
       { label: "대한항공", value: "대한항공" },
       { label: "흥국생명", value: "흥국생명" },
@@ -167,8 +167,8 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "메르세데스", value: "메르세데스" },
     ],
   },
-  독서: {
-    소설: [
+  READING: {
+    NOVEL: [
       { label: "SF", value: "SF" },
       { label: "추리", value: "추리" },
       { label: "판타지", value: "판타지" },
@@ -176,55 +176,55 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "구병모", value: "구병모" },
       { label: "헤르만헤세", value: "헤르만헤세" },
     ],
-    시집: [
+    POETRY: [
       { label: "기형도", value: "기형도" },
       { label: "이상", value: "이상" },
       { label: "에드거앨런포", value: "에드거앨런포" },
       { label: "랭보", value: "랭보" },
     ],
-    웹소설: [
+    WEBNOVEL: [
       { label: "괴담출근", value: "괴담출근" },
       { label: "전독시", value: "전독시" },
       { label: "나혼렙", value: "나혼렙" },
       { label: "환생물", value: "환생물" },
     ],
-    기타: [
+    ETC_READING: [
       { label: "자기계발서", value: "자기계발서" },
       { label: "에세이", value: "에세이" },
     ],
   },
-  패션: {
-    서브컬쳐: [
+  FASHION: {
+    SUBCULTURE: [
       { label: "그런지", value: "그런지" },
       { label: "메탈룩", value: "메탈룩" },
       { label: "핑크록", value: "핑크록" },
       { label: "로리타", value: "로리타" },
     ],
-    클래식: [
+    FASHION_CLASSIC: [
       { label: "포멀룩", value: "포멀룩" },
       { label: "프레피룩", value: "프레피룩" },
       { label: "올드머니", value: "올드머니" },
       { label: "페미닌", value: "페미닌" },
       { label: "오피스룩", value: "오피스룩" },
     ],
-    캐주얼: [
+    VINTAGE: [
       { label: "놈코어", value: "놈코어" },
       { label: "미니멀", value: "미니멀" },
       { label: "스쿨룩", value: "스쿨룩" },
     ],
-    스트릿: [
+    STREET: [
       { label: "고프코어", value: "고프코어" },
       { label: "워크웨어", value: "워크웨어" },
       { label: "아메카지", value: "아메카지" },
     ],
   },
-  라이프스타일: {
-    맛집탐방: [
+  LIFESTYLE: {
+    RESTAURANT: [
       { label: "감성카페", value: "감성카페" },
       { label: "오마카세", value: "오마카세" },
       { label: "노포맛집", value: "노포맛집" },
     ],
-    사진: [
+    PICTURE: [
       { label: "필름카메라", value: "필름카메라" },
       { label: "디지털카메라", value: "디지털카메라" },
       { label: "풍경사진", value: "풍경사진" },
@@ -235,26 +235,26 @@ export const HASHTAG_SUGGESTIONS = {
       { label: "레고", value: "레고" },
       { label: "다꾸", value: "다꾸" },
     ],
-    요리: [
+    COOKING: [
       { label: "베이킹", value: "베이킹" },
       { label: "집밥", value: "집밥" },
     ],
   },
-  여행: {
-    국내여행: [
+  TRAVELING: {
+    DOMESTIC_TRAVEL: [
       { label: "벚꽃여행", value: "벚꽃여행" },
       { label: "국토종주", value: "국토종주" },
       { label: "휴양", value: "휴양" },
       { label: "액티비티", value: "액티비티" },
     ],
-    해외여행: [
+    INTERNATIONAL_TRAVEL: [
       { label: "일본", value: "일본" },
       { label: "유럽", value: "유럽" },
       { label: "동남아", value: "동남아" },
       { label: "세계일주", value: "세계일주" },
       { label: "배낭여행", value: "배낭여행" },
     ],
-    캠핑: [
+    CAMPING: [
       { label: "글램핑", value: "글램핑" },
       { label: "백패킹", value: "백패킹" },
       { label: "차박", value: "차박" },
