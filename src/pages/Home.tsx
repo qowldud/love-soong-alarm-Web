@@ -1,5 +1,5 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 
 import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
@@ -14,9 +14,9 @@ import { CardLayout } from "../components/home/Card/Layout";
 import { useAuthStore } from "../store/authStore";
 import { MapCanvas } from "../components/home/Map";
 import { LoginCard } from "../components/home/Card/LoginCard";
-import { useLoaderData } from "react-router-dom";
-import { useGeoLocation } from "../hooks/useGeoLocation";
-import { postLocation } from "../api/location";
+// import { useLoaderData } from "react-router-dom";
+// import { useGeoLocation } from "../hooks/useGeoLocation";
+// import { postLocation } from "../api/location";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
