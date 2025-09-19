@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { Header } from "../common/Header";
+import { Header } from "../../common/Header";
 
 export const PrivateLayout = () => {
   const { pathname } = useLocation();

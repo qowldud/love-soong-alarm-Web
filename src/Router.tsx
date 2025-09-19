@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import { Redirect } from "./pages/Redirect";
 
-import { PrivateLayout } from "./components/PrivateLayout";
+import { PrivateLayout } from "./components/Layout/PrivateLayout";
 import { Onboarding_Profile } from "./pages/onboarding/Onboarding_Profile";
 import { Onboarding_Extra } from "./pages/onboarding/Onboarding_Extra";
 import { Onboarding_Interests } from "./pages/onboarding/Onboarding_Interests";
@@ -12,7 +12,7 @@ import { TermsPage } from "./pages/TermsPage";
 
 import { Home } from "./pages/Home";
 import { Chat } from "./pages/Chat";
-import { Layout } from "./components/Layout";
+import { Layout } from "./components/Layout/Layout";
 import { ChatLayout } from "./components/chat/Layout";
 import { Coin } from "./pages/Coin";
 import { Setting } from "./pages/Setting";
@@ -20,17 +20,13 @@ import { Alarm } from "./pages/Alarm";
 import { ChatLoader, HomeLoader } from "./hooks/loader";
 import { CoinCallback } from "./pages/CoinCallback";
 import { Splash } from "./pages/Splash";
+import { SocketLayout } from "./components/Layout/SocketLayout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      {
-        path: "",
-        element: <Home />,
-        loader: HomeLoader,
-      },
       {
         path: "/signup",
       },
@@ -55,54 +51,64 @@ export const router = createBrowserRouter([
         element: <Onboarding_Preference />,
       },
       {
+        path: "/splash",
+        element: <Splash />,
+      },
+      {
         path: "/term",
         element: <TermsPage />,
       },
       {
-        path: "/edit",
-        element: <EditPage />,
-      },
-      {
-        path: "/redirect",
-        element: <Redirect />,
-      },
-      {
-        element: <PrivateLayout />,
+        element: <SocketLayout />,
         children: [
           {
-            path: "/splash",
-            element: <Splash />,
-          },
-          {
-            path: "/coin",
-            element: <Coin />,
-          },
-          {
-            path: "/coin/callback",
-            element: <CoinCallback />,
-          },
-
-          {
-            path: "/alarm",
-            element: <Alarm />,
-          },
-          {
-            path: "/setting",
-            element: <Setting />,
-          },
-          {
-            path: "/chat",
-            element: <ChatLayout />,
-            children: [
-              {
-                path: ":roomId",
-                element: <Chat />,
-                loader: ChatLoader,
-              },
-            ],
+            path: "",
+            element: <Home />,
+            loader: HomeLoader,
           },
           {
             path: "/edit",
+            element: <EditPage />,
+          },
+          {
+            path: "/redirect",
+            element: <Redirect />,
+          },
+          {
+            element: <PrivateLayout />,
+            children: [
+              {
+                path: "/coin",
+                element: <Coin />,
+              },
+              {
+                path: "/coin/callback",
+                element: <CoinCallback />,
+              },
+
+              {
+                path: "/alarm",
+                element: <Alarm />,
+              },
+              {
+                path: "/setting",
+                element: <Setting />,
+              },
+              {
+                path: "/chat",
+                element: <ChatLayout />,
+                children: [
+                  {
+                    path: ":roomId",
+                    element: <Chat />,
+                    loader: ChatLoader,
+                  },
+                ],
+              },
+              {
+                path: "/edit",
+              },
+            ],
           },
         ],
       },

@@ -1,4 +1,6 @@
 import { Outlet } from "react-router-dom";
+
+import { ToastContainer } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
 
 export const Layout = () => {
@@ -13,6 +15,18 @@ export const Layout = () => {
         className="relative w-full h-full overflow-hidden"
       >
         <Outlet />
+
+        <ToastContainer
+          position="top-center"
+          autoClose={2500}
+          closeOnClick
+          hideProgressBar
+          pauseOnHover
+          draggable={false}
+          closeButton={false}
+          toastClassName="custom-toast-box"
+          className="custom-toast-container"
+        />
       </motion.div>
     </AnimatePresence>
   );

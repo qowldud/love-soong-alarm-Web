@@ -9,11 +9,14 @@ interface BasicResponse<T> {
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
-  headers: import.meta.env.DEV
-    ? {
-        Authorization: `Bearer ${import.meta.env.VITE_MASTER_TOKEN}`,
-      }
-    : {},
+  // headers: import.meta.env.DEV
+  //   ? {
+  //       Authorization: `Bearer ${import.meta.env.VITE_MASTER_TOKEN}`,
+  //     }
+  //   : {},
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  },
   timeout: 180000,
 });
 
