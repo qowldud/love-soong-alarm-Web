@@ -6,6 +6,7 @@ import { CardHeader } from "../../Common";
 export const MemberOutcard = () => {
   const navigate = useNavigate();
   const setMemberout = useAuthStore((state) => state.setIsMemberOutOpen);
+  const logout = useAuthStore((state) => state.logout);
 
   const { deleteData } = useApi();
 
@@ -13,7 +14,7 @@ export const MemberOutcard = () => {
     try {
       const { success } = await deleteData("/api/auth/withdraw");
       if (success) {
-        localStorage.removeItem("accessToken");
+        logout();
         navigate("/");
       }
     } catch (err) {

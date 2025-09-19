@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useAuthStore } from "../../store/authStore";
 
 declare global {
   interface Window {
@@ -26,6 +27,10 @@ export function MapCanvas() {
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
   const watchIdRef = useRef<number | null>(null);
+  const [isPWA, setIsPWA] = useState(false);
+  const isModalOpen = useAuthStore((state) => state.isModalOpen);
+  const isOpen = isModalOpen;
+  console.log(isOpen);
 
   // 커스텀 마커 HTML
   const markerHtml = `
@@ -35,6 +40,19 @@ export function MapCanvas() {
       background:#fff; border-radius:9999px; border:2px solid #3b82f6;
       box-shadow:0 6px 18px rgba(0,0,0,.18); font-size:18px;">📍</div>
   `;
+
+  useEffect(() => {
+    // PWA 환경 감지
+    const checkPWA = () => {
+      return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (window.navigator as any).standalone ||
+        document.referrer.includes("android-app://")
+      );
+    };
+
+    setIsPWA(checkPWA());
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -118,11 +136,17 @@ export function MapCanvas() {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden">
+    <div
+      className="absolute right-0 left-0 z-0 overflow-hidden"
+      style={{ height: isPWA && !isOpen ? "calc(100% + 34px)" : "100%" }}
+    >
       <div
         id="map"
         className="w-full h-full transform-gpu [filter:grayscale(30%)_saturate(90%)_brightness(105%)]"
-        style={{ transformOrigin: "center center" }}
+        style={{
+          transformOrigin: "center center",
+          height: isPWA && !isOpen ? "calc(100% + 34px)" : "100%",
+        }}
       />
     </div>
   );

@@ -12,7 +12,7 @@ export const Layout = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.45, ease: "easeOut" }}
-        className="relative w-full h-full overflow-hidden"
+        className="relative w-full h-full"
       >
         <Outlet />
 

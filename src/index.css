@@ -45,22 +45,22 @@
 
   @media all and (display-mode: standalone) {
     @media screen and (width: 375px) and (max-height: 667px) {
-      :root {
-        --safe-bottom: 0px;
+      #root {
+        padding-bottom: 0px;
       }
     }
 
     /* iPhone Xs, 13 mini 등 노치 + 작은 기기 */
     @media screen and (width: 375px) and (min-height: 700px) {
-      :root {
-        --safe-bottom: 34px;
+      #root {
+        padding-bottom: 34px;
       }
     }
 
     /* iPhone 14 Pro 이상 */
     @media screen and (min-width: 393px) {
-      :root {
-        --safe-bottom: 34px;
+      #root {
+        padding-bottom: 34px;
       }
     }
   }

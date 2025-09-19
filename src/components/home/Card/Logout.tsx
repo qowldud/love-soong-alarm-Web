@@ -6,6 +6,7 @@ import { CardHeader } from "../../Common";
 export const LogoutCard = () => {
   const setLogout = useAuthStore((state) => state.setIsLogoutOpen);
   const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
 
   const { postData } = useApi();
 
@@ -13,7 +14,7 @@ export const LogoutCard = () => {
     try {
       const data = await postData("/api/auth/logout");
       if (data.success) {
-        localStorage.removeItem("accessToken");
+        logout();
         navigate("/");
       }
     } catch (err) {

@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export const Redirect = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
 
   useEffect(() => {
     const isRegistered = searchParams.get("isRegistered");
@@ -15,13 +17,13 @@ export const Redirect = () => {
       return;
     }
 
-    localStorage.setItem("accessToken", accessToken);
+    login(accessToken);
 
     if (isRegistered === "true") {
       navigate("/splash");
     } else {
       navigate("/onboarding/profile");
     }
-  }, [searchParams, navigate]);
-  return <></>;
+  }, [searchParams, navigate, login]);
+  return null;
 };

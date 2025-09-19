@@ -46,7 +46,6 @@ const Header = () => {
 
 export const LoginCard = () => {
   const loginType = useAuthStore((state) => state.loginType);
-
   return (
     <div className="relative">
       <Header />

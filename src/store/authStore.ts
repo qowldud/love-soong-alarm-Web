@@ -47,12 +47,12 @@ export const useAuthStore = create<AuthState>()(
       setAuth: (flag) => set({ isAuth: flag }),
 
       login: (token) => {
-        sessionStorage.setItem("token", token);
+        localStorage.setItem("token", token);
         set({ isAuth: true });
       },
 
       logout: () => {
-        sessionStorage.removeItem("token");
+        localStorage.removeItem("token");
         set({ isAuth: false });
       },
     }),
