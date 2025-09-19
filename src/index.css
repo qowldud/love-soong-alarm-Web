@@ -19,8 +19,12 @@
   --color-success-strong: rgba(22, 184, 116, 1);
   --color-success-regular: rgba(22, 184, 116, 0.08);
   --color-fill-strong: rgba(154, 146, 173, 0.12);
+  --color-dim-strong: rgba(35, 29, 51, 0.2);
+  --color-divider-regular: rgba(154, 146, 173, 0.2);
+  --color-fill-interactive: rgba(255, 255, 255, 0.8);
 
   --shadow-dim-weak: 0 0 16px 0 rgba(51, 29, 36, 0.08);
+  --shadow-dim-regular: 0 8px 40px rgba(35, 29, 51, 0.12);
 }
 @layer utilities {
   .shadow-dim-weak {

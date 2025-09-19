@@ -1,0 +1,132 @@
+import type { ReactNode, ButtonHTMLAttributes } from "react";
+import { useEffect, useRef } from "react";
+// import { useLoaderData, useRevalidator } from "react-router-dom";
+
+import Location from "@/assets/icons/ic_location.svg";
+import Chat from "@/assets/icons/ic_chat.svg";
+import { CardLayout } from "../Card/Layout";
+import { LoginCard } from "../Card/LoginCard";
+import { ProfilePreview } from "../Card/ProfilePreview";
+import { ChatPreview } from "../Card/ChatPreview";
+import { useGeoLocation } from "../../../hooks/useGeoLocation";
+import { useAuthStore } from "../../../store/authStore";
+import { useHomeStore } from "../../../store/homeStore";
+import { MapCanvas } from "../Map";
+import { ProfileCard } from "../Profile";
+import { postLocation } from "../../../api/location";
+import { useStepLocationUpdate } from "../../../hooks/useLocationUpdate";
+import { HomeBottom } from "../Bottom";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: ReactNode;
+}
+
+// const MOVE_THRESHOLD_METERS = 5;
+
+// TEST DATA
+// const CORRECT_COUNT = 0;
+// const CORRECT_COUNT = 1;
+
+const Button = ({ children, ...props }: ButtonProps) => {
+  return (
+    <button className="p-4 bg-white rounded-xl w-14 h-14" {...props}>
+      {children}
+    </button>
+  );
+};
+
+const RenderCard = () => (
+  <>
+    <CardLayout branch="login">
+      <LoginCard />
+    </CardLayout>
+
+    <CardLayout branch="profile">
+      <ProfilePreview />
+    </CardLayout>
+
+    <CardLayout branch="chat">
+      <ChatPreview />
+    </CardLayout>
+  </>
+);
+
+export const LoggedInView = () => {
+  // const revalidator = useRevalidator();
+
+  // const { locationData, chatLists } = useLoaderData();
+  const { location } = useGeoLocation();
+
+  const isAuth = useAuthStore((state) => state.isAuth);
+
+  const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
+  const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
+  const setCheckChat = useHomeStore((state) => state.setCheckChat);
+
+  // // TODO: React-Query로 화면 전체 리랜더링 최소화 해야함
+  // // 최신 좌표/마지막 전송 좌표 저장용 ref
+  const latestRef = useRef<{ lat: number; lng: number } | null>(null);
+
+  useEffect(() => {
+    if (location?.latitude != null && location?.longitude != null) {
+      latestRef.current = { lat: location.latitude, lng: location.longitude };
+    }
+  }, [location?.latitude, location?.longitude]);
+
+  useStepLocationUpdate({
+    enabled: isAuth,
+    intervalMs: 3000,
+    thresholdMeters: 5,
+    getCurrent: () => latestRef.current,
+    post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),
+  });
+
+  return (
+    <>
+      <MapCanvas />
+      <div
+        className={`${
+          isAuth ? "w-full" : "top-5 left-4 right-4"
+        } absolute z-30`}
+      >
+        <ProfileCard />
+      </div>
+
+      <div
+        className={`${
+          isAuth ? "top-57" : "top-62"
+        } absolute flex flex-row gap-x-2 left-4 right-4 z-30 justify-between`}
+      />
+
+      <div className="absolute flex gap-2 left-3 right-3 bottom-2 z-30 items-center">
+        <Button>
+          <img src={Location} alt={"location"} />
+        </Button>
+
+        <HomeBottom
+          count={0}
+          onClick={() => {
+            if (!isAuth) {
+              setIsModalOpen({ flag: true, type: "edit" });
+              return;
+            }
+            setCheckProfile(true);
+          }}
+        />
+
+        <Button
+          onClick={() => {
+            if (!isAuth) {
+              setIsModalOpen({ flag: true, type: "edit" });
+              return;
+            }
+            setCheckChat(true);
+          }}
+        >
+          <img src={Chat} alt={"chat"} />
+        </Button>
+      </div>
+      <RenderCard />
+    </>
+  );
+};
