@@ -18,7 +18,7 @@ export const ProfilePreview = () => {
   const [loginModal, setLoginModal] = useState(false);
 
   const isAuth = useAuthStore((state) => state.isAuth);
-  const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
+  // const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setReachMax = useChatStore((state) => state.setReachMax);
 
   const handleClick = async (userId?: number) => {
