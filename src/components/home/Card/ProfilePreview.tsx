@@ -4,11 +4,39 @@ import { CardHeader, HashTagWrapper, Profile } from "../../Common";
 import { useAuthStore } from "../../../store/authStore";
 import { useSelectedUserStore } from "../../../store/useSelectedUserStore";
 
+import { useApi } from "../../../api/api";
+import type { MakeChat } from "../../../types/chat";
+import { toast } from "react-toastify";
+import { useChatStore } from "../../../store/chatStore";
+
 export const ProfilePreview = () => {
   const navigate = useNavigate();
+  const { postData } = useApi();
+  const { selectedUser } = useSelectedUserStore();
+
   const isAuth = useAuthStore((state) => state.isAuth);
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
-  const { selectedUser } = useSelectedUserStore();
+  const setReachMax = useChatStore((state) => state.setReachMax);
+
+  const handleClick = async (userId: number) => {
+    if (!isAuth) {
+      setIsModalOpen({ flag: true, type: "chat" });
+      return;
+    }
+
+    const response = await postData<MakeChat>("/api/chats", {
+      targetUserId: userId,
+    });
+
+    if (response.message === "사용 가능한 채팅 슬롯이 존재하지 않습니다.") {
+      setReachMax(true);
+      return;
+    }
+
+    if (response.success) {
+      navigate(`/chat/${response.data.chatRoomId}`);
+    } else toast.warn(response.message);
+  };
 
   return (
     <div className="relative">
@@ -22,16 +50,7 @@ export const ProfilePreview = () => {
         ))}
       </div>
       <div className="flex py-2.5">
-        <Button
-          children="채팅하기"
-          onClick={() => {
-            if (!isAuth) {
-              setIsModalOpen({ flag: true, type: "chat" });
-              return;
-            }
-            navigate("/chat/1");
-          }}
-        />
+        <Button children="채팅하기" onClick={() => handleClick(2)} />
       </div>
     </div>
   );

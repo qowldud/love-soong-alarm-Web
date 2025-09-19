@@ -45,6 +45,10 @@ export interface CheckSendMessage {
   isSentByMe: boolean;
 }
 
+export interface ExcessChat {
+  type: "MESSAGE_COUNT_LIMIT";
+}
+
 // 본인 : 채팅창 목록 업데이트 정보
 export interface ListUpdate {
   type: "CHAT_LIST_UPDATE";

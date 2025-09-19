@@ -17,7 +17,7 @@ import { ChatLayout } from "./components/chat/Layout";
 import { Coin } from "./pages/Coin";
 import { Setting } from "./pages/Setting";
 import { Alarm } from "./pages/Alarm";
-import { ChatLoader, HomeLoader } from "./hooks/loader";
+import { AlarmLoader, ChatLoader, HomeLoader } from "./hooks/loader";
 import { CoinCallback } from "./pages/CoinCallback";
 import { Splash } from "./pages/Splash";
 import { SocketLayout } from "./components/Layout/SocketLayout";
@@ -89,6 +89,7 @@ export const router = createBrowserRouter([
               {
                 path: "/alarm",
                 element: <Alarm />,
+                loader: AlarmLoader,
               },
               {
                 path: "/setting",
@@ -97,11 +98,11 @@ export const router = createBrowserRouter([
               {
                 path: "/chat",
                 element: <ChatLayout />,
+                loader: ChatLoader,
                 children: [
                   {
-                    path: ":roomId",
+                    path: ":chatRoomId",
                     element: <Chat />,
-                    loader: ChatLoader,
                   },
                 ],
               },

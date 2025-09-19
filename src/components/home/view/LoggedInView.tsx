@@ -1,21 +1,26 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
-// import { useLoaderData, useRevalidator } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
-import { CardLayout } from "../Card/Layout";
-import { LoginCard } from "../Card/LoginCard";
+
+import { HomeBottom } from "../Bottom";
+import { ProfileCard } from "../Profile";
+
+import { useHomeStore } from "../../../store/homeStore";
 import { ProfilePreview } from "../Card/ProfilePreview";
 import { ChatPreview } from "../Card/ChatPreview";
-import { useGeoLocation } from "../../../hooks/useGeoLocation";
+import { CardLayout } from "../Card/Layout";
 import { useAuthStore } from "../../../store/authStore";
-import { useHomeStore } from "../../../store/homeStore";
 import { MapCanvas } from "../Map";
-import { ProfileCard } from "../Profile";
+import { LoginCard } from "../Card/LoginCard";
+
+import { useGeoLocation } from "../../../hooks/useGeoLocation";
 import { postLocation } from "../../../api/location";
 import { useStepLocationUpdate } from "../../../hooks/useLocationUpdate";
-import { HomeBottom } from "../Bottom";
+import { useChatStore } from "../../../store/chatStore";
+import { ReachMaxModal } from "../../../hooks/modal";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -25,39 +30,41 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 // TEST DATA
 // const CORRECT_COUNT = 0;
-// const CORRECT_COUNT = 1;
+const CORRECT_COUNT = 1;
 
 const Button = ({ children, ...props }: ButtonProps) => {
   return (
-    <button className="p-4 bg-white rounded-xl w-14 h-14" {...props}>
+    <button className="p-4 bg-white rounded-[12px]" {...props}>
       {children}
     </button>
   );
 };
 
-const RenderCard = () => (
-  <>
-    <CardLayout branch="login">
-      <LoginCard />
-    </CardLayout>
-
-    <CardLayout branch="profile">
-      <ProfilePreview />
-    </CardLayout>
-
-    <CardLayout branch="chat">
-      <ChatPreview />
-    </CardLayout>
-  </>
-);
-
 export const LoggedInView = () => {
   // const revalidator = useRevalidator();
 
-  // const { locationData, chatLists } = useLoaderData();
+  const { locationData, chatLists } = useLoaderData();
   const { location } = useGeoLocation();
+  console.log(locationData);
+
+  const RenderCard = () => (
+    <>
+      <CardLayout branch="login">
+        <LoginCard />
+      </CardLayout>
+
+      <CardLayout branch="profile">
+        <ProfilePreview />
+      </CardLayout>
+
+      <CardLayout branch="chat">
+        <ChatPreview items={chatLists.data} />
+      </CardLayout>
+    </>
+  );
 
   const isAuth = useAuthStore((state) => state.isAuth);
+  const reachMax = useChatStore((state) => state.reachMax);
 
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
@@ -76,7 +83,7 @@ export const LoggedInView = () => {
   useStepLocationUpdate({
     enabled: isAuth,
     intervalMs: 3000,
-    thresholdMeters: 5,
+    thresholdMeters: 10,
     getCurrent: () => latestRef.current,
     post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),
   });
@@ -98,13 +105,13 @@ export const LoggedInView = () => {
         } absolute flex flex-row gap-x-2 left-4 right-4 z-30 justify-between`}
       />
 
-      <div className="absolute flex gap-2 left-3 right-3 bottom-2 z-30 items-center">
+      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
         <Button>
           <img src={Location} alt={"location"} />
         </Button>
 
         <HomeBottom
-          count={0}
+          count={CORRECT_COUNT}
           onClick={() => {
             if (!isAuth) {
               setIsModalOpen({ flag: true, type: "edit" });
@@ -127,6 +134,8 @@ export const LoggedInView = () => {
         </Button>
       </div>
       <RenderCard />
+
+      {reachMax && <ReachMaxModal />}
     </>
   );
 };

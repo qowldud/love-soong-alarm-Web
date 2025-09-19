@@ -24,9 +24,11 @@ export const enjoyChat = async ({ targetUserId }: { targetUserId: number }) => {
   }
 };
 
-export const getDetailChat = async ({ roomId }: { roomId: number }) => {
+export const getDetailChat = async ({ chatRoomId }: { chatRoomId: number }) => {
   try {
-    const response = await getData<ChatDetail>(`/api/chats/rooms/${roomId}`);
+    const response = await getData<ChatDetail>(
+      `/api/chats/rooms/${chatRoomId}`
+    );
     return response;
   } catch (error: any) {
     console.log(error);

@@ -1,18 +1,17 @@
-type ItemProps = {
-  isMine: boolean;
-  content: string;
-};
+import type { RecentMessage } from "../../types/chat";
 
-export const ChatContent = ({ item }: { item: ItemProps }) => {
+export const ChatContent = ({ item }: { item: RecentMessage }) => {
   return (
     <div
       className={`flex w-full px-4 py-2 ${
-        item.isMine ? "justify-end" : "justify-start"
+        item.isSentByMe ? "justify-end" : "justify-start"
       }`}
     >
       <div
         className={`flex px-5 py-2.5 rounded-[50px] ${
-          item.isMine ? "bg-[#9A92AD]/12 text-[#231D33]" : "bg-main1 text-white"
+          item.isSentByMe
+            ? "bg-[#9A92AD]/12 text-[#231D33]"
+            : "bg-main1 text-white"
         }`}
       >
         {item.content}

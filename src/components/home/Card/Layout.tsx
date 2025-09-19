@@ -2,9 +2,18 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useHomeStore } from "../../../store/homeStore";
 import { useAuthStore } from "../../../store/authStore";
+import { useChatStore } from "../../../store/chatStore";
 
 type BottomSheetProps = {
-  branch: "profile" | "alarm" | "chat" | "login" | "logout" | "memberout";
+  branch:
+    | "profile"
+    | "alarm"
+    | "chat"
+    | "login"
+    | "logout"
+    | "memberout"
+    | "excesschat"
+    | "ignoreuser";
   children: React.ReactNode;
 };
 
@@ -16,7 +25,7 @@ const BRANCH_CONST = {
     maxHeightPct: 95.5,
   },
   chat: {
-    maxHeightPct: 75.5,
+    maxHeightPct: 40,
   },
   login: {
     maxHeightPct: 72,
@@ -25,6 +34,12 @@ const BRANCH_CONST = {
     maxHeightPct: 72,
   },
   memberout: {
+    maxHeightPct: 72,
+  },
+  excesschat: {
+    maxHeightPct: 72,
+  },
+  ignoreuser: {
     maxHeightPct: 72,
   },
 };
@@ -37,12 +52,16 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
   const chat = useHomeStore((state) => state.checkChat);
   const logout = useAuthStore((state) => state.isLogoutOpen);
   const memberout = useAuthStore((state) => state.isMemberOutOpen);
+  const excesschat = useChatStore((state) => state.excessChat);
+  const ignoreuser = useChatStore((state) => state.ignoreUser);
 
   const setLogin = useAuthStore((state) => state.setModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
   const setLogout = useAuthStore((state) => state.setIsLogoutOpen);
   const setMemberout = useAuthStore((state) => state.setIsMemberOutOpen);
+  const setExcessChat = useChatStore((state) => state.setExcessChat);
+  const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
 
   const isOpen =
     branch === "login"
@@ -53,7 +72,11 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
       ? chat
       : branch === "logout"
       ? logout
-      : memberout;
+      : branch === "memberout"
+      ? memberout
+      : branch === "excesschat"
+      ? excesschat
+      : ignoreuser;
 
   const onClose =
     branch === "login"
@@ -64,7 +87,11 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
       ? setCheckChat
       : branch === "logout"
       ? setLogout
-      : setMemberout;
+      : branch === "memberout"
+      ? setMemberout
+      : branch === "excesschat"
+      ? setExcessChat
+      : setIgnoreUser;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose;
@@ -99,13 +126,15 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
             }}
           >
             <div
-              className="mx-auto w-full rounded-t-2xl bg-white "
+              className="mx-auto w-full rounded-t-2xl bg-white flex flex-col"
               style={{ maxHeight: `calc(${maxHeightPct}vh)` }}
             >
-              <div className="flex items-center justify-center pt-2.5 pb-0.5">
+              <div className="flex items-center justify-center pt-2.5 pb-0.5 shrink-0">
                 <div className="h-1.5 w-12 rounded-full bg-divider-regular" />
               </div>
-              <div className="overflow-y-auto px-4">{children}</div>
+              <div className="overflow-y-auto flex-1 min-h-0 px-4">
+                {children}
+              </div>
             </div>
           </motion.div>
         </>

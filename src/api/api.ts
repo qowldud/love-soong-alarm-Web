@@ -1,4 +1,5 @@
 import axios, { type AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 interface BasicResponse<T> {
   data: T;
@@ -91,6 +92,13 @@ export const useApi = () => {
 
       return response.data;
     } catch (error: any) {
+      if (
+        error.response.status === 400 &&
+        error.response.data.message ===
+          "사용 가능한 채팅 슬롯이 존재하지 않습니다."
+      )
+        return error.response.data;
+
       handleApiError(error);
       throw error;
     }
@@ -111,8 +119,8 @@ export const useApi = () => {
   // Handle API Errors
   const handleApiError = (error: any) => {
     if (error.response) {
-      console.log("error.response", error.response);
-      console.log("API Error Response:", error.response.data);
+      // console.log(error.resopnse);
+      toast.error(error.response.data.message);
       return error.response.data;
     } else if (error.request) {
       console.log("API Error Request:", error.request);

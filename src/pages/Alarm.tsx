@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useRevalidator } from "react-router-dom";
 import { useHomeStore } from "../store/homeStore";
 
 import { ALARM_CONST } from "../hooks/consts";
@@ -6,8 +6,16 @@ import { ALARM_CONST } from "../hooks/consts";
 import Close from "@/assets/icons/ic_close.svg";
 import Check from "@/assets/icons/ic_check.svg";
 import Error from "@/assets/icons/ic_error.svg";
+import {
+  deleteAllAlarm,
+  deleteIndivAlarm,
+  readAllAlarm,
+  readIndivAlarm,
+} from "../api/notice";
+import { toast } from "react-toastify";
 
 type ListProps = {
+  id: number;
   title: string;
   content: string;
   time: string;
@@ -21,11 +29,33 @@ const CheckLabel = (type: "before" | "after") => {
 
 const Title = ({ type }: { type: "before" | "after" }) => {
   const LABEL = CheckLabel(type);
+  const revalidator = useRevalidator();
+
+  const handleRead = async () => {
+    if (type === "before") {
+      const response = await readAllAlarm();
+
+      if (response!.success) {
+        revalidator.revalidate();
+        toast.success("알람을 모두 읽었습니다.");
+      }
+    } else {
+      const response = await deleteAllAlarm();
+
+      if (response!.success) {
+        revalidator.revalidate();
+        toast.success("알람을 모두 지웠습니다.");
+      }
+    }
+  };
 
   return (
     <div className="flex flex-row justify-between items-center py-2">
       <div className="text-[18px] font-bold">{LABEL.title}</div>
-      <div className="flex flex-row gap-x-1">
+      <div
+        className="flex flex-row gap-x-1 cursor-pointer"
+        onClick={() => handleRead()}
+      >
         <img src={LABEL.img} />
         <div className="text-[#231D33]/60 text-[14px]">{LABEL.button}</div>
       </div>
@@ -40,18 +70,37 @@ const List = ({
   item: ListProps;
   type: "before" | "after";
 }) => {
+  const revalidator = useRevalidator();
   const navigate = useNavigate();
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
 
-  const onHandle = () => {
-    navigate("/");
-    setCheckProfile(true);
+  const handleClick = async ({ id }: { id: number }) => {
+    if (type === "before") {
+      const response = await readIndivAlarm({ notificationId: id });
+
+      if (response!.success) {
+        navigate("/");
+        setCheckProfile(true);
+      }
+    } else {
+      navigate("/");
+      setCheckProfile(true);
+    }
+  };
+
+  const handleDelete = async ({ id }: { id: number }) => {
+    const response = await deleteIndivAlarm({ notificationId: id });
+
+    if (response!.success) {
+      revalidator.revalidate();
+      toast.success("알림이 삭제되었습니다.");
+    }
   };
 
   return (
     <div
       className="w-full py-2.5 flex flex-row justify-between items-center"
-      onClick={() => onHandle()}
+      onClick={() => handleClick({ id: Number(item.id) })}
     >
       <div className="flex flex-col">
         <div className="text-[16px]">{item.title}</div>
@@ -66,7 +115,14 @@ const List = ({
         {type === "before" ? (
           <div className="bg-main1 w-1.5 h-1.5 rounded-full" />
         ) : (
-          <img src={Close} className="w-4 h-4" />
+          <img
+            src={Close}
+            className="w-4 h-4 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete({ id: Number(item.id) });
+            }}
+          />
         )}
       </div>
     </div>
@@ -76,6 +132,9 @@ const List = ({
 const ERROR_VALID = false;
 
 export const Alarm = () => {
+  const { alarmList } = useLoaderData();
+  console.log(alarmList);
+
   if (ERROR_VALID) {
     return (
       <div className="w-full h-full flex flex-col justify-center items-center gap-y-2">

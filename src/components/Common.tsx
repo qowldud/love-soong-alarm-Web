@@ -5,7 +5,7 @@ import Close from "@/assets/icons/ic_close.svg";
 import { useSelectedUserStore } from "../store/useSelectedUserStore";
 import type { UserInterest } from "../types/User";
 import clsx from "clsx";
-import { HOME_PROFILE_CONST } from "../hooks/consts";
+import type { ChatDetail } from "../types/chat";
 
 export const CardHeader = ({
   branch,
@@ -26,10 +26,10 @@ export const CardHeader = ({
     <>
       <button
         onClick={() => handleReset()}
-        className="absolute right-0 top-0 rounded-full p-2 text-gray-500 hover:bg-gray-100"
+        className=" rounded-full p-2 text-gray-500 hover:bg-gray-100"
         aria-label="닫기"
       />
-      <div className="flex justify-between px-1 py-3.5">
+      <div className="flex justify-between px-1 pb-3.5">
         <div className="text-[24px] font-bold text-[#231D33]">{title}</div>
         <img
           src={Close}
@@ -42,34 +42,36 @@ export const CardHeader = ({
   );
 };
 
-export const hashtag = ({
-  label,
-  isActive,
+export const Hashtag_v2 = ({
+  item,
 }: {
-  label: string;
-  isActive: boolean;
+  item: { label: string; hashtags: string[] };
 }) => {
   return (
-    <div
-      className={`${
-        isActive ? "text-main1 bg-main3" : "bg-[#AD929B]/8 text-[#331D24]/20"
-      } text-[12px] px-1.5 py-0.5 rounded-[4px]`}
-    >
-      #{label}
+    <div className="flex items-center gap-x-1.5 shrink-0">
+      <span className="inline-flex shrink-0 whitespace-nowrap text-main1 bg-main3 text-[12px] px-1.5 py-0.5 rounded-[4px]">
+        #{item.label}
+      </span>
+      {item.hashtags.map((it, i) => (
+        <span
+          key={i}
+          className="inline-flex shrink-0 whitespace-nowrap bg-[#AD929B]/8 text-[#331D24]/60 text-[12px] px-1.5 py-0.5 rounded-[4px]"
+        >
+          #{it}
+        </span>
+      ))}
     </div>
   );
 };
 
-export const ProfileLabel = ({ name }: { name: "jo" | "kim" }) => {
-  const USER = HOME_PROFILE_CONST[name];
-
+export const ProfileLabel = ({ chatDetail }: { chatDetail: ChatDetail }) => {
   return (
     <div className="flex flex-row gap-x-3 items-center">
-      <div>{USER.emoji}</div>
+      <div>{chatDetail.partner.emoji}</div>
       <div className="flex flex-col">
-        <div className="text-[18px]">{USER.name}</div>
+        <div className="text-[18px]">{chatDetail.partner.nickname}</div>
         <div className="text-[12px] text-[#331D24]/80">
-          {USER.age}세 | {USER.dept} | {USER.height}cm
+          {chatDetail.partner.age}세 | {chatDetail.partner.major}
         </div>
       </div>
     </div>

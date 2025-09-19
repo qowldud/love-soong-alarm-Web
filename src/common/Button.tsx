@@ -5,6 +5,7 @@ import Alert from "@/assets/icons/ic_alert.svg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "disabled" | "secondary";
+  branch?: string;
 }
 
 export const Button = ({
@@ -33,20 +34,26 @@ export const Button = ({
   );
 };
 
-export const Button_v2 = ({ branch }: { branch: string }) => {
+export const Button_v2 = ({ branch, ...props }: ButtonProps) => {
   switch (branch) {
     case "EDIT":
       return (
-        <button className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5">
+        <button
+          className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5"
+          {...props}
+        >
           <img src={Edit} alt={"edit"} />
           수정
         </button>
       );
     case "ALERT":
       return (
-        <button className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5">
+        <button
+          className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5"
+          {...props}
+        >
           <img src={Alert} alt={"alert"} />
-          신고
+          차단
         </button>
       );
     default:

@@ -3,14 +3,21 @@ import type {
   CheckSendMessage,
   ConnectionSuccess,
   ErrorType,
+  ExcessChat,
   ListUpdate,
   MessageRead,
   SuccessSubscribe,
   SuccesUnsubscribe,
   UnreadBadgeUpdate,
 } from "../types/socket";
+import { useChatStore } from "../store/chatStore";
+import type { RecentMessage } from "../types/chat";
+import { useMessageStore } from "../store/messageStore";
 
 export const useWebSocket = () => {
+  const setExcessChat = useChatStore((state) => state.setExcessChat);
+  const setNewMessage = useMessageStore((s) => s.setNewMessage);
+
   const handleConnectionSuccess = (data: ConnectionSuccess) => {
     toast.success("채팅이 연결되었습니다.");
     console.log("✅ CONNECTION_SUCCESS:", data);
@@ -34,6 +41,21 @@ export const useWebSocket = () => {
 
   const handleChatMessage = (data: CheckSendMessage) => {
     console.log("💬 CHAT_MESSAGE:", data);
+
+    const recent: RecentMessage = {
+      messageId: data.messageId,
+      content: data.content,
+      createdAt: data.timestamp,
+      isSentByMe: data.isSentByMe,
+      isRead: false,
+    };
+
+    setNewMessage({ item: recent });
+  };
+
+  const handleExcessChat = (data: ExcessChat) => {
+    console.log("💬 MESSAGE_COUNT_LIMIT:", data);
+    setExcessChat(true);
   };
 
   const handleChatListUpdate = (data: ListUpdate) => {
@@ -41,7 +63,7 @@ export const useWebSocket = () => {
   };
 
   const handleError = (data: ErrorType) => {
-    console.error("❌ ERROR:", data);
+    toast.error(data.message);
   };
 
   return {
@@ -51,6 +73,7 @@ export const useWebSocket = () => {
     handleSubscribe,
     handleUnsubscribe,
     handleChatMessage,
+    handleExcessChat,
     handleChatListUpdate,
     handleError,
   };

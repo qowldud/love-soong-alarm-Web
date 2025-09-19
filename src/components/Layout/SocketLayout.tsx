@@ -1,8 +1,11 @@
+import { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { useWebSocket } from "../../hooks/useWebSocket";
 import { useReliableSocket } from "../../hooks/useReliableSocket";
+import { toast } from "react-toastify";
 
 export interface SocketActions {
+  handlePlainType?: (type: string, chatRoomId: number) => void;
   handleEnter?: (chatRoomId: number) => void;
   handleExit?: (chatRoomId: number) => void;
   handleSend?: (chatRoomId: number, content: string) => void;
@@ -20,6 +23,8 @@ const urlFactory = () => {
 };
 
 export const SocketLayout = () => {
+  const activeRoomsRef = useRef<Set<number>>(new Set());
+
   const {
     handleConnectionSuccess,
     handleUnreadBadgeUpdate,
@@ -27,12 +32,18 @@ export const SocketLayout = () => {
     handleSubscribe,
     handleUnsubscribe,
     handleChatMessage,
+    handleExcessChat,
     handleChatListUpdate,
     handleError,
   } = useWebSocket();
 
   const { sendMessage } = useReliableSocket(urlFactory, {
-    onOpen: () => console.log("✅ WebSocket 연결됨"),
+    onOpen: () => {
+      console.log("✅ WebSocket 연결됨");
+      for (const id of activeRoomsRef.current) {
+        sendMessage({ type: "SUBSCRIBE", chatRoomId: id });
+      }
+    },
     onMessage: (data) => {
       switch (data.type) {
         case "CONNECTION_SUCCESS":
@@ -47,6 +58,8 @@ export const SocketLayout = () => {
           return handleMessageRead(data);
         case "CHAT_MESSAGE":
           return handleChatMessage(data);
+        case "MESSAGE_COUNT_LIMIT":
+          return handleExcessChat(data);
         case "CHAT_LIST_UPDATE":
           return handleChatListUpdate(data);
         case "ERROR":
@@ -56,8 +69,12 @@ export const SocketLayout = () => {
       }
     },
     onError: (e) => console.error("❌ WebSocket 에러:", e),
-    onClose: () => console.log("⚠️ WebSocket 닫힘"),
+    onClose: () => toast.warn("WebSocket 닫힘"),
   });
+
+  const handlePlainType = (type: string, chatRoomId: number) => {
+    sendMessage({ type: type, chatRoomId: chatRoomId });
+  };
 
   const handleEnter = (chatRoomId: number) => {
     sendMessage({ type: "SUBSCRIBE", chatRoomId: chatRoomId });
@@ -78,7 +95,12 @@ export const SocketLayout = () => {
     });
   };
 
-  const ctx: SocketActions = { handleEnter, handleExit, handleSend };
+  const ctx: SocketActions = {
+    handlePlainType,
+    handleEnter,
+    handleExit,
+    handleSend,
+  };
 
   return <Outlet context={ctx} />;
 };
