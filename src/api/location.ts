@@ -1,3 +1,4 @@
+import type { AxiosError } from "axios";
 import { useApi } from "./api";
 
 const { getData, postData } = useApi();
@@ -24,7 +25,13 @@ export const getLocation = async () => {
   try {
     const response = await getData<number[]>("/api/location/nearby");
     return response;
-  } catch (error: any) {
-    console.log(error);
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    if (axiosError.response?.status === 400) {
+      return null;
+    } else {
+      console.error(error);
+    }
   }
 };

@@ -38,7 +38,7 @@ export const ProfileCard = () => {
     );
 
   return (
-    <div className="absolute w-full z-30">
+    <div className="w-full z-30">
       <div className="flex flex-col bg-white">
         <div className="flex flex-row items-center justify-between py-3.5 px-4">
           <img src={Logo} alt={"Logo"} className="w-8 h-8" />

@@ -1,6 +1,5 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
-import { useLoaderData } from "react-router-dom";
 
 import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
@@ -19,6 +18,8 @@ import { LoginCard } from "../Card/LoginCard";
 import { useGeoLocation } from "../../../hooks/useGeoLocation";
 import { postLocation } from "../../../api/location";
 import { useStepLocationUpdate } from "../../../hooks/useLocationUpdate";
+import { useLoaderData } from "react-router-dom";
+import { OutOfBoundsNotice } from "../OutOfBoundsNotice";
 import { useChatStore } from "../../../store/chatStore";
 import { ReachMaxModal } from "../../../hooks/modal";
 
@@ -90,15 +91,11 @@ export const LoggedInView = () => {
 
   return (
     <>
-      <MapCanvas />
-      <div
-        className={`${
-          isAuth ? "w-full" : "top-5 left-4 right-4"
-        } absolute z-30`}
-      >
+      <div className="w-full">
         <ProfileCard />
       </div>
 
+      {locationData ? <MapCanvas /> : <OutOfBoundsNotice />}
       <div
         className={`${
           isAuth ? "top-57" : "top-62"

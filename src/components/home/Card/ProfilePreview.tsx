@@ -8,19 +8,22 @@ import { useApi } from "../../../api/api";
 import type { MakeChat } from "../../../types/chat";
 import { toast } from "react-toastify";
 import { useChatStore } from "../../../store/chatStore";
+import { useState } from "react";
+import { LoginModal } from "../LoginModal";
 
 export const ProfilePreview = () => {
   const navigate = useNavigate();
   const { postData } = useApi();
   const { selectedUser } = useSelectedUserStore();
+  const [loginModal, setLoginModal] = useState(false);
 
   const isAuth = useAuthStore((state) => state.isAuth);
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setReachMax = useChatStore((state) => state.setReachMax);
 
-  const handleClick = async (userId: number) => {
+  const handleClick = async (userId?: number) => {
     if (!isAuth) {
-      setIsModalOpen({ flag: true, type: "chat" });
+      setLoginModal(true);
       return;
     }
 
@@ -39,19 +42,22 @@ export const ProfilePreview = () => {
   };
 
   return (
-    <div className="relative">
-      <CardHeader branch="profile" title="프로필 보기" />
-      <div className="mb-3 flex items-start gap-3">
-        <Profile />
+    <>
+      {loginModal && <LoginModal />}
+      <div className="relative">
+        <CardHeader branch="profile" title="프로필 보기" />
+        <div className="mb-3 flex items-start gap-3">
+          <Profile />
+        </div>
+        <div className="flex gap-2 pb-2 overflow-x-auto">
+          {selectedUser?.interests.map((item) => (
+            <HashTagWrapper key={item.detailLabel} interest={item} />
+          ))}
+        </div>
+        <div className="flex py-2.5">
+          <Button children="채팅하기" onClick={() => handleClick(2)} />
+        </div>
       </div>
-      <div className="flex gap-2 pb-2 overflow-x-auto">
-        {selectedUser?.interests.map((item) => (
-          <HashTagWrapper key={item.detailLabel} interest={item} />
-        ))}
-      </div>
-      <div className="flex py-2.5">
-        <Button children="채팅하기" onClick={() => handleClick(2)} />
-      </div>
-    </div>
+    </>
   );
 };
