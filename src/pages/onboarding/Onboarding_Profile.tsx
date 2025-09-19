@@ -112,7 +112,7 @@ export const Onboarding_Profile = () => {
         </div>
       </div>
 
-      <div className="w-full py-2.5 px-4 flex flex-col gap-2 absolute bottom-0 bg-white">
+      <div className="w-full pb-2.5 pt-5.5 px-4 flex flex-col gap-2 absolute bottom-0 bg-white shadow-dim-weak backdrop-blur-40 rounded-xl">
         <Link to="/onboarding/interests">
           <Button variant={isFilled ? "primary" : "disabled"}>다음</Button>
         </Link>

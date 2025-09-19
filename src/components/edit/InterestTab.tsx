@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SectionHeader } from "../profileOnboarding/SectionHeader";
 import { Chip } from "../profileOnboarding/Chip";
 import { Divider } from "../../common/Divider";
@@ -7,26 +6,96 @@ import { HashtagInput } from "../profileOnboarding/HashtagInput";
 import { Button } from "../../common/Button";
 import { INTEREST_OPTIONS } from "../../constants/interests";
 import { GENRE_OPTIONS } from "../../constants/genres";
+import { useEditProfileStore } from "../../store/EditProfileState";
+import { useApi } from "../../api/api";
 
-export const InterestTab = () => {
-  const [selectedInterests, setSelectedInterests] = useState<string | null>(
-    null
+interface InterestTabProps {
+  index: number;
+}
+
+const getInterestValueFromLabel = (label: string | null) => {
+  const matched = INTEREST_OPTIONS.find((item) => item.label === label);
+  return matched?.value;
+};
+
+const getGenreValueFromLabel = (
+  interestLabel: string | null,
+  genreLabel: string | null
+) => {
+  const interestValue = getInterestValueFromLabel(interestLabel);
+  if (!interestValue) return;
+
+  const genres = GENRE_OPTIONS[interestValue];
+  const matched = genres?.find((g) => g.label === genreLabel);
+  return matched?.value;
+};
+
+export const InterestTab = ({ index }: InterestTabProps) => {
+  const interest = useEditProfileStore((state) => state.interests[index]);
+  const setInterstAt = useEditProfileStore((state) => state.setInterestAt);
+  const toPayload = useEditProfileStore((state) => state.toPayload);
+  const isModified = useEditProfileStore((state) => state.isModified);
+  const initialize = useEditProfileStore((state) => state.initialize);
+
+  const { putData } = useApi();
+
+  const interestValue = getInterestValueFromLabel(interest.label);
+  const genreValue = getGenreValueFromLabel(
+    interest.label,
+    interest.detailLabel
   );
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
-  const genres = selectedInterests
-    ? GENRE_OPTIONS[selectedInterests] || []
-    : [];
+  const genres =
+    interestValue !== undefined ? GENRE_OPTIONS[interestValue] || [] : [];
 
-  const handleSelect = (value: string) => {
-    setSelectedInterests(value);
+  const isFilled =
+    interest.label && interest.hashTags.length > 0 && interest.detailLabel;
+
+  const handleSelectInterest = (label: string) => {
+    setInterstAt(index, {
+      label,
+      detailLabel: "",
+      hashTags: [],
+    });
   };
 
   const handleGenreClick = (genre: string) => {
-    if (selectedGenre === genre) {
-      setSelectedGenre(null);
+    if (interest.detailLabel === genre) {
+      setInterstAt(index, {
+        ...interest,
+        detailLabel: "",
+        hashTags: [],
+      });
     } else {
-      setSelectedGenre(genre);
+      setInterstAt(index, {
+        ...interest,
+        detailLabel: genre,
+        hashTags: [],
+      });
+    }
+  };
+
+  const handleHashTagChange = (tags: string[]) => {
+    setInterstAt(index, {
+      ...interest,
+      hashTags: tags,
+    });
+  };
+
+  const handleEdit = async () => {
+    if (!interest.label || !interest.detailLabel) return;
+
+    const payload = toPayload(true);
+    const not_convert_payload = toPayload(false);
+    console.log(payload);
+    try {
+      const res = await putData("/api/users/me", payload);
+      if (res.success) {
+        console.log("수정성공");
+        initialize(not_convert_payload);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -41,15 +110,15 @@ export const InterestTab = () => {
               <Chip
                 key={option.value}
                 variant="interest"
-                selected={selectedInterests === option.value}
-                label={option.label}
-                onClick={() => handleSelect(option.value)}
+                selected={interest.label === option.label}
+                label={`${option.emoji} ${option.label}`}
+                onClick={() => handleSelectInterest(option.label)}
               />
             ))}
           </div>
         </div>
 
-        {selectedInterests && (
+        {interest.label && (
           <>
             {" "}
             <Divider />
@@ -57,32 +126,38 @@ export const InterestTab = () => {
             <ChipStack>
               {genres.map((genre) => (
                 <Chip
+                  key={genre.label}
                   variant="detail"
-                  selected={selectedGenre === genre.value}
+                  selected={interest.detailLabel === genre.label}
                   label={genre.label}
-                  onClick={() => handleGenreClick(genre.value)}
+                  onClick={() => handleGenreClick(genre.label)}
                 />
               ))}
             </ChipStack>
-            {selectedGenre && (
-              <HashtagInput
-                interest={selectedInterests}
-                interestDetail={selectedGenre}
-              />
-            )}
+            {interest.detailLabel &&
+              interestValue !== undefined &&
+              genreValue !== undefined && (
+                <HashtagInput
+                  interest={interestValue}
+                  interestDetail={genreValue}
+                  value={interest.hashTags}
+                  onChange={handleHashTagChange}
+                />
+              )}
           </>
         )}
       </div>
 
-      {/* zustand 해시태그 저장하면서 해시태그 있을때 보이도록 추후 수정 */}
-      {selectedInterests && selectedGenre && (
-        <div className="absolute bottom-0 max-w-[444px] w-full px-4 flex flex-col bg-white pb-8 shadow-dim-weak backdrop-blur-40">
-          <div className="w-full pt-2.5 pb-0.5"></div>
-          <div className="py-2.5">
-            <Button variant="primary">수정하기</Button>
-          </div>
-        </div>
-      )}
+      <div className="absolute bottom-0 max-w-[444px] w-full flex flex-col bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
+        <Button
+          variant={isModified() && isFilled ? "primary" : "disabled"}
+          disabled={!isModified() || !isFilled}
+          type="button"
+          onClick={handleEdit}
+        >
+          수정하기
+        </Button>
+      </div>
     </div>
   );
 };

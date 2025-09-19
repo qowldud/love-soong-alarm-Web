@@ -1,8 +1,25 @@
+import { useNavigate } from "react-router-dom";
+import { useApi } from "../../../api/api";
 import { useAuthStore } from "../../../store/authStore";
 import { CardHeader } from "../../Common";
 
 export const MemberOutcard = () => {
+  const navigate = useNavigate();
   const setMemberout = useAuthStore((state) => state.setIsMemberOutOpen);
+
+  const { deleteData } = useApi();
+
+  const deleteAccount = async () => {
+    try {
+      const { success } = await deleteData("/api/auth/withdraw");
+      if (success) {
+        localStorage.removeItem("accessToken");
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="relative">
@@ -18,7 +35,10 @@ export const MemberOutcard = () => {
       </div>
 
       <div className="flex flex-row gap-x-2 px-4 py-2.5 w-full">
-        <div className="flex py-4 w-[50%] rounded-[12px] bg-main1 text-white justify-center items-center cursor-pointer">
+        <div
+          className="flex py-4 w-[50%] rounded-[12px] bg-main1 text-white justify-center items-center cursor-pointer"
+          onClick={deleteAccount}
+        >
           탈퇴
         </div>
         <div

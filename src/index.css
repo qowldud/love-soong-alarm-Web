@@ -2,9 +2,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-main1: #eb427b;
-  --color-main3: #eb427b14;
-  --color-content-base: #231d33;
+  --color-main1: rgba(114, 66, 235, 1);
+  --color-main2: rgba(114, 66, 235, 0.32);
+  --color-main3: rgba(114, 66, 235, 0.08);
+  --color-content-base: rgba(35, 29, 51, 1);
   --color-content-disabled: rgba(35, 29, 51, 0.4);
   --color-additive: rgba(35, 29, 51, 0.8);
   --color-assistive: rgba(35, 29, 51, 0.6);
@@ -14,8 +15,10 @@
   --color-inverted: #f2ebed;
   --color-disabled: rgba(51, 29, 36, 0.4);
   --color-divider-regular: rgba(173, 146, 155, 0.2);
-  --color-danger-strong: #ff244b;
-  --color-success-strong: #16b874;
+  --color-danger-strong: rgba(255, 36, 75, 1);
+  --color-success-strong: rgba(22, 184, 116, 1);
+  --color-success-regular: rgba(22, 184, 116, 0.08);
+  --color-fill-strong: rgba(154, 146, 173, 0.12);
 
   --shadow-dim-weak: 0 0 16px 0 rgba(51, 29, 36, 0.08);
 }
@@ -41,8 +44,24 @@
   }
 
   @media all and (display-mode: standalone) {
-    body {
-      /* pwa 인식 */
+    @media screen and (width: 375px) and (max-height: 667px) {
+      :root {
+        --safe-bottom: 0px;
+      }
+    }
+
+    /* iPhone Xs, 13 mini 등 노치 + 작은 기기 */
+    @media screen and (width: 375px) and (min-height: 700px) {
+      :root {
+        --safe-bottom: 34px;
+      }
+    }
+
+    /* iPhone 14 Pro 이상 */
+    @media screen and (min-width: 393px) {
+      :root {
+        --safe-bottom: 34px;
+      }
     }
   }
 }

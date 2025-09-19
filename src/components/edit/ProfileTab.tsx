@@ -1,13 +1,51 @@
-import { useState } from "react";
 import { Input } from "../../common/Input";
 import { OptionButton } from "../profileOnboarding/OptionButton";
 import { SectionHeader } from "../profileOnboarding/SectionHeader";
 import { Button } from "../../common/Button";
+import { useEditProfileStore } from "../../store/EditProfileState";
+import { useApi } from "../../api/api";
 
-const GENDER_OPTIONS = ["남성", "여성"];
+const GENDER_OPTIONS = [
+  { label: "남성", value: "MALE" },
+  { label: "여성", value: "FEMALE" },
+] as const;
 
 export const ProfileTab = () => {
-  const [select, setSelect] = useState<string | null>(null);
+  const {
+    emoji,
+    nickname,
+    gender,
+    birthDate,
+    major,
+    setMajor,
+    setEmoji,
+    setNickname,
+    setGender,
+    setBirthDate,
+    isModified,
+    toPayload,
+    initialize,
+  } = useEditProfileStore();
+
+  const { putData } = useApi();
+
+  const isFilled =
+    emoji && nickname && gender && major && birthDate && birthDate.length === 4;
+
+  const handleEdit = async () => {
+    const payload = toPayload(true);
+    const clientPayload = toPayload(false);
+    try {
+      const res = await putData("/api/users/me", payload);
+      if (res.success) {
+        console.log("수정성공");
+        initialize(clientPayload);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="h-full flex flex-col overflow-y-auto justify-between relative">
       <div className="flex flex-col px-4">
@@ -15,13 +53,23 @@ export const ProfileTab = () => {
 
         <div className="flex flex-col gap-4">
           <div className="flex flex-col pt-2">
-            <Input label="나를 표현하는 이모티콘" placeholder="예시) 🥰" />
-            <div className="px-1 py-2.5 text-assistive text-xs font-normal">
+            <Input
+              label="나를 표현하는 이모티콘"
+              placeholder="예시) 🥰"
+              value={emoji}
+              onChange={(e) => setEmoji(e.target.value)}
+            />
+            <div className="px-1 pt-2.5 text-assistive text-xs font-normal">
               키보드에서 이모티콘을 자유롭게 입력해주세요!
             </div>
           </div>
 
-          <Input label="닉네임" placeholder="예시) 김숭실" />
+          <Input
+            label="닉네임"
+            placeholder="예시) 김숭실"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          />
 
           <div className="flex flex-col gap-3">
             <span className="px-1 text-content-base text-sm font-normal">
@@ -31,27 +79,49 @@ export const ProfileTab = () => {
             <div className="flex gap-2">
               {GENDER_OPTIONS.map((option) => (
                 <OptionButton
-                  label={option}
-                  select={select === option}
-                  onClick={() => setSelect(option)}
+                  key={option.label}
+                  label={option.label}
+                  select={option.value === gender}
+                  onClick={() => setGender(option.value)}
                 />
               ))}
             </div>
 
             <div className="py-2">
-              <span className="px-1 pb-2 text-sm text-additive font-medium">
-                생년월일
-              </span>
+              <Input
+                label="생년월일"
+                placeholder="예시) 2006"
+                value={birthDate}
+                onChange={(e) => {
+                  const onlyNums = e.target.value.replace(/\D/g, "");
+                  if (onlyNums.length <= 4) {
+                    setBirthDate(onlyNums);
+                  }
+                }}
+                maxLength={4}
+                inputMode="numeric"
+              />
             </div>
+
+            <Input
+              label="학과(혹은 학부)"
+              placeholder="예시) 컴퓨터학부"
+              value={major}
+              onChange={(e) => setMajor(e.target.value)}
+            />
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-0 max-w-[444px] w-full flex px-4 flex-col bg-white pb-8 shadow-dim-weak backdrop-blur-40">
-        <div className="w-full pt-2.5 pb-0.5"></div>
-        <div className="py-2.5">
-          <Button variant="primary">수정하기</Button>
-        </div>
+      <div className="absolute bottom-0 max-w-[444px] w-full flex flex-col bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
+        <Button
+          variant={isModified() && isFilled ? "primary" : "disabled"}
+          disabled={!isModified() || !isFilled}
+          type="button"
+          onClick={handleEdit}
+        >
+          수정하기
+        </Button>
       </div>
     </div>
   );

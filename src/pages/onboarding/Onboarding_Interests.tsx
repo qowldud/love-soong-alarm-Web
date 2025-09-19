@@ -33,18 +33,13 @@ export const Onboarding_Interests = () => {
         </Description>
 
         <div className="flex justify-center">
-          <div
-            className="px-4 py-2.5 flex flex-wrap gap-2 w-full"
-            // style={{
-            //   gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
-            // }}
-          >
+          <div className="px-4 py-2.5 flex flex-wrap gap-2 w-full">
             {INTEREST_OPTIONS.map((option) => (
               <Chip
                 key={option.value}
                 variant="interest"
                 selected={currentLabels.includes(option.value)}
-                label={option.label}
+                label={`${option.emoji} ${option.label}`}
                 onClick={() => handleSelect(option.value)}
                 className="justify-center"
               />
@@ -53,10 +48,16 @@ export const Onboarding_Interests = () => {
         </div>
       </div>
 
-      <div className="w-full mb-8 px-4 py-2.5 absolute bottom-0 bg-white">
+      <div className="w-full px-4 pb-2.5 pt-5.5 rounded-xl absolute bottom-0 bg-white flex flex-col gap-2 shadow-dim-weak backdrop-blur-40">
         <Link to="/onboarding/preference/0">
           <Button variant={isFilled ? "primary" : "disabled"}>다음으로</Button>
         </Link>
+
+        {!isFilled && (
+          <span className="text-assistive text-xs text-center font-normal leading-4.5 tracking-[-0.24px]">
+            취향을 하나 이상 선택해야 다음으로 넘어갈 수 있어요
+          </span>
+        )}
       </div>
     </div>
   );

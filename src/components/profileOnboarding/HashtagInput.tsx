@@ -2,18 +2,23 @@ import { useRef, useState } from "react";
 import { Chip } from "./Chip";
 import CloseIcon from "@/assets/icons/close.svg?url";
 import { ChipStack } from "./ChipStack";
-import { useOnboardingStore } from "../../store/onboardingStore";
 import { HASHTAG_SUGGESTIONS } from "../../constants/hashtag_suggestions";
 import { SectionHeader } from "./SectionHeader";
 import { Divider } from "../../common/Divider";
 
 interface Props {
-  interest: string;
+  interest: string | null;
   interestDetail: string | null;
+  value: string[];
+  onChange: (tags: string[]) => void;
 }
 
-export const HashtagInput = ({ interest, interestDetail }: Props) => {
-  const { currentHashtags, setCurrentHashtags } = useOnboardingStore();
+export const HashtagInput = ({
+  interest,
+  interestDetail,
+  value,
+  onChange,
+}: Props) => {
   const [inputValue, setInputValue] = useState("");
   const ContainerRef = useRef<HTMLDivElement>(null);
 
@@ -26,18 +31,14 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
 
   const addHashtag = () => {
     const trimmed = inputValue.trim();
-    if (
-      trimmed &&
-      !currentHashtags.includes(trimmed) &&
-      currentHashtags.length < 2
-    ) {
-      setCurrentHashtags([...currentHashtags, trimmed]);
+    if (trimmed && !value.includes(trimmed) && value.length < 2) {
+      onChange([...value, trimmed]);
       setInputValue("");
     }
   };
 
   const removeHashtag = (tag: string) => {
-    setCurrentHashtags(currentHashtags.filter((t) => t !== tag));
+    onChange(value.filter((t) => t !== tag));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -48,8 +49,10 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
   };
 
   const onClickHashTag = (tag: string) => {
-    if (currentHashtags.length >= 2) return;
-    setCurrentHashtags([...currentHashtags, tag]);
+    const trimmed = tag.trim();
+    if (trimmed && !value.includes(trimmed) && value.length < 2) {
+      onChange([...value, tag]);
+    }
   };
 
   return (
@@ -60,7 +63,7 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
         subTitle="10자 이내로 작성해주세요"
       />
       <div className="flex flex-wrap items-center gap-2 py-2.5">
-        {currentHashtags.map((tag) => (
+        {value.map((tag) => (
           <Chip
             key={tag}
             variant="detail"
@@ -71,7 +74,7 @@ export const HashtagInput = ({ interest, interestDetail }: Props) => {
           />
         ))}
 
-        {currentHashtags.length < 2 && (
+        {value.length < 2 && (
           <div
             className="px-2 py-1.5 flex items-center gap-1 bg-fill-regular rounded-lg"
             ref={ContainerRef}

@@ -33,6 +33,7 @@ interface OnboardingState {
   setCurrentHashtags: (hashtags: string[]) => void;
 
   addCurrentInterest: () => void;
+  reset: () => void;
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -82,6 +83,19 @@ export const useOnboardingStore = create<OnboardingState>()(
           currentHashtags: [],
         });
       },
+      reset: () =>
+        set({
+          emoji: "",
+          nickname: "",
+          gender: null,
+          birthDate: "",
+          major: "",
+          interests: [],
+          currentLabels: [],
+          currentLabel: null,
+          currentDetail: null,
+          currentHashtags: [],
+        }),
     }),
     {
       name: "onboarding-storage",

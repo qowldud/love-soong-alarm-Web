@@ -11,6 +11,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { GENRE_OPTIONS } from "../../constants/genres";
 import { useEffect } from "react";
 import { useApi } from "../../api/api";
+import { INTEREST_OPTIONS } from "../../constants/interests";
 
 export const Onboarding_Preference = () => {
   const { step } = useParams();
@@ -22,6 +23,8 @@ export const Onboarding_Preference = () => {
     currentHashtags,
     setCurrentDetail,
     addCurrentInterest,
+    setCurrentHashtags,
+    reset,
   } = useOnboardingStore();
 
   const currentStep = Number(step || 0);
@@ -52,6 +55,8 @@ export const Onboarding_Preference = () => {
     try {
       const data = await patchData("/api/users/on-boarding", payload);
       if (data.success) {
+        reset();
+        sessionStorage.removeItem("onboarding-storage");
         navigate("/splash");
       }
     } catch (err) {
@@ -71,13 +76,20 @@ export const Onboarding_Preference = () => {
     }
   };
 
+  const changeValueToLabel = (value: string) => {
+    const match = INTEREST_OPTIONS.find((option) => option.value === value);
+    return match?.label;
+  };
+
   return (
     <div className="flex flex-col h-full justify-between">
       <div className="flex flex-col">
         <Header title="80% 작성 완료" />
         <ProgressBar per="80%" />
 
-        <Description title="휴멸님의 음악 취향에 대해 알려주세요">
+        <Description
+          title={`휴멸님의 ${changeValueToLabel(label)} 취향에 대해 알려주세요`}
+        >
           더 자세히 적을수록 나와 맞는 소울메이트가 찾아와요!
         </Description>
 
@@ -96,12 +108,17 @@ export const Onboarding_Preference = () => {
           </ChipStack>
 
           {currentDetail && (
-            <HashtagInput interest={label} interestDetail={currentDetail} />
+            <HashtagInput
+              interest={label}
+              interestDetail={currentDetail}
+              value={currentHashtags}
+              onChange={(tags) => setCurrentHashtags(tags)}
+            />
           )}
         </div>
       </div>
 
-      <div className="mb-8 px-4 py-2.5 flex flex-col gap-2">
+      <div className="px-4 pb-2.5 pt-5.5 flex flex-col gap-2 shadow-dim-weak backdrop-blur-40 rounded-xl">
         <Button
           variant={isFilled ? "primary" : "disabled"}
           onClick={handleNext}

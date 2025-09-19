@@ -9,31 +9,25 @@ interface BasicResponse<T> {
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
-  // headers: import.meta.env.DEV
-  //   ? {
-  //       Authorization: `Bearer ${import.meta.env.VITE_MASTER_TOKEN}`,
-  //     }
-  //   : {},
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  },
   timeout: 180000,
 });
 
-if (import.meta.env.PROD) {
-  axiosInstance.interceptors.request.use(
-    (config) => {
-      const token = localStorage.getItem("accessToken");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    } else if (import.meta.env.DEV && import.meta.env.VITE_MASTER_TOKEN) {
+      config.headers.Authorization = `Bearer ${
+        import.meta.env.VITE_MASTER_TOKEN
+      }`;
     }
-  );
-}
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const useApi = () => {
   const getData = async <T>(
@@ -89,7 +83,7 @@ export const useApi = () => {
 
   const postData = async <T>(
     url: string,
-    data: Record<string, any>
+    data?: Record<string, any>
   ): Promise<BasicResponse<T>> => {
     try {
       const response: AxiosResponse<BasicResponse<T>> =
