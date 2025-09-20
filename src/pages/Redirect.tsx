@@ -16,7 +16,6 @@ export const Redirect = () => {
       navigate("/");
       return;
     }
-
     login(accessToken);
 
     if (isRegistered === "true") {

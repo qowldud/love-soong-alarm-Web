@@ -44,10 +44,7 @@ const Button = ({ children, ...props }: ButtonProps) => {
 export const LoggedInView = () => {
   // const revalidator = useRevalidator();
 
-  const { locationData, chatLists } = useLoaderData() ?? {
-    locationData: null,
-    chatLists: { data: [] },
-  };
+  const { locationData, chatLists } = useLoaderData();
   const { location } = useGeoLocation();
   console.log(location);
 
@@ -62,7 +59,7 @@ export const LoggedInView = () => {
       </CardLayout>
 
       <CardLayout branch="chat">
-        <ChatPreview items={chatLists.data ?? []} />
+        <ChatPreview items={chatLists.data} />
       </CardLayout>
     </>
   );
