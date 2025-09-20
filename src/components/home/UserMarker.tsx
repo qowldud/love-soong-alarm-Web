@@ -1,6 +1,6 @@
 import Marker from "@/assets/icons/Vector.svg";
 import MatchMarker from "@/assets/icons/Vector_match.svg?url";
-import SelectMarker from "@/assets/icons/Vector_select.svg?url";
+import SelectMarker from "@/assets/icons/Vector_Select.svg?url";
 import type { User } from "../../types/User";
 interface Props {
   user: User;
