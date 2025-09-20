@@ -2,6 +2,7 @@ import type { ButtonHTMLAttributes } from "react";
 
 import { HOME_CONST } from "../../hooks/consts";
 import { useAuthStore } from "../../store/authStore";
+import { useLoaderData, useRevalidator } from "react-router-dom";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   count: number;
@@ -9,6 +10,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const HomeBottom = ({ count, ...props }: ButtonProps) => {
   const isAuth = useAuthStore((state) => state.isAuth);
+  const { locationData } = useLoaderData();
+  const { revalidate } = useRevalidator();
 
   if (!isAuth)
     return (
@@ -22,6 +25,17 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
         <div className="text-xs">{`${HOME_CONST.yes.label}`}</div>
       </button>
     );
+
+  if (!locationData) {
+    return (
+      <button
+        className="flex flex-1 items-center justify-center bg-main3 text-main1 rounded-lg py-4 cursor-pointer"
+        onClick={() => revalidate()}
+      >
+        새로고침
+      </button>
+    );
+  }
 
   if (count) {
     return (

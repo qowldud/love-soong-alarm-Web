@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface HomeState {
   checkProfile: boolean;
@@ -13,8 +13,8 @@ interface HomeState {
 export const useHomeStore = create<HomeState>()(
   persist(
     (set) => ({
-      checkProfile: false,
-      checkChat: false,
+      checkProfile: false as boolean,
+      checkChat: false as boolean,
 
       setReset: (branch) => {
         switch (branch) {
@@ -41,6 +41,7 @@ export const useHomeStore = create<HomeState>()(
     }),
     {
       name: "home-store",
+      storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({
         checkProfile: state.checkProfile,
         checkChat: state.checkChat,

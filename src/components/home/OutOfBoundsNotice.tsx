@@ -2,7 +2,7 @@ import ErrorIcon from "@/assets/icons/error.svg?url";
 
 export const OutOfBoundsNotice = () => {
   return (
-    <div className="flex flex-col gap-3 w-full h-full items-center justify-center bg-root-strong pb-20">
+    <div className="flex flex-col gap-3 w-full h-full items-center justify-center bg-root-strong pb-30">
       <img src={ErrorIcon} alt="error_icon" />
       <span className="text-danger-strong text-2xl font-bold leading-[34px] tracking-[-0.48px]">
         숭실대를 벗어났어요!

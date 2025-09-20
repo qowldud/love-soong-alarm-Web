@@ -11,7 +11,7 @@ export const MockPeople = [
       },
       {
         detailLabel: "힙합",
-        hashTags: ["#외힙", "#지언"],
+        hashTags: ["#외힙", "#칸예"],
       },
     ],
     lastSeen: "2025-09-20T12:00:00Z",
@@ -26,11 +26,11 @@ export const MockPeople = [
     interests: [
       {
         detailLabel: "밴드",
-        hashTags: ["#걍정지마", "#지스쿠리클럽"],
+        hashTags: ["#검정치마", "#지소쿠리클럽"],
       },
       {
         detailLabel: "영화",
-        hashTags: ["#퐁상수", "#에에에엥"],
+        hashTags: ["#홍상수", "#에에올"],
       },
     ],
     lastSeen: "2025-09-20T11:58:00Z",
@@ -57,18 +57,18 @@ export const MockPeople = [
     longitude: 126.9588147892906,
   },
   {
-    name: "티타노사우르스",
+    name: "티라노사우르스",
     age: 26,
     major: "경영학부",
     emoji: "🦖",
     interests: [
       {
         detailLabel: "스트릿",
-        hashTags: ["#고고코어"],
+        hashTags: ["#고프코어"],
       },
       {
         detailLabel: "사진",
-        hashTags: ["#김승일", "#허수진"],
+        hashTags: ["#김승일", "#허수경"],
       },
     ],
     lastSeen: "2025-09-20T11:50:00Z",
@@ -76,7 +76,7 @@ export const MockPeople = [
     longitude: 126.96022887473148,
   },
   {
-    name: "송숭간판",
+    name: "숭솦간판",
     age: 25,
     major: "소프트웨어학부",
     emoji: "💻",

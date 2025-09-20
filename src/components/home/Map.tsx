@@ -30,7 +30,6 @@ export function MapCanvas() {
   const [isPWA, setIsPWA] = useState(false);
   const isModalOpen = useAuthStore((state) => state.isModalOpen);
   const isOpen = isModalOpen;
-  console.log(isOpen);
 
   // 커스텀 마커 HTML
   const markerHtml = `

@@ -88,7 +88,7 @@ export const Hashtag = ({
   return (
     <div
       className={clsx(
-        "text-xs font-medium leading-4.5 tracking-[-0.24px] px-1.5 py-1 rounded-sm",
+        "text-xs font-medium leading-4.5 tracking-[-0.24px] px-1.5 py-1 rounded-sm whitespace-nowrap",
         isHashTag ? "text-additive bg-fill-strong" : "text-main1 bg-main3"
       )}
     >

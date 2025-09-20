@@ -148,7 +148,7 @@ export const Alarm = () => {
 
   return (
     <div className="relative">
-      <div className=" flex flex-col overflow-y-scroll gap-y-2 divide-y-2 divide-[#EDEBF2]">
+      <div className=" flex flex-col overflow-y-auto gap-y-2 divide-y-2 divide-[#EDEBF2]">
         <div className="px-4 py-2.5">
           <Title type="before" />
           {ALARM_CONST.before.map((item, index) => (

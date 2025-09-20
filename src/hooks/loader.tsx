@@ -10,10 +10,6 @@ export const TestLoader = async () => {
 };
 
 export const HomeLoader = async () => {
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (!accessToken) return;
-
   const locationData = await getLocation();
   const chatLists = await getChatLists();
 

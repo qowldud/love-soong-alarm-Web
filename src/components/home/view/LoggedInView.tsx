@@ -46,7 +46,7 @@ export const LoggedInView = () => {
 
   const { locationData, chatLists } = useLoaderData();
   const { location } = useGeoLocation();
-  console.log(locationData);
+  console.log(location);
 
   const RenderCard = () => (
     <>
@@ -86,7 +86,11 @@ export const LoggedInView = () => {
     intervalMs: 3000,
     thresholdMeters: 10,
     getCurrent: () => latestRef.current,
-    post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),
+    post: ({ latitude, longitude }) =>
+      postLocation({
+        latitude,
+        longitude,
+      }),
   });
 
   return (
@@ -102,7 +106,7 @@ export const LoggedInView = () => {
         } absolute flex flex-row gap-x-2 left-4 right-4 z-30 justify-between`}
       />
 
-      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
+      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-2 z-30 items-center">
         <Button>
           <img src={Location} alt={"location"} />
         </Button>
