@@ -1,15 +1,22 @@
-import { Outlet, useLoaderData, useOutletContext } from "react-router-dom";
+import {
+  Outlet,
+  useLoaderData,
+  useOutletContext,
+  useRevalidator,
+} from "react-router-dom";
 
 import { ChatCard } from "./Card";
 import { ChatInput } from "./Input";
 import type { SocketActions } from "../Layout/SocketLayout";
 import type { ChatDetail } from "../../types/chat";
+import { useEffect } from "react";
 
 export interface Context extends SocketActions {
   chatDetail: ChatDetail;
 }
 
 export const ChatLayout = () => {
+  const revalidator = useRevalidator();
   const { chatDetail } = useLoaderData();
 
   const { handleEnter, handleExit, handleSend } =
@@ -21,6 +28,14 @@ export const ChatLayout = () => {
     handleSend,
     chatDetail: chatDetail.data,
   };
+
+  useEffect(() => {
+    const onRevalidate = () => {
+      revalidator.revalidate();
+    };
+    window.addEventListener("revalidate:chat", onRevalidate);
+    return () => window.removeEventListener("revalidate:chat", onRevalidate);
+  }, [revalidator]);
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">

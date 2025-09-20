@@ -59,6 +59,53 @@ export interface ListUpdate {
   isRead: boolean;
 }
 
+export interface SubscribeList {
+  type: "CHAT_LIST_SUBSCRIBE";
+  message: string;
+}
+
+export interface UnsubscribeList {
+  type: "CHAT_LIST_UNSUBSCRIBE";
+  message: string;
+}
+
+export interface NewChatUpdate {
+  type: "NEW_CHAT_ROOM_CREATED";
+  chatRoomId: number;
+  partnerNickname: string;
+  partnerEmoji: string;
+  createdAt: string;
+}
+export interface NewChatUpdate {
+  type: "NEW_CHAT_ROOM_CREATED";
+  chatRoomId: number;
+  partnerNickname: string;
+  partnerEmoji: string;
+  createdAt: string;
+}
+
+export interface Notification {
+  type: "NOTIFICATION";
+  notificationId: number;
+  matchingUserId: number;
+  message: string;
+}
+
+export interface NotifiactionUpdate {
+  type: "UNREAD_NOTIFICATION_BADGE_UPDATE";
+  hasUnread: boolean;
+}
+
+export interface ReadNotification {
+  type: "READ_NOTIFICATION";
+  notificationId: number;
+}
+
+export interface ReadAllNotification {
+  type: "READ_ALL_NOTIFICATION";
+  isAll: boolean;
+}
+
 // 에러 페이지
 export interface ErrorType {
   type: "ERROR";

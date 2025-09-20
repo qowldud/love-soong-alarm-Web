@@ -7,8 +7,6 @@ import type { ChatDetail } from "../../types/chat";
 export const ChatCard = ({ chatDetail }: { chatDetail: ChatDetail }) => {
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
 
-  console.log(chatDetail.partner.interests);
-
   return (
     <div className="relative flex flex-col gap-y-1 bg-white px-4 py-2.5 w-full">
       <div className="flex flex-row justify-between items-center py-2.5">

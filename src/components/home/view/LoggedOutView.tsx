@@ -4,7 +4,7 @@ import { LogoutMap } from "../LogoutMap";
 import { CardLayout } from "../Card/Layout";
 import { LoginCard } from "../Card/LoginCard";
 import { ProfilePreview } from "../Card/ProfilePreview";
-import { ChatPreview } from "../Card/ChatPreview";
+// import { ChatPreview } from "../Card/ChatPreview";
 
 const RenderCard = () => (
   <>
@@ -16,9 +16,9 @@ const RenderCard = () => (
       <ProfilePreview />
     </CardLayout>
 
-    <CardLayout branch="chat">
+    {/* <CardLayout branch="chat">
       <ChatPreview />
-    </CardLayout>
+    </CardLayout> */}
   </>
 );
 

@@ -1,4 +1,5 @@
 import { healthCheck } from "../api/api";
+import { getUserMaxSlots } from "../api/auth";
 import { getChatLists, getDetailChat } from "../api/chat";
 import { getLocation } from "../api/location";
 import { getNotifications } from "../api/notice";
@@ -14,10 +15,11 @@ export const HomeLoader = async () => {
 
   if (!accessToken) return;
 
+  const maxSlots = await getUserMaxSlots();
   const locationData = await getLocation();
   const chatLists = await getChatLists();
 
-  return { locationData, chatLists };
+  return { maxSlots, locationData, chatLists };
 };
 
 export const ChatLoader = async ({ params }: any) => {

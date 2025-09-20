@@ -96,3 +96,20 @@ body {
   background-color: white;
   position: relative;
 }
+
+.custom-toast-container {
+  width: 100%;
+  padding: 0;
+}
+
+.custom-toast-box {
+  display: absolute;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  padding: 12px 16px;
+  max-width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  text-align: center;
+}

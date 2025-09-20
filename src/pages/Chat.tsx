@@ -6,7 +6,6 @@ import type { Context } from "../components/chat/Layout";
 import { CardLayout } from "../components/home/Card/Layout";
 import { ExcessChat } from "../components/home/Card/ExcessChat";
 import { IgnoreUser } from "../components/home/Card/IgnoreUser";
-import { useMessageStore } from "../store/messageStore";
 
 const RenderCard = () => (
   <>
@@ -26,8 +25,6 @@ export const Chat = () => {
   const { chatRoomId } = useParams<{ chatRoomId: string }>();
   const id = Number(chatRoomId);
   const prevIdRef = useRef<number | null>(null);
-
-  const newMessage = useMessageStore((state) => state.newMessage);
 
   useEffect(() => {
     const prevId = prevIdRef.current;
@@ -55,7 +52,7 @@ export const Chat = () => {
   });
 
   const baseLen = chatDetail.recentMessages?.length ?? 0;
-  const liveLen = newMessage.length;
+  const liveLen = chatDetail.recentMessages?.length ?? 0;
 
   useEffect(() => {
     const el = containerRef.current;
@@ -63,15 +60,13 @@ export const Chat = () => {
     el.scrollTop = el.scrollHeight;
   }, [baseLen, liveLen, containerRef]);
 
-  const allMessages = [...(chatDetail.recentMessages ?? []), ...newMessage];
-
   return (
     <>
       <div
         ref={containerRef}
         className="relative h-full w-full overflow-y-auto touch-pan-y"
       >
-        {allMessages.map((item, index) => (
+        {chatDetail.recentMessages?.map((item, index) => (
           <ChatContent key={item.messageId ?? index} item={item} />
         ))}
       </div>

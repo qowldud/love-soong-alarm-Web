@@ -1,6 +1,6 @@
 import { useApi } from "./api";
 
-const { postData, putData, patchData, deleteData } = useApi();
+const { getData, postData, putData, patchData, deleteData } = useApi();
 
 export const updateUserProfile = async ({ id }: { id: number }) => {
   try {
@@ -14,6 +14,15 @@ export const updateUserProfile = async ({ id }: { id: number }) => {
 export const checkUserProfile = async ({ userId }: { userId: number }) => {
   try {
     const response = await patchData(`/api/users/${userId}`, {});
+    return response;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+export const getUserMaxSlots = async () => {
+  try {
+    const response = await getData<{ maxSlots: number }>("/api/users/slots");
     return response;
   } catch (error: any) {
     console.log(error);

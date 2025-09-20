@@ -1,8 +1,10 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
+import { useLoaderData } from "react-router-dom";
 
 import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
+import Chat_Alarm from "@/assets/icons/ic_unread_chat.svg";
 
 import { HomeBottom } from "../Bottom";
 import { ProfileCard } from "../Profile";
@@ -18,10 +20,10 @@ import { LoginCard } from "../Card/LoginCard";
 import { useGeoLocation } from "../../../hooks/useGeoLocation";
 import { postLocation } from "../../../api/location";
 import { useStepLocationUpdate } from "../../../hooks/useLocationUpdate";
-import { useLoaderData } from "react-router-dom";
 import { OutOfBoundsNotice } from "../OutOfBoundsNotice";
 import { useChatStore } from "../../../store/chatStore";
 import { ReachMaxModal } from "../../../hooks/modal";
+import { useMessageStore } from "../../../store/messageStore";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -41,12 +43,24 @@ const Button = ({ children, ...props }: ButtonProps) => {
   );
 };
 
-export const LoggedInView = () => {
-  // const revalidator = useRevalidator();
-
+export const LoggedInView = ({
+  handleSendSubscribeList,
+  handleSendUnsubscribeList,
+}: {
+  handleSendSubscribeList: () => void;
+  handleSendUnsubscribeList: () => void;
+}) => {
   const { locationData, chatLists } = useLoaderData();
   const { location } = useGeoLocation();
-  console.log(location);
+
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const reachMax = useChatStore((state) => state.reachMax);
+  const isChatAlarm = useHomeStore((state) => state.isChatAlarm);
+
+  const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
+  const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
+  const setCheckChat = useHomeStore((state) => state.setCheckChat);
+  const setInitLists = useMessageStore((state) => state.setInitLists);
 
   const RenderCard = () => (
     <>
@@ -59,17 +73,13 @@ export const LoggedInView = () => {
       </CardLayout>
 
       <CardLayout branch="chat">
-        <ChatPreview items={chatLists.data} />
+        <ChatPreview
+          handleSendSubscribeList={handleSendSubscribeList!}
+          handleSendUnsubscribeList={handleSendUnsubscribeList!}
+        />
       </CardLayout>
     </>
   );
-
-  const isAuth = useAuthStore((state) => state.isAuth);
-  const reachMax = useChatStore((state) => state.reachMax);
-
-  const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
-  const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
-  const setCheckChat = useHomeStore((state) => state.setCheckChat);
 
   // // TODO: React-Query로 화면 전체 리랜더링 최소화 해야함
   // // 최신 좌표/마지막 전송 좌표 저장용 ref
@@ -81,9 +91,15 @@ export const LoggedInView = () => {
     }
   }, [location?.latitude, location?.longitude]);
 
+  useEffect(() => {
+    if (chatLists?.data?.chatRooms) {
+      setInitLists({ chatRooms: chatLists.data.chatRooms });
+    }
+  }, [chatLists, setInitLists]);
+
   useStepLocationUpdate({
     enabled: isAuth,
-    intervalMs: 3000,
+    intervalMs: 5000,
     thresholdMeters: 10,
     getCurrent: () => latestRef.current,
     post: ({ latitude, longitude }) =>
@@ -131,7 +147,7 @@ export const LoggedInView = () => {
             setCheckChat(true);
           }}
         >
-          <img src={Chat} alt={"chat"} />
+          <img src={`${isChatAlarm ? Chat_Alarm : Chat}`} alt={"chat"} />
         </Button>
       </div>
       <RenderCard />

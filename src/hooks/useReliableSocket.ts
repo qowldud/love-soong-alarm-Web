@@ -20,6 +20,8 @@ export function useReliableSocket(
   }
 ) {
   const wsRef = useRef<WebSocket | null>(null);
+  const reconnectTimer = useRef<NodeJS.Timeout | null>(null);
+  const retryCountRef = useRef(0);
 
   const connect = useCallback(() => {
     const url = urlFactory();
@@ -30,7 +32,11 @@ export function useReliableSocket(
     const ws = new WebSocket(url);
     wsRef.current = ws;
 
-    ws.onopen = () => handlers.onOpen?.(ws);
+    ws.onopen = () => {
+      retryCountRef.current = 0; // 성공했으니 retry 카운터 리셋
+      handlers.onOpen?.(ws);
+    };
+
     ws.onmessage = (evt) => {
       try {
         handlers.onMessage?.(JSON.parse(evt.data));
@@ -38,13 +44,29 @@ export function useReliableSocket(
         handlers.onMessage?.(evt.data);
       }
     };
-    ws.onerror = (e) => handlers.onError?.(e);
-    ws.onclose = (e) => handlers.onClose?.(e);
+
+    ws.onerror = (e) => {
+      handlers.onError?.(e);
+    };
+
+    ws.onclose = (e) => {
+      handlers.onClose?.(e);
+
+      // 재연결 로직
+      const retryDelay = Math.min(1000 * 2 ** retryCountRef.current, 30000); // 최대 30초
+      retryCountRef.current += 1;
+
+      if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
+      reconnectTimer.current = setTimeout(() => {
+        connect();
+      }, retryDelay);
+    };
   }, [urlFactory, handlers]);
 
   useEffect(() => {
     connect();
     return () => {
+      if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
       wsRef.current?.close();
       wsRef.current = null;
     };

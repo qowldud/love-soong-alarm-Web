@@ -5,17 +5,21 @@ import { useAuthStore } from "../../store/authStore";
 import Logo from "@/assets/icons/ic_lovin.svg";
 import Coin from "@/assets/icons/ic_coin.svg";
 import Alarm from "@/assets/icons/ic_alarm.svg";
+import Alarm_Notice from "@/assets/icons/ic_unread_notice.svg";
 import Setting from "@/assets/icons/ic_setting.svg";
 import View from "@/assets/icons/ic_view.svg";
 import Reload from "@/assets/icons/ic_reload.svg";
+
 import { Title } from "../../common/Title";
 import { Button } from "../../common/Button";
+import { useHomeStore } from "../../store/homeStore";
 
 export const ProfileCard = () => {
   const revalidate = useRevalidator();
   const navigate = useNavigate();
 
   const isAuth = useAuthStore((state) => state.isAuth);
+  const isNoticeAlarm = useHomeStore((state) => state.isNoticeAlarm);
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
 
   if (!isAuth)
@@ -50,7 +54,7 @@ export const ProfileCard = () => {
               onClick={() => navigate("/coin")}
             />
             <img
-              src={Alarm}
+              src={`${isNoticeAlarm ? Alarm_Notice : Alarm}`}
               alt={"Alarm"}
               className="w-6 h-6 cursor-pointer"
               onClick={() => navigate("/alarm")}

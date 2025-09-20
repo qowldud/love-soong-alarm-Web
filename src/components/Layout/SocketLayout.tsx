@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 export interface SocketActions {
   handlePlainType?: (type: string, chatRoomId: number) => void;
   handleEnter?: (chatRoomId: number) => void;
+  handleSendSubscribeList?: () => void;
+  handleSendUnsubscribeList?: () => void;
   handleExit?: (chatRoomId: number) => void;
   handleSend?: (chatRoomId: number, content: string) => void;
 }
@@ -34,6 +36,13 @@ export const SocketLayout = () => {
     handleChatMessage,
     handleExcessChat,
     handleChatListUpdate,
+    handleSubscribeList,
+    handleUnsubscribeList,
+    handleNewUserChat,
+    handleNotification,
+    handleNotifiactionAlarm,
+    handleReadAllNotificatino,
+    handleReadNotification,
     handleError,
   } = useWebSocket();
 
@@ -62,6 +71,20 @@ export const SocketLayout = () => {
           return handleExcessChat(data);
         case "CHAT_LIST_UPDATE":
           return handleChatListUpdate(data);
+        case "CHAT_LIST_SUBSCRIBE":
+          return handleSubscribeList(data);
+        case "CHAT_LIST_UNSUBSCRIBE":
+          return handleUnsubscribeList(data);
+        case "NEW_CHAT_ROOM_CREATED":
+          return handleNewUserChat();
+        case "NOTIFICATION":
+          return handleNotification(data);
+        case "UNREAD_NOTIFICATION_BADGE_UPDATE":
+          return handleNotifiactionAlarm(data);
+        case "READ_NOTIFICATION":
+          return handleReadNotification(data);
+        case "READ_ALL_NOTIFICATION":
+          return handleReadAllNotificatino(data);
         case "ERROR":
           return handleError(data);
         default:
@@ -78,6 +101,14 @@ export const SocketLayout = () => {
 
   const handleEnter = (chatRoomId: number) => {
     sendMessage({ type: "SUBSCRIBE", chatRoomId: chatRoomId });
+  };
+
+  const handleSendSubscribeList = () => {
+    sendMessage({ type: "CHAT_LIST_SUBSCRIBE" });
+  };
+
+  const handleSendUnsubscribeList = () => {
+    sendMessage({ type: "CHAT_LIST_UNSUBSCRIBE" });
   };
 
   const handleExit = (chatRoomId: number) => {
@@ -98,6 +129,8 @@ export const SocketLayout = () => {
   const ctx: SocketActions = {
     handlePlainType,
     handleEnter,
+    handleSendSubscribeList,
+    handleSendUnsubscribeList,
     handleExit,
     handleSend,
   };
