@@ -10,14 +10,11 @@ import { useHomeStore } from "../store/homeStore";
 export const Splash = () => {
   const navigate = useNavigate();
 
-  const login = useAuthStore((state) => state.login);
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setReset = useHomeStore((state) => state.setReset);
 
   // TODO: 핸들 함수 구현
   const handleLogin = () => {
-    login("tmp");
-
     setIsModalOpen({ flag: false });
     setReset();
 
