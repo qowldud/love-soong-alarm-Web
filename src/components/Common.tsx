@@ -103,7 +103,7 @@ export const HashTagWrapper = ({ interest }: { interest: UserInterest }) => (
     <Hashtag label={interest.detailLabel} isHashTag={false} />
 
     {interest.hashTags.map((tag) => (
-      <Hashtag label={tag} isHashTag={true} />
+      <Hashtag key={tag} label={tag} isHashTag={true} />
     ))}
   </div>
 );

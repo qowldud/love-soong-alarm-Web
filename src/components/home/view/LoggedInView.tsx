@@ -33,7 +33,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 // TEST DATA
 // const CORRECT_COUNT = 0;
-const CORRECT_COUNT = 1;
 
 const Button = ({ children, ...props }: ButtonProps) => {
   return (
@@ -52,6 +51,7 @@ export const LoggedInView = ({
 }) => {
   const { locationData, chatLists } = useLoaderData();
   const { location } = useGeoLocation();
+  console.log(locationData.data);
 
   const isAuth = useAuthStore((state) => state.isAuth);
   const reachMax = useChatStore((state) => state.reachMax);
@@ -115,7 +115,11 @@ export const LoggedInView = ({
         <ProfileCard />
       </div>
 
-      {locationData ? <MapCanvas /> : <OutOfBoundsNotice />}
+      {locationData ? (
+        <MapCanvas users={locationData.data.nearbyUsersInformation} />
+      ) : (
+        <OutOfBoundsNotice />
+      )}
       <div
         className={`${
           isAuth ? "top-57" : "top-62"
@@ -128,7 +132,7 @@ export const LoggedInView = ({
         </Button>
 
         <HomeBottom
-          count={CORRECT_COUNT}
+          count={locationData.data.matchCount}
           onClick={() => {
             if (!isAuth) {
               setIsModalOpen({ flag: true, type: "edit" });

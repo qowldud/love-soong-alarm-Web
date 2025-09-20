@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuthStore } from "../../store/authStore";
+import type { User } from "../../types/User";
+import { useSelectedUserStore } from "../../store/useSelectedUserStore";
+import { useHomeStore } from "../../store/homeStore";
+import { UserMarker } from "./UserMarker";
+import ReactDOMServer from "react-dom/server";
 
 declare global {
   interface Window {
@@ -23,13 +28,20 @@ const loadKakaoMap = () =>
     document.head.appendChild(s);
   });
 
-export function MapCanvas() {
+interface Props {
+  users: User[];
+}
+
+export function MapCanvas({ users }: Props) {
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
+  const userMarkerRef = useRef<any[]>([]);
   const watchIdRef = useRef<number | null>(null);
   const [isPWA, setIsPWA] = useState(false);
   const isModalOpen = useAuthStore((state) => state.isModalOpen);
+  const { selectedUser } = useSelectedUserStore();
   const isOpen = isModalOpen;
+  console.log(users);
 
   // 커스텀 마커 HTML
   const markerHtml = `
@@ -40,6 +52,59 @@ export function MapCanvas() {
       box-shadow:0 6px 18px rgba(0,0,0,.18); font-size:18px;">📍</div>
   `;
 
+  // 마커 렌더 함수
+  const renderUserMarkers = (kakao: typeof window.kakao, map: any) => {
+    userMarkerRef.current.forEach((marker) => marker.setMap(null));
+    userMarkerRef.current = [];
+
+    users?.forEach((user) => {
+      const userLatLng = new kakao.maps.LatLng(user.latitude, user.longitude);
+
+      const isSelected = selectedUser?.userId === user.userId;
+      console.log(user);
+
+      const htmlString = ReactDOMServer.renderToString(
+        <UserMarker user={user} isSelected={isSelected} />
+      );
+
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = htmlString;
+
+      const markerContent = wrapper.firstElementChild as HTMLElement;
+
+      const userMarker = new kakao.maps.CustomOverlay({
+        position: userLatLng,
+        content: markerContent,
+        yAnchor: 0.5,
+        xAnchor: 0.5,
+        map,
+      });
+
+      if (markerContent) {
+        markerContent.style.pointerEvents = "auto";
+        markerContent.style.cursor = "pointer";
+
+        markerContent.addEventListener("click", () => {
+          const { setSelectedUser } = useSelectedUserStore.getState();
+          const { setCheckProfile } = useHomeStore.getState();
+
+          setSelectedUser(user);
+          setCheckProfile(true);
+
+          if (mapRef.current) {
+            const latlng = new window.kakao.maps.LatLng(
+              user.latitude,
+              user.longitude
+            );
+            mapRef.current.panTo(latlng);
+          }
+        });
+      }
+
+      userMarkerRef.current.push(userMarker);
+    });
+  };
+
   useEffect(() => {
     // PWA 환경 감지
     const checkPWA = () => {
@@ -49,7 +114,6 @@ export function MapCanvas() {
         document.referrer.includes("android-app://")
       );
     };
-
     setIsPWA(checkPWA());
   }, []);
 
@@ -68,6 +132,11 @@ export function MapCanvas() {
         });
         mapRef.current = map;
 
+        kakao.maps.event.addListener(map, "click", () => {
+          const { setSelectedUser } = useSelectedUserStore.getState();
+          setSelectedUser(null);
+        });
+
         // 현재 위치 마커(커스텀 오버레이)
         const initialPos = new kakao.maps.LatLng(
           SSU_LOCATION.lat,
@@ -80,6 +149,8 @@ export function MapCanvas() {
           xAnchor: 0.5,
           map,
         });
+        renderUserMarkers(kakao, map);
+
         markerRef.current = marker;
 
         // 위치 갱신 함수
@@ -127,12 +198,25 @@ export function MapCanvas() {
       if (watchIdRef.current !== null) {
         try {
           navigator.geolocation.clearWatch(watchIdRef.current);
-        } catch {}
+        } catch (err) {
+          console.error(err);
+        }
       }
       if (markerRef.current) markerRef.current.setMap(null);
       if (mapRef.current) mapRef.current = null;
+      if (userMarkerRef.current) {
+        userMarkerRef.current.forEach((m) => m.setMap(null));
+        userMarkerRef.current = [];
+      }
     };
   }, []);
+
+  useEffect(() => {
+    if (!mapRef.current || !window.kakao?.maps) return;
+    userMarkerRef.current.forEach((marker) => marker.setMap(null));
+    userMarkerRef.current = [];
+    renderUserMarkers(window.kakao, mapRef.current);
+  }, [selectedUser]);
 
   return (
     <div

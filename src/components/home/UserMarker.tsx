@@ -1,30 +1,33 @@
+import Marker from "@/assets/icons/Vector.svg";
+import MatchMarker from "@/assets/icons/Vector_match.svg?url";
+import SelectMarker from "@/assets/icons/Vector_select.svg?url";
+import type { User } from "../../types/User";
 interface Props {
-  emoji: string;
-  status?: "online" | "offline"; // 상태 점 색상
-  select?: boolean;
+  user: User;
+  isSelected?: boolean;
 }
 
-export const UserMarker = ({ emoji, status = "online" }: Props) => {
-  return (
-    <div
-      className="relative flex items-center justify-center z-20"
-      style={{
-        width: "48px",
-        height: "60px",
-        aspectRatio: "4/5",
-        flexShrink: 0,
-      }}
-    >
-      {/* 중앙 이모지 */}
-      <span className="text-sm z-10">{emoji}</span>
+export const UserMarker = ({ user, isSelected }: Props) => {
+  const MarkerIcon = isSelected
+    ? SelectMarker
+    : user.isMatching
+    ? MatchMarker
+    : Marker;
 
-      {/* 하단 상태 점 */}
-      <span
-        className="absolute bottom-2 w-2 h-2 rounded-full"
-        style={{
-          backgroundColor: status === "online" ? "#22c55e" : "#9ca3af",
-        }}
-      />
+  return (
+    <div className="user-marker relative flex flex-col items-center justify-center z-80 w-12 cursor-pointer">
+      <img src={MarkerIcon} alt="marker_icon" className="w-12 h-15" />
+
+      <div className="absolute top-3 flex flex-col justify-center items-center gap-1">
+        <span className="text-sm z-10">{user.emoji}</span>
+
+        <span
+          className="w-1 h-1 rounded-full"
+          style={{
+            backgroundColor: status === "online" ? "#22c55e" : "#9ca3af",
+          }}
+        />
+      </div>
     </div>
   );
 };
