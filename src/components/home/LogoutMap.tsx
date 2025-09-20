@@ -56,7 +56,7 @@ export function LogoutMap() {
     MockPeople.forEach((user) => {
       const userLatLng = new kakao.maps.LatLng(user.latitude, user.longitude);
 
-      const isSelected = selectedUser?.id === user.id;
+      const isSelected = selectedUser?.userId === user.userId;
 
       const htmlString = ReactDOMServer.renderToString(
         <UserMarker user={user} isSelected={isSelected} />

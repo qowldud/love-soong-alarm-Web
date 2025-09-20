@@ -63,7 +63,6 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
   const setMemberout = useAuthStore((state) => state.setIsMemberOutOpen);
   const setExcessChat = useChatStore((state) => state.setExcessChat);
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
-  const { setSelectedUser } = useSelectedUserStore();
 
   const cardRef = useRef<HTMLDivElement>(null);
 
