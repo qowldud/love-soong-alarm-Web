@@ -46,7 +46,7 @@ export const getPrevChat = async ({
 }) => {
   try {
     const response = await getData<PrevMessage>(
-      `/api/chats/rooms/${roomId}/previous-message`,
+      `/api/chats/rooms/${roomId}/previous-messages`,
       { roomId: roomId, size: size || 50, lastMessageId: lastMessageId }
     );
     return response;

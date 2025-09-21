@@ -17,19 +17,18 @@ import type {
   UnsubscribeList,
 } from "../types/socket";
 import { useChatStore } from "../store/chatStore";
-import type { RecentMessage } from "../types/chat";
+
 import { useMessageStore } from "../store/messageStore";
 import { useHomeStore } from "../store/homeStore";
 
 export const useWebSocket = () => {
   const setExcessChat = useChatStore((state) => state.setExcessChat);
-  const setNewMessage = useMessageStore((state) => state.setNewMessage);
   const setIsNoticeAlarm = useHomeStore((state) => state.setIsNoticeAlarm);
   const setIsChatAlarm = useHomeStore((state) => state.setIsChatAlarm);
   const setNewChats = useMessageStore((state) => state.setNewChats);
 
   const handleConnectionSuccess = (data: ConnectionSuccess) => {
-    toast.success("채팅이 연결되었습니다.");
+    // toast.success("채팅이 연결되었습니다.");
     console.log("✅ CONNECTION_SUCCESS:", data);
   };
 
@@ -55,16 +54,7 @@ export const useWebSocket = () => {
 
   const handleChatMessage = (data: CheckSendMessage) => {
     console.log("💬 CHAT_MESSAGE:", data);
-
-    const recent: RecentMessage = {
-      messageId: data.messageId,
-      content: data.content,
-      createdAt: data.timestamp,
-      isSentByMe: data.isSentByMe,
-      isRead: false,
-    };
-
-    setNewMessage({ item: recent });
+    window.dispatchEvent(new CustomEvent("revalidate:chat"));
   };
 
   const handleExcessChat = (data: ExcessChat) => {
@@ -74,7 +64,6 @@ export const useWebSocket = () => {
 
   const handleChatListUpdate = (data: ListUpdate) => {
     console.log("📜 CHAT_LIST_UPDATE:", data);
-
     setNewChats({ newChat: data });
   };
 
@@ -87,6 +76,7 @@ export const useWebSocket = () => {
   };
 
   const handleNewUserChat = () => {
+    console.log("NEW_CHAT_ROOM_CREATED");
     window.dispatchEvent(new CustomEvent("revalidate:home"));
     return;
   };
@@ -97,7 +87,6 @@ export const useWebSocket = () => {
 
   const handleNotifiactionAlarm = (data: NotifiactionUpdate) => {
     console.log("Notiication Update: ", data);
-
     if (data.hasUnread) setIsNoticeAlarm(true);
     else setIsNoticeAlarm(false);
   };

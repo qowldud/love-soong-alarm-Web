@@ -5,8 +5,9 @@ import type { ChatRoom } from "../../../types/chat";
 import Lock from "@/assets/icons/ic_lock.svg";
 import Right_Button from "@/assets/icons/ic_right_button.svg";
 import { useHomeStore } from "../../../store/homeStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useMessageStore } from "../../../store/messageStore";
+import { getChatLists } from "../../../api/chat";
 
 const List = ({ item }: { item: ChatRoom }) => {
   const navigate = useNavigate();
@@ -114,38 +115,41 @@ export const ChatPreview = ({
   handleSendSubscribeList: () => void;
   handleSendUnsubscribeList: () => void;
 }) => {
+  const [remainSlot, setRemainSlot] = useState<number>();
   const newChats = useMessageStore((state) => state.newChats);
-
-  const subscribeRef = useRef(handleSendSubscribeList);
-  const unsubscribeRef = useRef(handleSendUnsubscribeList);
-  const didSubscribeRef = useRef(false);
-
-  subscribeRef.current = handleSendSubscribeList;
-  unsubscribeRef.current = handleSendUnsubscribeList;
+  const setInitLists = useMessageStore((s) => s.setInitLists);
 
   useEffect(() => {
-    const hasRooms = (newChats?.length ?? 0) > 0;
-    if (!didSubscribeRef.current && hasRooms) {
-      didSubscribeRef.current = true;
-      subscribeRef.current();
-    }
-
-    return () => {
-      if (didSubscribeRef.current) {
-        didSubscribeRef.current = false;
-        unsubscribeRef.current();
+    (async () => {
+      try {
+        const res = await getChatLists();
+        if (res?.data?.chatRooms) {
+          setRemainSlot(res.data.userSlotInfo.remainingSlot ?? 0);
+          setInitLists({ chatRooms: res.data.chatRooms });
+        }
+      } catch (err) {
+        console.error("채팅 리스트 불러오기 실패:", err);
       }
+    })();
+
+    handleSendSubscribeList();
+    return () => {
+      handleSendUnsubscribeList();
     };
-  }, []);
+  }, [handleSendSubscribeList, handleSendUnsubscribeList, setInitLists]);
 
   return (
     <div className="relative pb-10">
       <CardHeader branch="chat" title="채팅" />
       <div className="flex flex-col overflow-auto">
-        {newChats?.map((item, index) => (
-          <List key={index} item={item} />
+        {newChats?.map((item) => (
+          <List key={item.chatRoomId} item={item} />
         ))}
-        <EmptyList />
+
+        {Array.from({ length: remainSlot ?? 0 }).map((_, idx) => (
+          <EmptyList key={idx} />
+        ))}
+
         <LockedList />
       </div>
     </div>

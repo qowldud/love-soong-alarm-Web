@@ -17,7 +17,12 @@ import { ChatLayout } from "./components/chat/Layout";
 import { Coin } from "./pages/Coin";
 import { Setting } from "./pages/Setting";
 import { Alarm } from "./pages/Alarm";
-import { AlarmLoader, ChatLoader, HomeLoader } from "./hooks/loader";
+import {
+  AlarmLoader,
+  ChatLoader,
+  CoinLoader,
+  HomeLoader,
+} from "./hooks/loader";
 import { CoinCallback } from "./pages/CoinCallback";
 import { Splash } from "./pages/Splash";
 import { SocketLayout } from "./components/Layout/SocketLayout";
@@ -80,6 +85,7 @@ export const router = createBrowserRouter([
               {
                 path: "/coin",
                 element: <Coin />,
+                loader: CoinLoader,
               },
               {
                 path: "/coin/callback",

@@ -29,6 +29,17 @@ export const getUserMaxSlots = async () => {
   }
 };
 
+export const getUserTickets = async () => {
+  try {
+    const response = await getData<{ chatTicket: number }>(
+      "/api/users/tickets"
+    );
+    return response;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
 export const onboardingProfile = async () => {
   try {
     const response = await patchData(`/api/users/on-boarding`, {});

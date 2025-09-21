@@ -1,6 +1,6 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useRevalidator } from "react-router-dom";
 
 import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
@@ -23,7 +23,6 @@ import { useStepLocationUpdate } from "../../../hooks/useLocationUpdate";
 import { OutOfBoundsNotice } from "../OutOfBoundsNotice";
 import { useChatStore } from "../../../store/chatStore";
 import { ReachMaxModal } from "../../../hooks/modal";
-import { useMessageStore } from "../../../store/messageStore";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -49,7 +48,9 @@ export const LoggedInView = ({
   handleSendSubscribeList: () => void;
   handleSendUnsubscribeList: () => void;
 }) => {
-  const { locationData, chatLists } = useLoaderData();
+  const revalidator = useRevalidator();
+
+  const { locationData } = useLoaderData();
   const { location } = useGeoLocation();
   console.log(locationData.data);
 
@@ -60,7 +61,6 @@ export const LoggedInView = ({
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
-  const setInitLists = useMessageStore((state) => state.setInitLists);
 
   const RenderCard = () => (
     <>
@@ -92,21 +92,19 @@ export const LoggedInView = ({
   }, [location?.latitude, location?.longitude]);
 
   useEffect(() => {
-    if (chatLists?.data?.chatRooms) {
-      setInitLists({ chatRooms: chatLists.data.chatRooms });
-    }
-  }, [chatLists, setInitLists]);
+    const onRevalidate = () => {
+      revalidator.revalidate();
+    };
+    window.addEventListener("revalidate:home", onRevalidate);
+    return () => window.removeEventListener("revalidate:home", onRevalidate);
+  }, [revalidator]);
 
   useStepLocationUpdate({
     enabled: isAuth,
     intervalMs: 5000,
-    thresholdMeters: 10,
+    thresholdMeters: 0,
     getCurrent: () => latestRef.current,
-    post: ({ latitude, longitude }) =>
-      postLocation({
-        latitude,
-        longitude,
-      }),
+    post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),
   });
 
   return (
@@ -126,7 +124,7 @@ export const LoggedInView = ({
         } absolute flex flex-row gap-x-2 left-4 right-4 z-30 justify-between`}
       />
 
-      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-2 z-30 items-center">
+      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
         <Button>
           <img src={Location} alt={"location"} />
         </Button>

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { useWebSocket } from "../../hooks/useWebSocket";
 import { useReliableSocket } from "../../hooks/useReliableSocket";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 export interface SocketActions {
   handlePlainType?: (type: string, chatRoomId: number) => void;
@@ -92,7 +92,8 @@ export const SocketLayout = () => {
       }
     },
     onError: (e) => console.error("❌ WebSocket 에러:", e),
-    onClose: () => toast.warn("WebSocket 닫힘"),
+    onClose: () => {},
+    // toast.warn("WebSocket 닫힘"),
   });
 
   const handlePlainType = (type: string, chatRoomId: number) => {

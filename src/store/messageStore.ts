@@ -7,6 +7,11 @@ type MessageStore = {
   newMessage: RecentMessage[];
   newChats: ChatRoom[];
 
+  chatDetailMessages: RecentMessage[];
+  setInitMessages: (messages: RecentMessage[]) => void;
+  prependMessages: (messages: RecentMessage[]) => void;
+  appendMessage: (message: RecentMessage) => void;
+
   setNewMessage: (args: { item: RecentMessage }) => void;
   setInitLists: ({ chatRooms }: { chatRooms: ChatRoom[] }) => void;
   setReadMessage: () => void;
@@ -17,6 +22,7 @@ type MessageStore = {
 export const useMessageStore = create<MessageStore>()((set) => ({
   newMessage: [],
   newChats: [],
+  chatDetailMessages: [],
 
   setNewMessage: ({ item }) =>
     set((s) => ({ newMessage: [...s.newMessage, item] })),
@@ -110,4 +116,14 @@ export const useMessageStore = create<MessageStore>()((set) => ({
         ],
       };
     }),
+
+  setInitMessages: (messages) => set({ chatDetailMessages: messages }),
+
+  prependMessages: (messages) =>
+    set((s) => ({
+      chatDetailMessages: [...messages, ...s.chatDetailMessages],
+    })),
+
+  appendMessage: (message) =>
+    set((s) => ({ chatDetailMessages: [...s.chatDetailMessages, message] })),
 }));

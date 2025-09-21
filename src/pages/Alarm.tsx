@@ -1,8 +1,6 @@
 import { useLoaderData, useNavigate, useRevalidator } from "react-router-dom";
 import { useHomeStore } from "../store/homeStore";
 
-import { ALARM_CONST } from "../hooks/consts";
-
 import Close from "@/assets/icons/ic_close.svg";
 import Check from "@/assets/icons/ic_check.svg";
 import Error from "@/assets/icons/ic_error.svg";
@@ -13,13 +11,7 @@ import {
   readIndivAlarm,
 } from "../api/notice";
 import { toast } from "react-toastify";
-
-type ListProps = {
-  id: number;
-  title: string;
-  content: string;
-  time: string;
-};
+import type { Notice } from "../types/notice";
 
 const CheckLabel = (type: "before" | "after") => {
   if (type === "before")
@@ -63,13 +55,7 @@ const Title = ({ type }: { type: "before" | "after" }) => {
   );
 };
 
-const List = ({
-  item,
-  type,
-}: {
-  item: ListProps;
-  type: "before" | "after";
-}) => {
+const List = ({ item, type }: { item: Notice; type: "before" | "after" }) => {
   const revalidator = useRevalidator();
   const navigate = useNavigate();
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
@@ -99,18 +85,18 @@ const List = ({
 
   return (
     <div
-      className="w-full py-2.5 flex flex-row justify-between items-center"
+      className="w-full py-2.5 flex flex-row justify-between items-center cursor-pointer"
       onClick={() => handleClick({ id: Number(item.id) })}
     >
       <div className="flex flex-col">
-        <div className="text-[16px]">{item.title}</div>
+        <div className="text-[16px]">새로운 이성이 왔어요!</div>
         <div className="text-[12px] font-light text-[#231D33]/80">
-          {item.content}
+          {item.message}
         </div>
       </div>
       <div className="flex flex-row gap-x-2 items-center">
         <div className="text-[12px] font-light text-[#231D33]/60">
-          {item.time}
+          {item.notificationTime}
         </div>
         {type === "before" ? (
           <div className="bg-main1 w-1.5 h-1.5 rounded-full" />
@@ -129,13 +115,14 @@ const List = ({
   );
 };
 
-const ERROR_VALID = false;
-
 export const Alarm = () => {
   const { alarmList } = useLoaderData();
-  console.log(alarmList);
 
-  if (ERROR_VALID) {
+  const notices: Notice[] = alarmList?.data ?? [];
+  const unread = notices.filter((n) => !n.isRead);
+  const read = notices.filter((n) => n.isRead);
+
+  if (!alarmList.data.length) {
     return (
       <div className="w-full h-full flex flex-col justify-center items-center gap-y-2">
         <img src={Error} alt={"Error"} />
@@ -147,21 +134,28 @@ export const Alarm = () => {
   }
 
   return (
-    <div className="relative">
-      <div className=" flex flex-col overflow-y-auto gap-y-2 divide-y-2 divide-[#EDEBF2]">
-        <div className="px-4 py-2.5">
-          <Title type="before" />
-          {ALARM_CONST.before.map((item, index) => (
-            <List key={index} item={item} type="before" />
-          ))}
-        </div>
-
-        <div className="px-4 py-2.5">
-          <Title type="after" />
-          {ALARM_CONST.after.map((item, index) => (
-            <List key={index} item={item} type="after" />
-          ))}
-        </div>
+    <div className="relative h-full">
+      <div className="flex flex-col h-full overflow-y-auto gap-y-2 divide-y-2 divide-[#EDEBF2]">
+        {unread.length ? (
+          <div className="px-4 py-2.5">
+            <Title type="before" />
+            {unread?.map((item, index) => (
+              <List key={index} item={item} type="before" />
+            ))}
+          </div>
+        ) : (
+          <></>
+        )}
+        {read.length ? (
+          <div className="px-4 py-2.5">
+            <Title type="after" />
+            {read?.map((item, index) => (
+              <List key={index} item={item} type="after" />
+            ))}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

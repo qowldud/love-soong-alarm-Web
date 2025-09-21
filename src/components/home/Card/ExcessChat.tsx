@@ -5,6 +5,8 @@ import Ticket from "@/assets/icons/ic_ticket.svg";
 import { useApi } from "../../../api/api";
 import { toast } from "react-toastify";
 import { useChatStore } from "../../../store/chatStore";
+import { getUserTickets } from "../../../api/auth";
+import { useEffect, useState } from "react";
 
 export const ExcessChat = () => {
   const { postData } = useApi();
@@ -12,6 +14,19 @@ export const ExcessChat = () => {
   const navigate = useNavigate();
   const { chatRoomId } = useParams<{ chatRoomId: string }>();
   const setExcessChat = useChatStore((state) => state.setExcessChat);
+
+  const [tickets, setTickets] = useState<number>(0);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getUserTickets();
+        setTickets(res?.data.chatTicket ?? 0);
+      } catch (err) {
+        console.error("티켓 개수 불러오기 실패:", err);
+      }
+    })();
+  }, []);
 
   const handleUse = async () => {
     const response = await postData(
@@ -48,7 +63,7 @@ export const ExcessChat = () => {
               내 채팅 티켓
             </div>
           </div>
-          <div className="text-base text-additive">3개</div>
+          <div className="text-base text-additive">{tickets} 개</div>
         </div>
 
         <div className="flex flex-row gap-x-2 py-2.5">

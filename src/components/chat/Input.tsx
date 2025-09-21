@@ -1,6 +1,6 @@
 import Add from "@/assets/icons/ic_add.svg";
 import Send from "@/assets/icons/ic_send.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -11,6 +11,7 @@ export const ChatInput = ({
 }) => {
   const [message, setMessage] = useState<string>("");
   const { chatRoomId } = useParams<{ chatRoomId: string }>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleMessage = () => {
     if (!message.trim()) {
@@ -19,6 +20,7 @@ export const ChatInput = ({
     }
     handleSend(Number(chatRoomId), message);
     setMessage("");
+    inputRef.current?.focus();
   };
 
   return (
@@ -32,6 +34,7 @@ export const ChatInput = ({
             onClick={() => toast.warn("아직 준비중입니다.")}
           />
           <input
+            ref={inputRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {

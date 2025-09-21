@@ -1,6 +1,6 @@
 import { healthCheck } from "../api/api";
-import { getUserMaxSlots } from "../api/auth";
-import { getChatLists, getDetailChat } from "../api/chat";
+import { getUserTickets } from "../api/auth";
+import { getDetailChat } from "../api/chat";
 import { getLocation } from "../api/location";
 import { getNotifications } from "../api/notice";
 
@@ -14,12 +14,15 @@ export const HomeLoader = async () => {
   const accessToken = localStorage.getItem("accessToken");
 
   if (!accessToken) return;
-
-  const maxSlots = await getUserMaxSlots();
   const locationData = await getLocation();
-  const chatLists = await getChatLists();
 
-  return { maxSlots, locationData, chatLists };
+  return { locationData };
+};
+
+export const CoinLoader = async () => {
+  const ticketNumber = await getUserTickets();
+
+  return { ticketNumber };
 };
 
 export const ChatLoader = async ({ params }: any) => {

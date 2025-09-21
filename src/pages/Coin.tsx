@@ -1,6 +1,7 @@
 import Ticket from "@/assets/icons/ic_ticket.svg";
 import { useState, type ReactNode } from "react";
 import { Button } from "../common/Button";
+import { useLoaderData } from "react-router-dom";
 
 type Payment = {
   id: number;
@@ -92,6 +93,7 @@ const List = ({
 };
 
 export const Coin = () => {
+  const { ticketNumber } = useLoaderData();
   const [select, setSelect] = useState<Payment | null>(null);
 
   const handleSelect = (item: Payment) => setSelect(item);
@@ -115,7 +117,9 @@ export const Coin = () => {
               내 채팅 티켓
             </div>
           </div>
-          <div className=" text-additive text-[16px] pt-2.5">3개</div>
+          <div className=" text-additive text-[16px] pt-2.5">
+            {ticketNumber.data.chatTicket} 개
+          </div>
         </Header>
         <Border />
 
