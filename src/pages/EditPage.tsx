@@ -8,21 +8,7 @@ import { useEditProfileStore } from "../store/EditProfileState";
 import { useApi } from "../api/api";
 import { useEffect } from "react";
 import { INTEREST_OPTIONS } from "../constants/interests";
-
-interface Interest {
-  label: string;
-  detailLabel: string;
-  hashTags: string[];
-}
-
-interface UserProfile {
-  name: string;
-  birthDate: number;
-  major: string;
-  emoji: string;
-  gender: "MALE" | "FEMALE";
-  interests: Interest[];
-}
+import type { Interest, UserProfile } from "../types/User";
 
 export const EditPage = () => {
   const [selectedTab, setSelectedTab] = useState("프로필");

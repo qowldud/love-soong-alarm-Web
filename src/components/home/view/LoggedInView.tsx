@@ -23,6 +23,9 @@ import { useStepLocationUpdate } from "../../../hooks/useLocationUpdate";
 import { OutOfBoundsNotice } from "../OutOfBoundsNotice";
 import { useChatStore } from "../../../store/chatStore";
 import { ReachMaxModal } from "../../../hooks/modal";
+import { useQuery } from "@tanstack/react-query";
+import { useApi } from "../../../api/api";
+import type { UserProfile } from "../../../types/User";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -112,6 +115,15 @@ export const LoggedInView = ({
     post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),
   });
 
+  const { getData } = useApi();
+
+  const { data: myProfile } = useQuery({
+    queryKey: ["user-profile"],
+    queryFn: () => getData<UserProfile>("/api/users/me"),
+  });
+
+  console.log(myProfile);
+
   return (
     <>
       <div className="w-full">
@@ -124,6 +136,7 @@ export const LoggedInView = ({
         <MapCanvas
           users={locationData?.data?.nearbyUsersInformation}
           ref={mapRef}
+          myProfile={myProfile?.data}
         />
       ) : (
         <OutOfBoundsNotice />

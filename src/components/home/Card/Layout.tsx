@@ -63,7 +63,7 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
   const setMemberout = useAuthStore((state) => state.setIsMemberOutOpen);
   const setExcessChat = useChatStore((state) => state.setExcessChat);
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
-  const { setSelectedUser } = useSelectedUserStore();
+  const { resetSelected } = useSelectedUserStore();
 
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -106,6 +106,7 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+        if (branch === "profile") resetSelected();
         onClose(false);
       }
     };
@@ -133,7 +134,7 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
             dragElastic={0.12}
             onDragEnd={(_, info) => {
               if (info.offset.y > 120 || info.velocity.y > 800) {
-                if (branch === "profile") setSelectedUser(null);
+                if (branch === "profile") resetSelected();
                 onClose(false);
               }
             }}

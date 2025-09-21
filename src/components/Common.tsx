@@ -3,7 +3,7 @@ import { useHomeStore } from "../store/homeStore";
 
 import Close from "@/assets/icons/ic_close.svg";
 import { useSelectedUserStore } from "../store/useSelectedUserStore";
-import type { UserInterest } from "../types/User";
+import type { Interest, UserInterest } from "../types/User";
 import clsx from "clsx";
 import type { ChatDetail } from "../types/chat";
 
@@ -16,14 +16,14 @@ export const CardHeader = ({
 }) => {
   const setResetHome = useHomeStore((state) => state.setReset);
   const setResetAuth = useAuthStore((state) => state.setReset);
-  const { setSelectedUser } = useSelectedUserStore();
+  const { resetSelected } = useSelectedUserStore();
 
   const handleReset = () => {
     setResetHome(branch);
     setResetAuth();
 
     if (branch === "profile") {
-      setSelectedUser(null);
+      resetSelected();
     }
   };
 
@@ -103,7 +103,11 @@ export const Hashtag = ({
   );
 };
 
-export const HashTagWrapper = ({ interest }: { interest: UserInterest }) => (
+export const HashTagWrapper = ({
+  interest,
+}: {
+  interest: UserInterest | Interest;
+}) => (
   <div className="flex gap-2">
     <Hashtag label={interest.detailLabel} isHashTag={false} />
 
@@ -113,16 +117,26 @@ export const HashTagWrapper = ({ interest }: { interest: UserInterest }) => (
   </div>
 );
 
+const getAgeFromBirthYear = (birthYear: number): number => {
+  const currentYear = new Date().getFullYear();
+  return currentYear - birthYear + 1;
+};
+
 export const Profile = () => {
-  const { selectedUser } = useSelectedUserStore();
+  const { selectedUser, selectedMy } = useSelectedUserStore();
 
   return (
     <div className="flex gap-2 items-center py-2.5 w-full">
-      <div>{selectedUser?.emoji}</div>
+      <div>{selectedUser ? selectedUser?.emoji : selectedMy?.emoji}</div>
       <div className="flex flex-col flex-1 px-1">
-        <div className="text-lg">{selectedUser?.name}</div>
+        <div className="text-lg">
+          {selectedUser ? selectedUser?.name : selectedMy?.name}
+        </div>
         <div className="text-xs text-additive">
-          {selectedUser?.age}세 | {selectedUser?.major}
+          {selectedUser
+            ? selectedUser?.age
+            : getAgeFromBirthYear(Number(selectedMy?.birthDate))}
+          세 | {selectedUser ? selectedUser?.major : selectedMy?.major}
         </div>
       </div>
 

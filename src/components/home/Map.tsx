@@ -7,7 +7,7 @@ import {
   type JSX,
 } from "react";
 import { useAuthStore } from "../../store/authStore";
-import type { User } from "../../types/User";
+import type { User, UserProfile } from "../../types/User";
 import { useSelectedUserStore } from "../../store/useSelectedUserStore";
 import { useHomeStore } from "../../store/homeStore";
 import { UserMarker } from "./UserMarker";
@@ -41,10 +41,11 @@ interface MapCanvasRef {
 
 interface Props {
   users?: User[];
+  myProfile?: UserProfile;
 }
 
 export const MapCanvas = forwardRef<MapCanvasRef, Props>(
-  ({ users }, ref): JSX.Element => {
+  ({ users, myProfile }, ref): JSX.Element => {
     const mapRef = useRef<any>(null);
     const markerRef = useRef<any>(null);
     const userMarkerRef = useRef<any[]>([]);
@@ -70,14 +71,50 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
       moveToCurrentLocation,
     }));
 
-    // 커스텀 마커 HTML
-    const markerHtml = `
-    <div style="
-      transform: translate(-50%, -50%);
-      width: 36px; height: 36px; display:flex; align-items:center; justify-content:center;
-      background:#fff; border-radius:9999px; border:2px solid #3b82f6;
-      box-shadow:0 6px 18px rgba(0,0,0,.18); font-size:18px;">📍</div>
-  `;
+    // 내 마커 생성
+    const createMyMarker = (kakao: typeof window.kakao, map: any) => {
+      if (!myProfile) return;
+
+      // 기존 마커 제거
+      if (markerRef.current) {
+        markerRef.current.setMap(null);
+      }
+
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = `
+        <div style="transform:translate(-50%,-50%);width:36px;height:36px;
+          display:flex;align-items:center;justify-content:center;
+          background:#fff;border-radius:9999px;border:2px solid #3b82f6;
+          box-shadow:0 6px 18px rgba(0,0,0,.18);font-size:18px;cursor:pointer;">
+          ${myProfile.emoji}
+        </div>
+      `;
+
+      const markerContent = wrapper.firstElementChild as HTMLElement;
+      markerContent.addEventListener("click", () => {
+        const { setSelectedMy } = useSelectedUserStore.getState();
+        const { setCheckProfile } = useHomeStore.getState();
+        setSelectedMy(myProfile);
+        setCheckProfile(true);
+      });
+
+      const pos = currentLocationRef.current
+        ? new kakao.maps.LatLng(
+            currentLocationRef.current.lat,
+            currentLocationRef.current.lng
+          )
+        : new kakao.maps.LatLng(SSU_LOCATION.lat, SSU_LOCATION.lng);
+
+      const marker = new kakao.maps.CustomOverlay({
+        position: pos,
+        content: markerContent,
+        yAnchor: 0.5,
+        xAnchor: 0.5,
+        map,
+      });
+
+      markerRef.current = marker;
+    };
 
     // 마커 렌더 함수
     const renderUserMarkers = (kakao: typeof window.kakao, map: any) => {
@@ -149,7 +186,7 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
         const kakao = await loadKakaoMap();
         kakao.maps.load(() => {
           const container = document.getElementById("map");
-          if (!container) return;
+          if (!container || !myProfile) return;
 
           const map = new kakao.maps.Map(container, {
             center: new kakao.maps.LatLng(SSU_LOCATION.lat, SSU_LOCATION.lng),
@@ -164,26 +201,15 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
             setSelectedUser(null);
           });
 
-          // 현재 위치 마커(커스텀 오버레이)
-          const initialPos = new kakao.maps.LatLng(
-            SSU_LOCATION.lat,
-            SSU_LOCATION.lng
-          );
-          const marker = new kakao.maps.CustomOverlay({
-            position: initialPos,
-            content: markerHtml,
-            yAnchor: 0.5,
-            xAnchor: 0.5,
-            map,
-          });
+          createMyMarker(kakao, map);
           renderUserMarkers(kakao, map);
-
-          markerRef.current = marker;
 
           // 위치 갱신 함수
           const updatePosition = (lat: number, lng: number) => {
             const pos = new kakao.maps.LatLng(lat, lng);
-            marker.setPosition(pos);
+            if (markerRef.current) {
+              markerRef.current.setPosition(pos);
+            }
             map.panTo(pos);
 
             currentLocationRef.current = { lat, lng };
@@ -238,7 +264,7 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
           userMarkerRef.current = [];
         }
       };
-    }, []);
+    }, [myProfile]);
 
     useEffect(() => {
       if (!mapRef.current || !window.kakao?.maps) return;
