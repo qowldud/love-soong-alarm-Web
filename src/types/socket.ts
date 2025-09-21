@@ -84,6 +84,22 @@ export interface NewChatUpdate {
   createdAt: string;
 }
 
+export interface BlockUser {
+  type: "BLOCK_USER";
+  chatRoomId: number;
+  message: string;
+  targetUserId: number;
+  isBlocked: null;
+}
+
+export interface UnblockUser {
+  type: "UNBLOCK_USER";
+  chatRoomId: number;
+  message: string;
+  targetUserId: number;
+  isBlocked: null;
+}
+
 export interface Notification {
   type: "NOTIFICATION";
   notificationId: number;

@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import type {
+  BlockUser,
   CheckSendMessage,
   ConnectionSuccess,
   ErrorType,
@@ -13,6 +14,7 @@ import type {
   SubscribeList,
   SuccessSubscribe,
   SuccesUnsubscribe,
+  UnblockUser,
   UnreadBadgeUpdate,
   UnsubscribeList,
 } from "../types/socket";
@@ -77,7 +79,6 @@ export const useWebSocket = () => {
 
   const handleNewUserChat = () => {
     console.log("NEW_CHAT_ROOM_CREATED");
-    window.dispatchEvent(new CustomEvent("revalidate:home"));
     return;
   };
 
@@ -89,6 +90,14 @@ export const useWebSocket = () => {
     console.log("Notiication Update: ", data);
     if (data.hasUnread) setIsNoticeAlarm(true);
     else setIsNoticeAlarm(false);
+  };
+
+  const handleBlockUser = (data: BlockUser) => {
+    console.log("BLOCK_USER: ", data);
+  };
+
+  const handleUnblockUser = (data: UnblockUser) => {
+    console.log("UNBLOCK_USER: ", data);
   };
 
   const handleReadAllNotificatino = (data: ReadAllNotification) => {
@@ -115,6 +124,8 @@ export const useWebSocket = () => {
     handleSubscribeList,
     handleUnsubscribeList,
     handleNewUserChat,
+    handleBlockUser,
+    handleUnblockUser,
     handleNotification,
     handleNotifiactionAlarm,
     handleReadAllNotificatino,

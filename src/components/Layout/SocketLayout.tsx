@@ -7,6 +7,8 @@ import { useReliableSocket } from "../../hooks/useReliableSocket";
 export interface SocketActions {
   handlePlainType?: (type: string, chatRoomId: number) => void;
   handleEnter?: (chatRoomId: number) => void;
+  handleBlock?: (chatRoomId: number) => void;
+  handleUnblock?: (chatRoomId: number) => void;
   handleSendSubscribeList?: () => void;
   handleSendUnsubscribeList?: () => void;
   handleExit?: (chatRoomId: number) => void;
@@ -39,6 +41,8 @@ export const SocketLayout = () => {
     handleSubscribeList,
     handleUnsubscribeList,
     handleNewUserChat,
+    handleBlockUser,
+    handleUnblockUser,
     handleNotification,
     handleNotifiactionAlarm,
     handleReadAllNotificatino,
@@ -53,6 +57,7 @@ export const SocketLayout = () => {
         sendMessage({ type: "SUBSCRIBE", chatRoomId: id });
       }
     },
+
     onMessage: (data) => {
       switch (data.type) {
         case "CONNECTION_SUCCESS":
@@ -77,6 +82,10 @@ export const SocketLayout = () => {
           return handleUnsubscribeList(data);
         case "NEW_CHAT_ROOM_CREATED":
           return handleNewUserChat();
+        case "BLOCK_USER":
+          return handleBlockUser(data);
+        case "UNBLOCK_USER":
+          return handleUnblockUser(data);
         case "NOTIFICATION":
           return handleNotification(data);
         case "UNREAD_NOTIFICATION_BADGE_UPDATE":
@@ -88,9 +97,11 @@ export const SocketLayout = () => {
         case "ERROR":
           return handleError(data);
         default:
+          console.log(data);
           return;
       }
     },
+
     onError: (e) => console.error("❌ WebSocket 에러:", e),
     onClose: () => {},
     // toast.warn("WebSocket 닫힘"),
@@ -102,6 +113,14 @@ export const SocketLayout = () => {
 
   const handleEnter = (chatRoomId: number) => {
     sendMessage({ type: "SUBSCRIBE", chatRoomId: chatRoomId });
+  };
+
+  const handleBlock = (chatRoomId: number) => {
+    sendMessage({ type: "BLOCK_USER", chatRoomId: chatRoomId });
+  };
+
+  const handleUnblock = (chatRoomId: number) => {
+    sendMessage({ type: "UNBLOCK_USER", chatRoomId: chatRoomId });
   };
 
   const handleSendSubscribeList = () => {
@@ -130,6 +149,8 @@ export const SocketLayout = () => {
   const ctx: SocketActions = {
     handlePlainType,
     handleEnter,
+    handleBlock,
+    handleUnblock,
     handleSendSubscribeList,
     handleSendUnsubscribeList,
     handleExit,

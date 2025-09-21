@@ -40,7 +40,7 @@ export const ChatLayout = () => {
   return (
     <div className="flex h-dvh max-w-dvw flex-col overflow-hidden">
       <div className="flex flex-col items-center gap-4 shrink-0">
-        <ChatCard chatDetail={chatDetail.data} />
+        <ChatCard chatDetail={chatDetail?.data} />
       </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">

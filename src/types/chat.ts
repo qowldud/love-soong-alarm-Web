@@ -30,6 +30,8 @@ export interface ChatDetail {
   recentMessages: RecentMessage[];
   hasMoreMessages: boolean;
   oldestMessageId: number;
+  isPartnerBlocked: boolean;
+  isBlockedByPartner: boolean;
 }
 
 interface Partner {

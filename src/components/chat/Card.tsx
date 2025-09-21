@@ -11,7 +11,11 @@ export const ChatCard = ({ chatDetail }: { chatDetail: ChatDetail }) => {
     <div className="relative flex flex-col gap-y-1 bg-white px-4 py-2.5 w-full">
       <div className="flex flex-row justify-between items-center py-2.5">
         <ProfileLabel chatDetail={chatDetail} />
-        <Button_v2 branch="ALERT" onClick={() => setIgnoreUser(true)} />
+        {chatDetail?.isPartnerBlocked ? (
+          <Button_v2 branch="BLOCK" onClick={() => setIgnoreUser(false)} />
+        ) : (
+          <Button_v2 branch="BLOCK" onClick={() => setIgnoreUser(true)} />
+        )}
       </div>
 
       <div className="flex flex-row flex-nowrap gap-x-1.5 overflow-x-auto py-2 pr-4 no-scrollbar">

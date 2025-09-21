@@ -66,7 +66,7 @@ export const ProfilePreview = () => {
         <div className="flex py-2.5">
           <Button
             children={selectedUser ? "채팅하기" : "수정하기"}
-            onClick={() => handleClick(2)}
+            onClick={() => handleClick(selectedUser?.userId)}
           />
         </div>
       </div>

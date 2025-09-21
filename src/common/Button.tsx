@@ -46,7 +46,7 @@ export const Button_v2 = ({ branch, ...props }: ButtonProps) => {
           수정
         </button>
       );
-    case "ALERT":
+    case "BLOCK":
       return (
         <button
           className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5"
@@ -54,6 +54,16 @@ export const Button_v2 = ({ branch, ...props }: ButtonProps) => {
         >
           <img src={Alert} alt={"alert"} />
           차단
+        </button>
+      );
+    case "UNBLOCK":
+      return (
+        <button
+          className="flex flex-row gap-x-1 truncate bg-[#AD929B]/8 text-[12px] text-[#331D24] rounded-[8px] p-2.5"
+          {...props}
+        >
+          <img src={Alert} alt={"alert"} />
+          차단 해제
         </button>
       );
     default:

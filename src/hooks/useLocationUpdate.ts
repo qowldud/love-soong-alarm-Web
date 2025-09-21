@@ -38,7 +38,8 @@ export function useStepLocationUpdate({
       if (!cur) return;
 
       if (!savedRef.current) {
-        savedRef.current = { lat: cur.lat, lng: cur.lng };
+        // savedRef.current = { lat: cur.lat, lng: cur.lng };
+        savedRef.current = { lat: 37.4945402275658, lng: 126.95977107078 };
         return;
       }
 
@@ -47,7 +48,11 @@ export function useStepLocationUpdate({
 
       if (dist >= thresholdMeters) {
         try {
-          await post({ latitude: cur.lat, longitude: cur.lng });
+          // await post({ latitude: cur.lat, longitude: cur.lng });
+          await post({
+            latitude: 37.4945402275658,
+            longitude: 126.95977107078,
+          });
           savedRef.current = { lat: cur.lat, lng: cur.lng };
         } catch (e) {
           if (!silentFail) throw e;

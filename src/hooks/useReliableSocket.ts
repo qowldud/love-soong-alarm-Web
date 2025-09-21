@@ -57,9 +57,7 @@ export function useReliableSocket(
       retryCountRef.current += 1;
 
       if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
-      reconnectTimer.current = setTimeout(() => {
-        connect();
-      }, retryDelay);
+      reconnectTimer.current = setTimeout(() => {}, retryDelay);
     };
   }, [urlFactory, handlers]);
 
