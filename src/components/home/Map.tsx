@@ -29,7 +29,7 @@ const loadKakaoMap = () =>
   });
 
 interface Props {
-  users: User[];
+  users?: User[];
 }
 
 export function MapCanvas({ users }: Props) {

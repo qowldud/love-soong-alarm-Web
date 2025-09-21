@@ -10,7 +10,7 @@ export interface User {
   major: string;
   emoji: string;
   interests: UserInterest[];
-  lastSeen: string;
+  lastSeen: string | null;
   isMatching: boolean;
   latitude: number;
   longitude: number;

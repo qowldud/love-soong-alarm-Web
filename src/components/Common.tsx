@@ -16,10 +16,15 @@ export const CardHeader = ({
 }) => {
   const setResetHome = useHomeStore((state) => state.setReset);
   const setResetAuth = useAuthStore((state) => state.setReset);
+  const { setSelectedUser } = useSelectedUserStore();
 
   const handleReset = () => {
     setResetHome(branch);
     setResetAuth();
+
+    if (branch === "profile") {
+      setSelectedUser(null);
+    }
   };
 
   return (
