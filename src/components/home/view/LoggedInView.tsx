@@ -109,11 +109,13 @@ export const LoggedInView = ({
   return (
     <>
       <div className="w-full">
-        <ProfileCard />
+        <ProfileCard
+          userCount={locationData?.data?.nearbyUsersInformation?.length ?? 0}
+        />
       </div>
 
       {locationData ? (
-        <MapCanvas users={locationData?.data.nearbyUsersInformation} />
+        <MapCanvas users={locationData?.data?.nearbyUsersInformation} />
       ) : (
         <OutOfBoundsNotice />
       )}
@@ -129,7 +131,7 @@ export const LoggedInView = ({
         </Button>
 
         <HomeBottom
-          count={locationData?.data.matchCount}
+          count={locationData?.data?.matchCount}
           onClick={() => {
             if (!isAuth) {
               setIsModalOpen({ flag: true, type: "edit" });

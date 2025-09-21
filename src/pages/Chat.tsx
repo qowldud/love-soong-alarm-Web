@@ -117,7 +117,7 @@ export const Chat = () => {
     <>
       <div
         ref={containerRef}
-        className="relative h-full max-w-dvw overflow-y-auto touch-pan-y"
+        className="relative h-full w-full overflow-y-auto touch-pan-y"
       >
         <div ref={topRef} />
 

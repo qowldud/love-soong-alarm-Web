@@ -10,9 +10,9 @@ type Payment = {
 };
 
 const PAYMENT_CONST = [
-  { id: 1, content: "슬롯 1개 열기", value: 500 },
-  { id: 2, content: "슬롯 2개 열기", value: 700 },
-  { id: 3, content: "슬롯 3개 열기", value: 1000 },
+  { id: 1, content: "슬롯 1개 열기", value: 1000 },
+  { id: 2, content: "슬롯 2개 열기", value: 1200 },
+  { id: 3, content: "슬롯 3개 열기", value: 1300 },
   { id: 4, content: "티켓 1개", value: 1500 },
   { id: 5, content: "무제한 패스", value: 3900 },
 ];
@@ -97,27 +97,23 @@ export const Coin = () => {
   const [select, setSelect] = useState<Payment | null>(null);
 
   const handleSelect = (item: Payment) => setSelect(item);
-
   const onPay = () => {
-    if (select == null) {
-      alert("결제 옵션을 선택해주세요.");
-      return;
-    }
+    if (!select) return alert("결제 옵션을 선택해주세요.");
     const chosen = PAYMENT_CONST.find((p) => p.id === select.id)!;
     console.log("결제 선택:", chosen);
   };
 
   return (
-    <div className="flex h-full flex-col justify-between">
-      <div className="flex flex-col w-full gap-y-1 justify-cenbter items-start">
+    <div className="flex h-full flex-col">
+      <div className="flex-1 overflow-y-auto flex flex-col w-full gap-y-1 px-0 pb-24">
         <Header>
           <div className="flex flex-row gap-x-2 pt-2.5">
             <img src={Ticket} alt="Ticket" />
-            <div className="text-assistive font-light text-[16px]">
+            <div className="text-assistive font-light text-base">
               내 채팅 티켓
             </div>
           </div>
-          <div className=" text-additive text-[16px] pt-2.5">
+          <div className=" text-additive text-base pt-2.5">
             {ticketNumber.data.chatTicket} 개
           </div>
         </Header>
@@ -125,26 +121,20 @@ export const Coin = () => {
 
         <Wrapper>
           <Title title="채팅 슬롯" />
-          <List
-            item={PAYMENT_CONST[0]}
-            select={select}
-            onSelect={handleSelect}
-          />
-          <List
-            item={PAYMENT_CONST[1]}
-            select={select}
-            onSelect={handleSelect}
-          />
-          <List
-            item={PAYMENT_CONST[2]}
-            select={select}
-            onSelect={handleSelect}
-          />
+          <div className="text-xs text-assistive pb-3">
+            채팅 슬롯 잠금을 풀어 여러 상대와 대화할 수 있어요
+          </div>
+          {PAYMENT_CONST.slice(0, 3).map((p) => (
+            <List key={p.id} item={p} select={select} onSelect={handleSelect} />
+          ))}
         </Wrapper>
         <Border />
 
         <Wrapper>
           <Title title="채팅 연장 티켓" />
+          <div className="text-xs text-assistive pb-3">
+            한 채팅방 내에서 제한 없이 대화할 수 있어요
+          </div>
           <List
             item={PAYMENT_CONST[3]}
             select={select}
@@ -155,6 +145,9 @@ export const Coin = () => {
 
         <Wrapper>
           <Title title="무제한 패스" />
+          <div className="text-xs text-assistive pb-3">
+            슬롯이 무제한으로 열리고, 모든 채팅방에서 발신 제한이 풀려요
+          </div>
           <List
             item={PAYMENT_CONST[4]}
             select={select}
@@ -163,15 +156,13 @@ export const Coin = () => {
         </Wrapper>
       </div>
 
-      <div className="px-4 py-2.5">
+      <div className="sticky bottom-3 px-4 py-2.5 bg-white border-t border-[#EDEBF2] pb-[env(safe-area-inset-bottom)] ">
         {select ? (
-          <Button
-            variant="primary"
-            children={`${select?.value}원 결제하기`}
-            onClick={() => onPay()}
-          />
+          <Button variant="primary" onClick={onPay}>
+            {select.value}원 결제하기
+          </Button>
         ) : (
-          <Button variant="secondary" children="결제하기" />
+          <Button variant="secondary">결제하기</Button>
         )}
       </div>
     </div>

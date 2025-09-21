@@ -14,7 +14,7 @@ import { Title } from "../../common/Title";
 import { Button } from "../../common/Button";
 import { useHomeStore } from "../../store/homeStore";
 
-export const ProfileCard = () => {
+export const ProfileCard = ({ userCount }: { userCount: number }) => {
   const revalidate = useRevalidator();
   const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ export const ProfileCard = () => {
           <div className="flex flex-row items-center gap-x-1">
             <img src={View} alt={"View"} className="w-4 h-4" />
             <div className="text-[14px] font-light text-assistive">
-              6명의 사용자가 표시되고 있어요
+              {userCount} 명의 사용자가 표시되고 있어요
             </div>
           </div>
           <div className="flex flex-row items-center gap-x-1 cursor-pointer">
