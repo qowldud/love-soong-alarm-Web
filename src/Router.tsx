@@ -64,6 +64,13 @@ export const router = createBrowserRouter([
         element: <TermsPage />,
       },
       {
+        path: "/redirect",
+        element: <Redirect />,
+      },
+      {
+        path: "/preview",
+      },
+      {
         element: <SocketLayout />,
         children: [
           {
@@ -71,14 +78,7 @@ export const router = createBrowserRouter([
             element: <Home />,
             loader: HomeLoader,
           },
-          {
-            path: "/edit",
-            element: <EditPage />,
-          },
-          {
-            path: "/redirect",
-            element: <Redirect />,
-          },
+
           {
             element: <PrivateLayout />,
             children: [
@@ -114,6 +114,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "/edit",
+                element: <EditPage />,
               },
             ],
           },

@@ -100,7 +100,7 @@ export const LoggedInView = ({
 
   useStepLocationUpdate({
     enabled: isAuth,
-    intervalMs: 5000,
+    intervalMs: 100000000,
     thresholdMeters: 0,
     getCurrent: () => latestRef.current,
     post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),
@@ -113,6 +113,7 @@ export const LoggedInView = ({
           userCount={locationData?.data?.nearbyUsersInformation?.length ?? 0}
         />
       </div>
+
       {locationData ? (
         <MapCanvas users={locationData?.data?.nearbyUsersInformation} />
       ) : (

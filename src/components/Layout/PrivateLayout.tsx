@@ -1,9 +1,27 @@
-import { Outlet, useLocation, useOutletContext } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import { Header } from "../../common/Header";
 import type { SocketActions } from "./SocketLayout";
+import { useEffect } from "react";
 
 export const PrivateLayout = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const isAuth = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (!isAuth) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("auth-store");
+      localStorage.removeItem("chat-store");
+      sessionStorage.removeItem("home-store");
+      navigate("/");
+    }
+  }, [isAuth]);
 
   const { handleEnter, handleExit, handleSend } =
     useOutletContext<SocketActions>();

@@ -15,6 +15,7 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
   const { revalidate } = useRevalidator();
 
   const onRefresh = async () => {
+    console.log(navigator.geolocation);
     if (!navigator.geolocation) {
       console.log("이 브라우저는 위치 정보를 지원하지 않아요!");
       return;
@@ -49,6 +50,7 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
       <button
         className="flex flex-1 items-center justify-center bg-main3 text-main1 rounded-lg py-4 cursor-pointer"
         onClick={onRefresh}
+        type="button"
       >
         새로고침
       </button>
