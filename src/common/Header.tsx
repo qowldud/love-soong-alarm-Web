@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
+  onClick?: () => void;
 }
 
-export const Header = ({ title }: Props) => {
+export const Header = ({ title, onClick }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -15,7 +16,7 @@ export const Header = ({ title }: Props) => {
           src={Arrow_Back}
           alt="arrow_back"
           className="size-6 cursor-pointer"
-          onClick={() => navigate(-1)}
+          onClick={onClick ? onClick : () => navigate(-1)}
         />
         <span className="text-lg font-medium text-base]">{title}</span>
         <span className="size-6"></span>

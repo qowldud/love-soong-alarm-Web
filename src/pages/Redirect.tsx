@@ -18,10 +18,10 @@ export const Redirect = () => {
     }
 
     if (isRegistered === "true") {
-      localStorage.setItem("accessToken", accessToken);
+      login(accessToken);
       navigate("/splash");
     } else {
-      login(accessToken);
+      localStorage.setItem("accessToken", accessToken);
       navigate("/onboarding/profile");
     }
   }, [searchParams, navigate, login]);

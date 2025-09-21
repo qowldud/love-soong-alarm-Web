@@ -4,7 +4,7 @@ import { Description } from "../../components/profileOnboarding/Description";
 import { Input } from "../../common/Input";
 import { Button } from "../../common/Button";
 import { OptionButton } from "../../components/profileOnboarding/OptionButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useOnboardingStore } from "../../store/onboardingStore";
 import type { ChangeEvent } from "react";
 
@@ -41,10 +41,12 @@ export const Onboarding_Profile = () => {
     setEmoji(emojiOnly);
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col h-full relative">
       <div>
-        <Header title="30% 작성 완료" />
+        <Header title="30% 작성 완료" onClick={() => navigate("/")} />
         <ProgressBar per="30%" />
       </div>
 
