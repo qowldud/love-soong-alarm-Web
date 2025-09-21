@@ -46,7 +46,13 @@ export const Onboarding_Profile = () => {
   return (
     <div className="flex flex-col h-full relative">
       <div>
-        <Header title="30% 작성 완료" onClick={() => navigate("/")} />
+        <Header
+          title="30% 작성 완료"
+          onClick={() => {
+            localStorage.clear();
+            navigate("/");
+          }}
+        />
         <ProgressBar per="30%" />
       </div>
 

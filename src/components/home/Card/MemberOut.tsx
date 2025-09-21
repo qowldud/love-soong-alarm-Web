@@ -15,10 +15,8 @@ export const MemberOutcard = () => {
       const { success } = await deleteData("/api/auth/withdraw");
       if (success) {
         logout();
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("auth-store");
-        localStorage.removeItem("chat-store");
-        sessionStorage.removeItem("home-store");
+        localStorage.clear();
+        sessionStorage.clear();
         navigate("/");
       }
     } catch (err) {

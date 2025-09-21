@@ -26,6 +26,7 @@ import {
 import { CoinCallback } from "./pages/CoinCallback";
 import { Splash } from "./pages/Splash";
 import { SocketLayout } from "./components/Layout/SocketLayout";
+import { LocationGuide } from "./pages/LocationGuide";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "/onboarding/preference/:step",
         element: <Onboarding_Preference />,
+      },
+      {
+        path: "/guide",
+        element: <LocationGuide />,
       },
       {
         path: "/splash",

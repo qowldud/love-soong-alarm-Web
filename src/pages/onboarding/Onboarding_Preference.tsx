@@ -61,7 +61,7 @@ export const Onboarding_Preference = () => {
         reset();
         sessionStorage.removeItem("onboarding-storage");
         login(accessToken);
-        navigate("/splash");
+        navigate("/guide");
       } else {
         console.log("accessToken이 없습니다.");
         navigate("/");
@@ -131,7 +131,7 @@ export const Onboarding_Preference = () => {
           onClick={handleNext}
           type="button"
         >
-          {isLast ? "시작하기" : "다음으로"}
+          {isLast ? "완료하기" : "다음으로"}
         </Button>
         {isFilled && isLast && (
           <div className="px-1 pt-0.5 text-assistive text-xs font-normal text-center">
