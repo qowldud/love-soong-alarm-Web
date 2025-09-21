@@ -6,7 +6,7 @@ interface SelectedUserState {
   setSelectedUser: (user: User | null) => void;
 }
 
-export const useSelectedUserStore = create<SelectedUserState>((set) => ({
+export const useSelectedUserStore = create<SelectedUserState>()((set) => ({
   selectedUser: null,
   setSelectedUser: (user) => set({ selectedUser: user }),
 }));

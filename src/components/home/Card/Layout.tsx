@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useHomeStore } from "../../../store/homeStore";
 import { useAuthStore } from "../../../store/authStore";
 import { useChatStore } from "../../../store/chatStore";
+import { useSelectedUserStore } from "../../../store/useSelectedUserStore";
 
 type BottomSheetProps = {
   branch:
@@ -62,6 +63,7 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
   const setMemberout = useAuthStore((state) => state.setIsMemberOutOpen);
   const setExcessChat = useChatStore((state) => state.setExcessChat);
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
+  const { setSelectedUser } = useSelectedUserStore();
 
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -117,13 +119,6 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* <motion.div
-            className="absolute inset-0 z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => onClose(false)}
-          /> */}
           <motion.div
             ref={cardRef}
             role="dialog"
@@ -137,7 +132,10 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
             dragConstraints={{ top: 0, bottom: 0 }}
             dragElastic={0.12}
             onDragEnd={(_, info) => {
-              if (info.offset.y > 120 || info.velocity.y > 800) onClose(false);
+              if (info.offset.y > 120 || info.velocity.y > 800) {
+                if (branch === "profile") setSelectedUser(null);
+                onClose(false);
+              }
             }}
           >
             <div

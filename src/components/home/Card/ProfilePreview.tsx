@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../common/Button";
 import { CardHeader, HashTagWrapper, Profile } from "../../Common";
-import { useAuthStore } from "../../../store/authStore";
 import { useSelectedUserStore } from "../../../store/useSelectedUserStore";
 
 import { useApi } from "../../../api/api";
@@ -17,7 +16,7 @@ export const ProfilePreview = () => {
   const { selectedUser } = useSelectedUserStore();
   const [loginModal, setLoginModal] = useState(false);
 
-  const isAuth = useAuthStore((state) => state.isAuth);
+  const isAuth = localStorage.getItem("accessToken");
   const setReachMax = useChatStore((state) => state.setReachMax);
 
   const handleClick = async (userId?: number) => {
@@ -42,7 +41,9 @@ export const ProfilePreview = () => {
 
   return (
     <>
-      {loginModal && <LoginModal />}
+      {loginModal && (
+        <LoginModal type="chat" handleClose={() => setLoginModal(false)} />
+      )}
       <div className="relative">
         <CardHeader branch="profile" title="프로필 보기" />
         <div className="mb-3 flex items-start gap-3">

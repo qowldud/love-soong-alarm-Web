@@ -1,22 +1,38 @@
 import { BlurBackground } from "../../common/BlurBackground";
 import Kakao from "@/assets/icons/Kakao.svg?url";
 
-export const LoginModal = () => {
+interface Props {
+  type: "chat" | "button";
+  handleClose: () => void;
+}
+
+export const LoginModal = ({ type, handleClose }: Props) => {
   return (
-    <BlurBackground>
-      <div className="w-full bg-fill-static rounded-2xl py-0.5">
+    <BlurBackground onClick={handleClose}>
+      <div
+        className="w-full bg-fill-static rounded-2xl py-0.5"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="w-full flex flex-col py-4 pl-5 pr-7 gap-0.5">
           <span className="text-assistive text-xs font-normal leading-4.5 tracking-[-0.24px]">
             로그인
           </span>
 
           <span className="text-content-base text-xl font-bold leading-7 tracking-[-0.4px] whitespace-nowrap">
-            5초만에 시작하고 이 분과 대화해보세요!
+            {`5초만에 시작하고 ${
+              type === "chat"
+                ? "이 분과 대화해보세요!"
+                : "내 취향을 공유 해보세요!"
+            }`}
           </span>
 
           <span className="text-additive text-base font-medium leading-7 tracking-[-0.48px]">
-            지금과 간단하게 카카오톡으로 회원가입하고 <br /> 이 분과
-            대화해보세요!
+            지금과 간단하게 카카오톡으로 회원가입하고 <br />
+            {`${
+              type === "chat"
+                ? "이 분과 대화해보세요!"
+                : "내 취향을 공유해보세요!"
+            }`}
           </span>
         </div>
 

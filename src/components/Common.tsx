@@ -128,7 +128,7 @@ export const Profile = () => {
 
       <div className="px-1.5 py-0.5 rounded-sm bg-success-regular">
         <span className="text-success-strong text-xs font-medium leading-4.5 tracking-[-0.24px]">
-          10분 내 접속
+          {selectedUser?.lastSeen}
         </span>
       </div>
     </div>

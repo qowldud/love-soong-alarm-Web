@@ -50,6 +50,8 @@ export const LoggedInView = ({
 }) => {
   const revalidator = useRevalidator();
 
+  const mapRef = useRef<{ moveToCurrentLocation: () => void }>(null);
+
   const { locationData } = useLoaderData();
   const { location } = useGeoLocation();
 
@@ -60,6 +62,10 @@ export const LoggedInView = ({
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
+
+  const handleMoveToCurrentLocation = () => {
+    mapRef.current?.moveToCurrentLocation();
+  };
 
   const RenderCard = () => (
     <>
@@ -115,7 +121,10 @@ export const LoggedInView = ({
       </div>
 
       {locationData ? (
-        <MapCanvas users={locationData?.data?.nearbyUsersInformation} />
+        <MapCanvas
+          users={locationData?.data?.nearbyUsersInformation}
+          ref={mapRef}
+        />
       ) : (
         <OutOfBoundsNotice />
       )}
@@ -127,7 +136,7 @@ export const LoggedInView = ({
       />
 
       <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-2 z-30 items-center">
-        <Button>
+        <Button onClick={handleMoveToCurrentLocation}>
           <img src={Location} alt={"location"} />
         </Button>
 

@@ -7,7 +7,6 @@ import { OptionButton } from "../../components/profileOnboarding/OptionButton";
 import { Link } from "react-router-dom";
 import { useOnboardingStore } from "../../store/onboardingStore";
 import type { ChangeEvent } from "react";
-import GraphemeSplitter from "grapheme-splitter";
 
 const GENDER_OPTIONS = [
   { label: "남성", value: "MALE" },
@@ -32,10 +31,14 @@ export const Onboarding_Profile = () => {
     emoji && nickname && gender && major && birthDate && birthDate.length === 4;
 
   const onChangeEmoji = (e: ChangeEvent<HTMLInputElement>) => {
-    const splitter = new GraphemeSplitter();
-    const input = e.target.value;
-    const firstEmoji = splitter.splitGraphemes(input)[0] || "";
-    setEmoji(firstEmoji);
+    const value = e.target.value;
+
+    const emojiOnly = value.replace(
+      /[^\p{Emoji}\p{Extended_Pictographic}]/gu,
+      ""
+    );
+
+    setEmoji(emojiOnly);
   };
 
   return (
