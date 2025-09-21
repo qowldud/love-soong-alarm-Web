@@ -13,6 +13,10 @@ import { formatRelativeKo } from "../../../hooks/utils";
 const List = ({ item }: { item: ChatRoom }) => {
   const navigate = useNavigate();
 
+  const tsRaw = item?.lastMessageInfo?.timestamp;
+  console.log(tsRaw);
+  const tsText = tsRaw ? formatRelativeKo(tsRaw) : "";
+
   return (
     <div
       className="flex flex-row justify-between items-center px-4 py-2.5 w-full"
@@ -22,10 +26,12 @@ const List = ({ item }: { item: ChatRoom }) => {
         <div className="flex justify-center items-center w-6 h-6">
           {item.emoji}
         </div>
+
         <div className="flex flex-col min-w-0 w-[80%]">
           <div className="text-[16px] text-[#231D33] truncate">
             {item.partnerNickname}
           </div>
+
           <div className="flex flex-row items-center gap-x-1 text-[12px] min-w-0">
             <div
               className={`flex min-w-0 ${
@@ -34,16 +40,18 @@ const List = ({ item }: { item: ChatRoom }) => {
                   : "text-[#231D33]/80"
               }`}
               title={
-                item.lastMessageInfo.content +
-                formatRelativeKo(item.lastMessageInfo.timestamp)
+                item.lastMessageInfo.content + (tsText ? ` | ${tsText}` : "")
               }
             >
               <div className="flex-1 min-w-0 truncate">
                 {item.lastMessageInfo.content}
               </div>
-              <div className="shrink-0 text-[#231D33]/60 font-light whitespace-nowrap">
-                | {formatRelativeKo(item.lastMessageInfo.timestamp)}
-              </div>
+
+              {tsText && (
+                <div className="shrink-0 ml-1 text-[#231D33]/60 font-light ">
+                  | {tsText}
+                </div>
+              )}
             </div>
           </div>
         </div>
