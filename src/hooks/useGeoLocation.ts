@@ -16,11 +16,6 @@ export const useGeoLocation = (options = {}) => {
       latitude,
       longitude,
     });
-
-    // setLocation({
-    //   latitude: 37.49632819239069,
-    //   longitude: 126.9562421146958,
-    // });
   };
 
   const handleError = (err: GeolocationPositionError) => {

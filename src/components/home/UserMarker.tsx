@@ -2,6 +2,7 @@ import Marker from "@/assets/icons/Vector.svg";
 import MatchMarker from "@/assets/icons/Vector_match.svg?url";
 import SelectMarker from "@/assets/icons/Vector_Select.svg?url";
 import type { User } from "../../types/User";
+import clsx from "clsx";
 interface Props {
   user: User;
   isSelected?: boolean;
@@ -21,12 +22,16 @@ export const UserMarker = ({ user, isSelected }: Props) => {
       <div className="absolute top-3 flex flex-col justify-center items-center gap-1">
         <span className="text-sm z-10">{user.emoji}</span>
 
-        <span
-          className="w-1 h-1 rounded-full"
-          style={{
-            backgroundColor: status === "online" ? "#22c55e" : "#9ca3af",
-          }}
-        />
+        {user.lastSeen && (
+          <span
+            className={clsx(
+              "w-1 h-1 rounded-full",
+              user.lastSeen === "10분 내 접속"
+                ? "bg-success-strong"
+                : "bg-warning-strong"
+            )}
+          />
+        )}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import type { ButtonHTMLAttributes } from "react";
 import { HOME_CONST } from "../../hooks/consts";
 import { useAuthStore } from "../../store/authStore";
 import { useLoaderData, useRevalidator } from "react-router-dom";
+import { postLocation } from "../../api/location";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   count: number;
@@ -12,6 +13,24 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
   const isAuth = useAuthStore((state) => state.isAuth);
   const { locationData } = useLoaderData();
   const { revalidate } = useRevalidator();
+
+  const onRefresh = async () => {
+    if (!navigator.geolocation) {
+      console.log("이 브라우저는 위치 정보를 지원하지 않아요!");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const { latitude, longitude } = pos.coords;
+
+      try {
+        await postLocation({ latitude, longitude });
+        revalidate();
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  };
 
   if (!isAuth)
     return (
@@ -30,7 +49,7 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
     return (
       <button
         className="flex flex-1 items-center justify-center bg-main3 text-main1 rounded-lg py-4 cursor-pointer"
-        onClick={() => revalidate()}
+        onClick={onRefresh}
       >
         새로고침
       </button>
