@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import type {
   BlockUser,
   CheckSendMessage,
@@ -109,7 +108,7 @@ export const useWebSocket = () => {
   };
 
   const handleError = (data: ErrorType) => {
-    toast.error(data.message);
+    console.error(data.message);
   };
 
   return {

@@ -36,21 +36,29 @@ export const Chat = () => {
   );
   const [loadingPrev, setLoadingPrev] = useState(false);
 
-  const prevIdRef = useRef<number | null>(null);
-
   useEffect(() => {
-    const prevId = prevIdRef.current;
-    if (Number.isFinite(id)) {
-      if (prevId !== null && prevId !== id && Number.isFinite(prevId)) {
-        handleExit?.(prevId);
-      }
-      if (prevId !== id) handleEnter?.(id);
-      prevIdRef.current = id;
-    }
+    if (!Number.isFinite(id)) return;
+    handleEnter?.(id);
+
+    const reenter = () => {
+      handleEnter?.(id);
+    };
+
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") reenter();
+    };
+    const onPageShow = () => reenter();
+    const onFocus = () => reenter();
+
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pageshow", onPageShow);
+    window.addEventListener("focus", onFocus);
+
     return () => {
-      const lastId = prevIdRef.current;
-      if (Number.isFinite(lastId!)) handleExit?.(lastId!);
-      prevIdRef.current = null;
+      handleExit?.(id);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pageshow", onPageShow);
+      window.removeEventListener("focus", onFocus);
     };
   }, [id, handleEnter, handleExit]);
 

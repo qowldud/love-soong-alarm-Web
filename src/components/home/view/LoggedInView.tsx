@@ -122,8 +122,6 @@ export const LoggedInView = ({
     queryFn: () => getData<UserProfile>("/api/users/me"),
   });
 
-  console.log(myProfile);
-
   return (
     <>
       <div className="w-full">

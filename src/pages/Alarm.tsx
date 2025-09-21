@@ -12,6 +12,7 @@ import {
 } from "../api/notice";
 import { toast } from "react-toastify";
 import type { Notice } from "../types/notice";
+import { useSelectedUserStore } from "../store/useSelectedUserStore";
 
 const CheckLabel = (type: "before" | "after") => {
   if (type === "before")
@@ -58,7 +59,11 @@ const Title = ({ type }: { type: "before" | "after" }) => {
 const List = ({ item, type }: { item: Notice; type: "before" | "after" }) => {
   const revalidator = useRevalidator();
   const navigate = useNavigate();
+
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
+  const setSelectedUser = useSelectedUserStore(
+    (state) => state.setSelectedUser
+  );
 
   const handleClick = async ({ id }: { id: number }) => {
     if (type === "before") {

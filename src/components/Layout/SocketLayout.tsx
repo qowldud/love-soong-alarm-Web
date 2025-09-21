@@ -18,11 +18,15 @@ export interface SocketActions {
 const SOCKET_URL = import.meta.env.VITE_WS_URL;
 
 const urlFactory = () => {
-  const token = localStorage.getItem("accessToken") || "";
-  if (!token) return null;
-  const base = SOCKET_URL?.startsWith("wws")
-    ? SOCKET_URL
-    : SOCKET_URL?.replace(/^http/, "ws");
+  const token = localStorage.getItem("accessToken");
+  if (!token || !SOCKET_URL) return null;
+
+  let base = SOCKET_URL.trim();
+
+  if (base.startsWith("wws://")) base = "wss://" + base.slice(6);
+  if (base.startsWith("http://")) base = "ws://" + base.slice(7);
+  else if (base.startsWith("https://")) base = "wss://" + base.slice(8);
+
   return `${base}?token=${encodeURIComponent(token)}`;
 };
 

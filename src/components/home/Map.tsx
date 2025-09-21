@@ -125,7 +125,6 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
         const userLatLng = new kakao.maps.LatLng(user.latitude, user.longitude);
 
         const isSelected = selectedUser?.userId === user.userId;
-        console.log(user);
 
         const htmlString = ReactDOMServer.renderToString(
           <UserMarker user={user} isSelected={isSelected} />
@@ -157,8 +156,8 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
 
             if (mapRef.current) {
               const latlng = new window.kakao.maps.LatLng(
-                user.latitude,
-                user.longitude
+                user.latitude ?? 37.495938823365,
+                user.longitude ?? 126.95437558238
               );
               mapRef.current.panTo(latlng);
             }
