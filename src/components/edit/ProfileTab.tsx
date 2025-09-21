@@ -5,6 +5,7 @@ import { Button } from "../../common/Button";
 import { useEditProfileStore } from "../../store/EditProfileState";
 import { useApi } from "../../api/api";
 import type { ChangeEvent } from "react";
+import { toast } from "react-toastify";
 
 const GENDER_OPTIONS = [
   { label: "남성", value: "MALE" },
@@ -39,7 +40,9 @@ export const ProfileTab = () => {
     try {
       const res = await putData("/api/users/me", payload);
       if (res.success) {
-        console.log("수정성공");
+        toast.success("수정 완료 되었습니다.", {
+          autoClose: 1000,
+        });
         initialize(clientPayload);
       }
     } catch (err) {
@@ -69,7 +72,7 @@ export const ProfileTab = () => {
               label="나를 표현하는 이모티콘"
               placeholder="예시) 🥰"
               value={emoji}
-              maxLength={4}
+              maxLength={2}
               onChange={onChangeEmoji}
               onClear={() => setEmoji("")}
             />

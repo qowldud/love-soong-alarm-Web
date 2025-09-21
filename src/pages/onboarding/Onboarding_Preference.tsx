@@ -128,12 +128,13 @@ export const Onboarding_Preference = () => {
         </Button>
         {isFilled && isLast && (
           <div className="px-1 pt-0.5 text-assistive text-xs font-normal text-center">
-            "시작하기" 버튼을 통해 서비스를 시작하였을 경우,
+            "다음" 버튼을 통해 서비스를 시작하였을 경우,
             <Link to={"/term"} className="text-additive font-bold underline">
               약관의 내용
             </Link>
-            을 모두 읽고 이를 충분히 이해하였으며, 그 적용에 동의한 것으로
-            봅니다.
+            을 모두 읽고 이를 충분히 이해하였으며, 개인정보 수집∙이용에 동의한
+            것으로 봅니다. (동의를 거부할 권리가 있으며, 동의 거부시에는 서비스
+            이용이 제한됩니다.)
           </div>
         )}
       </div>

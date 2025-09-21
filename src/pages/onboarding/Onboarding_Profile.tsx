@@ -61,7 +61,7 @@ export const Onboarding_Profile = () => {
               placeholder="예시) 🥰"
               value={emoji}
               onChange={onChangeEmoji}
-              maxLength={4}
+              maxLength={2}
               onClear={() => setEmoji("")}
             />
             <div className="px-1 pt-2.5 text-assistive text-xs font-normal">

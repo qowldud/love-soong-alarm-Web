@@ -13,6 +13,7 @@ import Reload from "@/assets/icons/ic_reload.svg";
 import { Title } from "../../common/Title";
 import { Button } from "../../common/Button";
 import { useHomeStore } from "../../store/homeStore";
+import { toast } from "react-toastify";
 
 export const ProfileCard = ({ userCount }: { userCount: number }) => {
   const revalidate = useRevalidator();
@@ -79,7 +80,12 @@ export const ProfileCard = ({ userCount }: { userCount: number }) => {
             <img src={Reload} alt={"Reload"} className="w-5 h-5" />
             <div
               className="text-[14px] font-normal text-additive underline"
-              onClick={() => revalidate.revalidate()}
+              onClick={() => {
+                revalidate.revalidate();
+                toast.success("새로고침 되었습니다.", {
+                  autoClose: 1000,
+                });
+              }}
             >
               새로고침
             </div>

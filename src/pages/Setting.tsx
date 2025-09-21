@@ -39,6 +39,7 @@ const List = ({
       <div className="flex flex-row gap-x-4">
         <img src={img} alt={img} className="w-6 h-6" />
         <div
+          onClick={onClick}
           className={`${
             title === "로그아웃" ? "text-[#FF244B]" : "text-base"
           } text-[16px]`}
