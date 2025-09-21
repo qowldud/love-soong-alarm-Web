@@ -8,47 +8,55 @@ import { useHomeStore } from "../../../store/homeStore";
 import { useEffect, useState } from "react";
 import { useMessageStore } from "../../../store/messageStore";
 import { getChatLists } from "../../../api/chat";
+import { formatRelativeKo } from "../../../hooks/utils";
 
 const List = ({ item }: { item: ChatRoom }) => {
   const navigate = useNavigate();
 
   return (
     <div
-      className="flex flex-row justify-between items-center px-4 py-2.5"
+      className="flex flex-row justify-between items-center px-4 py-2.5 w-full"
       onClick={() => navigate(`/chat/${item.chatRoomId}`)}
     >
-      <div className="flex flex-row justify-center items-center gap-x-3">
+      <div className="flex flex-row items-center gap-x-3 min-w-0 w-full">
         <div className="flex justify-center items-center w-6 h-6">
           {item.emoji}
         </div>
-        <div className="flex flex-col">
-          <div className="text-[16px] text-[#231D33] ">
+        <div className="flex flex-col min-w-0 w-[80%]">
+          <div className="text-[16px] text-[#231D33] truncate">
             {item.partnerNickname}
           </div>
-          <div className="flex flex-row gap-x-1 justify-center items-center text-[12px]">
+          <div className="flex flex-row items-center gap-x-1 text-[12px] min-w-0">
             <div
-              className={`${
+              className={`flex min-w-0 ${
                 !item.lastMessageInfo.isSentByMe && !item.lastMessageInfo.isRead
                   ? "text-main1 font-bold"
                   : "text-[#231D33]/80"
               }`}
+              title={
+                item.lastMessageInfo.content +
+                formatRelativeKo(item.lastMessageInfo.timestamp)
+              }
             >
-              {item.lastMessageInfo.content}
-            </div>
-            <div className="text-[#231D33]/60 font-light">
-              | {item.lastMessageInfo.timestamp}
+              <div className="flex-1 min-w-0 truncate">
+                {item.lastMessageInfo.content}
+              </div>
+              <div className="shrink-0 text-[#231D33]/60 font-light whitespace-nowrap">
+                | {formatRelativeKo(item.lastMessageInfo.timestamp)}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       {!item.lastMessageInfo.isSentByMe && !item.lastMessageInfo.isRead ? (
-        <div className="rounded-full w-1.5 h-1.5 bg-main1 mr-1.5" />
+        <div className="rounded-full w-1.5 h-1.5 bg-main1 ml-1.5" />
       ) : item.lastMessageInfo.isRead ? (
-        <div className="text-[#231D33]/60 font-light text-[12px] mr-1.5">
+        <div className="text-[#231D33]/60 font-light text-[12px] ml-1.5 whitespace-nowrap">
           읽음
         </div>
       ) : (
-        <div className="text-[#231D33]/60 font-light text-[12px] mr-1.5">
+        <div className="text-[#231D33]/60 font-light text-[12px] ml-1.5 whitespace-nowrap">
           안읽음
         </div>
       )}
