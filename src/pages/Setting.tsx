@@ -89,12 +89,26 @@ export const Setting = () => {
         </div>
         <div className="flex flex-col">
           <List
-            onClick={() => setIsMemberOutOpen(true)}
+            onClick={() => {
+              localStorage.removeItem("accessToken");
+              localStorage.removeItem("auth-store");
+              localStorage.removeItem("chat-store");
+              sessionStorage.removeItem("home-store");
+
+              setIsMemberOutOpen(true);
+            }}
             img={Delete}
             title="탈퇴하기"
           />
           <List
-            onClick={() => setIsLogoutOpen(true)}
+            onClick={() => {
+              localStorage.removeItem("accessToken");
+              localStorage.removeItem("auth-store");
+              localStorage.removeItem("chat-store");
+              sessionStorage.removeItem("home-store");
+
+              setIsLogoutOpen(true);
+            }}
             img={Logout}
             title="로그아웃"
           />
