@@ -90,11 +90,6 @@ export const Setting = () => {
         <div className="flex flex-col">
           <List
             onClick={() => {
-              localStorage.removeItem("accessToken");
-              localStorage.removeItem("auth-store");
-              localStorage.removeItem("chat-store");
-              sessionStorage.removeItem("home-store");
-
               setIsMemberOutOpen(true);
             }}
             img={Delete}
