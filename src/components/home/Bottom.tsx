@@ -23,12 +23,11 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
 
-      try {
-        await postLocation({ latitude, longitude });
-        revalidate();
-      } catch (err) {
-        console.error(err);
-      }
+      console.log(latitude, longitude);
+
+      const res = await postLocation({ latitude, longitude });
+      console.log(res);
+      revalidate();
     });
   };
 

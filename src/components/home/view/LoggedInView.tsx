@@ -113,19 +113,19 @@ export const LoggedInView = ({
           userCount={locationData?.data?.nearbyUsersInformation?.length ?? 0}
         />
       </div>
-
       {locationData ? (
         <MapCanvas users={locationData?.data?.nearbyUsersInformation} />
       ) : (
         <OutOfBoundsNotice />
       )}
+
       <div
         className={`${
           isAuth ? "top-57" : "top-62"
         } absolute flex flex-row gap-x-2 left-4 right-4 z-30 justify-between`}
       />
 
-      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-10.5 z-30 items-center">
+      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-2 z-30 items-center">
         <Button>
           <img src={Location} alt={"location"} />
         </Button>
