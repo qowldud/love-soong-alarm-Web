@@ -12,8 +12,9 @@ export const TestLoader = async () => {
 
 export const HomeLoader = async () => {
   const accessToken = localStorage.getItem("accessToken");
+  const authStore = localStorage.getItem("auth-store");
 
-  if (!accessToken) return;
+  if (!accessToken || !authStore) return;
   const locationData = await getLocation();
 
   return { locationData };

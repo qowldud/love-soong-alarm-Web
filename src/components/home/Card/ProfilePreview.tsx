@@ -9,18 +9,20 @@ import { toast } from "react-toastify";
 import { useChatStore } from "../../../store/chatStore";
 import { useState } from "react";
 import { LoginModal } from "../LoginModal";
+import { useAuthStore } from "../../../store/authStore";
 
 export const ProfilePreview = () => {
   const navigate = useNavigate();
   const { postData } = useApi();
   const { selectedUser, selectedMy } = useSelectedUserStore();
+  const { isAuth } = useAuthStore();
   const [loginModal, setLoginModal] = useState(false);
 
-  const isAuth = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("accessToken");
   const setReachMax = useChatStore((state) => state.setReachMax);
 
   const handleClick = async (userId?: number) => {
-    if (!isAuth) {
+    if (!isAuth || !accessToken) {
       setLoginModal(true);
       return;
     }
