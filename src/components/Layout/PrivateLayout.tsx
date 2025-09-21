@@ -7,21 +7,23 @@ import {
 import { Header } from "../../common/Header";
 import type { SocketActions } from "./SocketLayout";
 import { useEffect } from "react";
+import { useAuthStore } from "../../store/authStore";
 
 export const PrivateLayout = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const isAuth = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("accessToken");
+  const { isAuth } = useAuthStore();
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth || !accessToken) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("auth-store");
       localStorage.removeItem("chat-store");
       sessionStorage.removeItem("home-store");
       navigate("/");
     }
-  }, [isAuth]);
+  }, [accessToken, isAuth]);
 
   const { handleEnter, handleExit, handleSend } =
     useOutletContext<SocketActions>();

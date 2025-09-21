@@ -12,10 +12,12 @@ import { GENRE_OPTIONS } from "../../constants/genres";
 import { useEffect } from "react";
 import { useApi } from "../../api/api";
 import { INTEREST_OPTIONS } from "../../constants/interests";
+import { useAuthStore } from "../../store/authStore";
 
 export const Onboarding_Preference = () => {
   const { step } = useParams();
   const navigate = useNavigate();
+  const { login } = useAuthStore();
   const {
     currentLabels,
     setCurrentLabel,
@@ -54,10 +56,15 @@ export const Onboarding_Preference = () => {
 
     try {
       const data = await patchData("/api/users/on-boarding", payload);
-      if (data.success) {
+      const accessToken = localStorage.getItem("accessToken");
+      if (data.success && accessToken) {
         reset();
         sessionStorage.removeItem("onboarding-storage");
+        login(accessToken);
         navigate("/splash");
+      } else {
+        console.log("accessToken이 없습니다.");
+        navigate("/");
       }
     } catch (err) {
       console.error(err);
