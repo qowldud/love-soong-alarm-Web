@@ -62,6 +62,7 @@ export const Onboarding_Profile = () => {
               value={emoji}
               onChange={onChangeEmoji}
               maxLength={4}
+              onClear={() => setEmoji("")}
             />
             <div className="px-1 pt-2.5 text-assistive text-xs font-normal">
               키보드에서 이모티콘을 자유롭게 입력해주세요!
@@ -72,7 +73,16 @@ export const Onboarding_Profile = () => {
             label="닉네임"
             placeholder="예시) 김숭실"
             value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
+            onClear={() => setNickname("")}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value.length <= 10) {
+                setNickname(value);
+              } else {
+                setNickname(value.slice(0, 10));
+              }
+            }}
+            maxLength={10}
           />
 
           <div className="flex flex-col gap-3">
@@ -96,6 +106,7 @@ export const Onboarding_Profile = () => {
             label="생년월일"
             placeholder="예시) 2006"
             value={birthDate}
+            onClear={() => setBirthDate("")}
             onChange={(e) => {
               const onlyNums = e.target.value.replace(/\D/g, "");
               if (onlyNums.length <= 4) {
@@ -111,6 +122,7 @@ export const Onboarding_Profile = () => {
             placeholder="예시) 컴퓨터학부"
             value={major}
             onChange={(e) => setMajor(e.target.value)}
+            onClear={() => setMajor("")}
           />
         </div>
       </div>

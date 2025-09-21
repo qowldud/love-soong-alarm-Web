@@ -100,8 +100,8 @@ export const InterestTab = ({ index }: InterestTabProps) => {
   };
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex flex-col px-4">
+    <div className="h-full flex flex-col ">
+      <div className="flex flex-col px-4 overflow-y-auto pb-60">
         <SectionHeader title="취향 대분류" className="pt-4 pb-2.5" />
 
         <div className="flex justify-center">

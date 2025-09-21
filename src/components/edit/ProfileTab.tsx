@@ -47,11 +47,11 @@ export const ProfileTab = () => {
   };
 
   return (
-    <div className="h-full flex flex-col overflow-y-auto justify-between relative">
-      <div className="flex flex-col px-4">
+    <div className="h-full flex flex-col justify-between">
+      <div className="flex flex-1 min-h-0 flex-col px-4 overflow-y-auto pb-40">
         <SectionHeader title="필수 프로필" className="pt-4 pb-2.5" />
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 ">
           <div className="flex flex-col pt-2">
             <Input
               label="나를 표현하는 이모티콘"
@@ -113,7 +113,7 @@ export const ProfileTab = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 max-w-[444px] w-full flex flex-col bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
+      <div className="sticky bottom-0 max-w-[444px] w-full flex flex-col bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
         <Button
           variant={isModified() && isFilled ? "primary" : "disabled"}
           disabled={!isModified() || !isFilled}
