@@ -15,6 +15,10 @@ export const LogoutCard = () => {
       const data = await postData("/api/auth/logout");
       if (data.success) {
         logout();
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("auth-store");
+        localStorage.removeItem("chat-store");
+        sessionStorage.removeItem("home-store");
         navigate("/");
       }
     } catch (err) {

@@ -102,11 +102,6 @@ export const Setting = () => {
           />
           <List
             onClick={() => {
-              localStorage.removeItem("accessToken");
-              localStorage.removeItem("auth-store");
-              localStorage.removeItem("chat-store");
-              sessionStorage.removeItem("home-store");
-
               setIsLogoutOpen(true);
             }}
             img={Logout}
