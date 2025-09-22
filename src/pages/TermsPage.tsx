@@ -14,7 +14,7 @@ const Tabs = [
 export const TermsPage = () => {
   const [selected, setSelected] = useState("서비스이용약관");
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col safe-bottom">
       <Header title="이용약관" />
       <RailTab tabs={Tabs} selectedTab={selected} onChange={setSelected} />
 

@@ -153,7 +153,7 @@ export const LoggedInView = ({
         } absolute flex flex-row gap-x-2 left-4 right-4 z-30 justify-between`}
       /> */}
 
-      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-2 z-30 items-center">
+      <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-2 z-30 items-center safe-bottom">
         <Button onClick={handleMoveToCurrentLocation}>
           <img src={Location} alt={"location"} />
         </Button>

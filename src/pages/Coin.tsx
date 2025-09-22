@@ -162,7 +162,7 @@ export const Coin = () => {
         </Wrapper>
       </div>
 
-      <div className="sticky w-full bottom-0 px-4 py-2.5 bg-white border-t border-[#EDEBF2]">
+      <div className="sticky w-full bottom-0 px-4 py-2.5 bg-white border-t border-[#EDEBF2] safe-bottom">
         <Button
           variant={`${select ? "primary" : "disabled"}`}
           onClick={onPay}

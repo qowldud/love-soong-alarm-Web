@@ -48,7 +48,7 @@ export const Onboarding_Interests = () => {
         </div>
       </div>
 
-      <div className="w-full px-4 pb-2.5 pt-5.5 rounded-xl absolute bottom-0 bg-white flex flex-col gap-2 shadow-dim-weak backdrop-blur-40">
+      <div className="w-full px-4 pb-2.5 pt-5.5 rounded-xl absolute bottom-0 bg-white flex flex-col gap-2 shadow-dim-weak backdrop-blur-40 safe-bottom">
         <Link to="/onboarding/preference/0">
           <Button variant={isFilled ? "primary" : "disabled"}>다음으로</Button>
         </Link>

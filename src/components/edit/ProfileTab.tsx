@@ -140,7 +140,7 @@ export const ProfileTab = () => {
         </div>
       </div>
 
-      <div className="sticky bottom-0 w-full bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
+      <div className="sticky bottom-0 w-full bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl safe-bottom">
         <Button
           variant={isModified() && isFilled ? "primary" : "disabled"}
           disabled={!isModified() || !isFilled}

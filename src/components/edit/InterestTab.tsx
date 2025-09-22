@@ -148,7 +148,7 @@ export const InterestTab = ({ index }: InterestTabProps) => {
         )}
       </div>
 
-      <div className="absolute bottom-0 max-w-[444px] w-full flex flex-col bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
+      <div className="absolute bottom-0 max-w-[444px] w-full flex flex-col bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl safe-bottom">
         <Button
           variant={isModified() && isFilled ? "primary" : "disabled"}
           disabled={!isModified() || !isFilled}

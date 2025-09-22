@@ -14,9 +14,7 @@ export const Layout = () => {
         transition={{ duration: 0.45, ease: "easeOut" }}
         className="relative w-full h-full"
       >
-        <div className="h-full w-full">
-          <Outlet />
-        </div>
+        <Outlet />
 
         <ToastContainer
           position="top-center"
