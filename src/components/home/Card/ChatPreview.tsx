@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useMessageStore } from "../../../store/messageStore";
 import { getChatLists } from "../../../api/chat";
 import { formatRelativeKo } from "../../../hooks/utils";
+import mixpanel from "mixpanel-browser";
 
 const List = ({ item }: { item: ChatRoom }) => {
   const navigate = useNavigate();
@@ -16,10 +17,18 @@ const List = ({ item }: { item: ChatRoom }) => {
   const tsRaw = item?.lastMessageInfo?.timestamp;
   const tsText = tsRaw ? formatRelativeKo(tsRaw) : "";
 
+  const onClick = () => {
+    mixpanel.track("Chat_Start", {
+      entry_point: "list",
+      chat_id: item.chatRoomId,
+    });
+    navigate(`/chat/${item.chatRoomId}`);
+  };
+
   return (
     <div
       className="flex flex-row justify-between items-center px-4 py-2.5 w-full"
-      onClick={() => navigate(`/chat/${item.chatRoomId}`)}
+      onClick={onClick}
     >
       <div className="flex flex-row items-center gap-x-3 min-w-0 w-full">
         <div className="flex justify-center items-center w-6 h-6">

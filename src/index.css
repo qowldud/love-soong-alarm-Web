@@ -25,6 +25,7 @@
   --color-root-strong: rgba(244, 242, 247, 1);
   --color-fill-static: rgba(255, 255, 255, 1);
   --color-warning-strong: rgba(255, 191, 15, 1);
+  --color-warning-regular: rgba(255, 191, 15, 0.08);
 
   --shadow-dim-weak: 0 -10px 16px 0 rgba(51, 29, 36, 0.08);
 

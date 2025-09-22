@@ -1,5 +1,5 @@
 import Ticket from "@/assets/icons/ic_ticket.svg";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Button } from "../common/Button";
 import { useLoaderData } from "react-router-dom";
 import clsx from "clsx";
@@ -98,6 +98,10 @@ export const Coin = () => {
 
   const isFreePass = ticketNumber?.data?.isPrepass;
 
+  useEffect(() => {
+    sessionStorage.removeItem("pay");
+  }, []);
+
   const handleSelect = (item: Payment) => setSelect(item);
   const onPay = async () => {
     if (!select) return alert("결제 옵션을 선택해주세요.");
@@ -106,6 +110,7 @@ export const Coin = () => {
       const res1 = await getPaymentUrl({ item: chosen.value });
 
       if (res1.success) {
+        sessionStorage.setItem("pay", JSON.stringify(chosen));
         const url = res1.data.url;
         window.location.href = url;
       }

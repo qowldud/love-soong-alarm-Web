@@ -1,9 +1,25 @@
 import CheckIcon from "@/assets/icons/check.svg?url";
 import { Button } from "../common/Button";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import mixpanel from "mixpanel-browser";
 
 export const CoinCallback = () => {
   const path = sessionStorage.getItem("Redirect_PATH") ?? "/";
+
+  useEffect(() => {
+    const raw = sessionStorage.getItem("pay");
+    const pay = raw ? JSON.parse(raw) : null;
+
+    if (!pay) return;
+
+    mixpanel.track("Purchase", {
+      total_price: pay.price,
+      items: pay.value,
+    });
+
+    sessionStorage.removeItem("pay");
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col justify-between ">

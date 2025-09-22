@@ -6,6 +6,7 @@ import { useSelectedUserStore } from "../store/useSelectedUserStore";
 import clsx from "clsx";
 import type { ChatDetail } from "../types/chat";
 import { useChatStore } from "../store/chatStore";
+import { GENRE_FLAT_OPTIONS } from "../constants/genres";
 
 export const CardHeader = ({
   branch,
@@ -53,15 +54,21 @@ export const CardHeader = ({
   );
 };
 
+const changeValueToLabel = (value: string) => {
+  const match = GENRE_FLAT_OPTIONS.find((option) => option.value === value);
+  return match?.label;
+};
+
 export const Hashtag_v2 = ({
   item,
 }: {
   item: { label: string; hashtags: string[] };
 }) => {
+  console.log(item.label);
   return (
     <div className="flex items-center gap-x-1.5 shrink-0">
       <span className="inline-flex shrink-0 whitespace-nowrap text-main1 bg-main3 text-[12px] px-1.5 py-0.5 rounded-[4px]">
-        #{item.label}
+        #{changeValueToLabel(item.label)}
       </span>
       {item.hashtags.map((it, i) => (
         <span
@@ -145,8 +152,22 @@ export const Profile = ({ emoji, name, age, major, lastSeen }: Props) => {
       </div>
 
       {selectedUserId !== -1 && (
-        <div className="px-1.5 py-0.5 rounded-sm bg-success-regular">
-          <span className="text-success-strong text-xs font-medium leading-4.5 tracking-[-0.24px]">
+        <div
+          className={clsx(
+            "px-1.5 py-0.5 rounded-sm",
+            lastSeen === "10분 내 접속"
+              ? "bg-success-regular"
+              : "bg-warning-regular"
+          )}
+        >
+          <span
+            className={clsx(
+              "text-xs font-medium leading-4.5 tracking-[-0.24px]",
+              lastSeen === "10분 내 접속"
+                ? "text-success-strong"
+                : "text-warning-strong"
+            )}
+          >
             {lastSeen}
           </span>
         </div>

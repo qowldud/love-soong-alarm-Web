@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useApi } from "../../api/api";
 import { INTEREST_OPTIONS } from "../../constants/interests";
 import { useAuthStore } from "../../store/authStore";
+import mixpanel from "mixpanel-browser";
 
 export const Onboarding_Preference = () => {
   const { step } = useParams();
@@ -62,6 +63,13 @@ export const Onboarding_Preference = () => {
         reset();
         sessionStorage.removeItem("onboarding-storage");
         login(accessToken);
+
+        // mixpanel 사용자 식별
+        mixpanel.track("SignUp");
+        mixpanel.identify("user_test");
+        mixpanel.track("Profile_Create", {
+          profile_completion_pct: 100,
+        });
         navigate("/guide");
       } else {
         console.log("accessToken이 없습니다.");
@@ -74,12 +82,18 @@ export const Onboarding_Preference = () => {
 
   const handleNext = () => {
     if (!isFilled) return;
+    mixpanel.track("Tag_Select", {
+      tags_selected: currentHashtags,
+    });
     addCurrentInterest();
 
     if (isLast) {
       // api 연동
       sendOnboarding();
     } else {
+      mixpanel.track("Profile_Create", {
+        profile_completion_pct: 80,
+      });
       navigate(`/onboarding/preference/${currentStep + 1}`);
     }
   };

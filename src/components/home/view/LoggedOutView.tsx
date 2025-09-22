@@ -1,15 +1,11 @@
 import Logo from "@/assets/icons/Logo.svg?url";
 import LoginIcon from "@/assets/icons/Login.svg?url";
-import Up_Arrow from "@/assets/icons/ic_up_arrow.svg";
-import Tutorial_Image from "@/assets/icons/ic_tutorial_marker.svg";
-
 import { LogoutMap } from "../LogoutMap";
 import { CardLayout } from "../Card/Layout";
 import { LoginCard } from "../Card/LoginCard";
 import { ProfilePreview } from "../Card/ProfilePreview";
 import { useState } from "react";
 import { LoginModal } from "../LoginModal";
-import { TutorialMap } from "../TutorialMap";
 import { Tutorial } from "../../../pages/Tutorial";
 // import { ChatPreview } from "../Card/ChatPreview";
 

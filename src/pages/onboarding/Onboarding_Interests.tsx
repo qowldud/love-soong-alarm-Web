@@ -4,11 +4,13 @@ import { Header } from "../../common/Header";
 
 import { Description } from "../../components/profileOnboarding/Description";
 import { ProgressBar } from "../../components/profileOnboarding/ProgressBar";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useOnboardingStore } from "../../store/onboardingStore";
 import { INTEREST_OPTIONS } from "../../constants/interests";
+import mixpanel from "mixpanel-browser";
 
 export const Onboarding_Interests = () => {
+  const navigate = useNavigate();
   const { currentLabels, setCurrentLabels } = useOnboardingStore();
 
   const handleSelect = (value: string) => {
@@ -21,6 +23,13 @@ export const Onboarding_Interests = () => {
   };
 
   const isFilled = currentLabels.length;
+
+  const onClickNext = () => {
+    mixpanel.track("Profile_Create", {
+      profile_completion_pct: 60,
+    });
+    navigate("/onboarding/preference/0");
+  };
 
   return (
     <div className="h-full flex flex-col justify-between relative">
@@ -49,9 +58,12 @@ export const Onboarding_Interests = () => {
       </div>
 
       <div className="w-full px-4 pb-2.5 pt-5.5 rounded-xl absolute bottom-0 bg-white flex flex-col gap-2 shadow-dim-weak backdrop-blur-40 safe-bottom">
-        <Link to="/onboarding/preference/0">
-          <Button variant={isFilled ? "primary" : "disabled"}>다음으로</Button>
-        </Link>
+        <Button
+          variant={isFilled ? "primary" : "disabled"}
+          onClick={onClickNext}
+        >
+          다음으로
+        </Button>
 
         {!isFilled && (
           <span className="text-assistive text-xs text-center font-normal leading-4.5 tracking-[-0.24px]">

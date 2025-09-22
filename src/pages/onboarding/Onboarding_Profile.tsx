@@ -4,9 +4,10 @@ import { Description } from "../../components/profileOnboarding/Description";
 import { Input } from "../../common/Input";
 import { Button } from "../../common/Button";
 import { OptionButton } from "../../components/profileOnboarding/OptionButton";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useOnboardingStore } from "../../store/onboardingStore";
 import type { ChangeEvent } from "react";
+import mixpanel from "mixpanel-browser";
 
 const GENDER_OPTIONS = [
   { label: "남성", value: "MALE" },
@@ -14,6 +15,7 @@ const GENDER_OPTIONS = [
 ] as const;
 
 export const Onboarding_Profile = () => {
+  const navigate = useNavigate();
   const {
     emoji,
     nickname,
@@ -41,7 +43,12 @@ export const Onboarding_Profile = () => {
     setEmoji(emojiOnly);
   };
 
-  const navigate = useNavigate();
+  const onClickNext = () => {
+    mixpanel.track("Profile_Create", {
+      profile_completion_pct: 30,
+    });
+    navigate("/onboarding/interests");
+  };
 
   return (
     <div className="flex flex-col h-full relative">
@@ -136,9 +143,12 @@ export const Onboarding_Profile = () => {
       </div>
 
       <div className="w-full pb-2.5 pt-5.5 px-4 flex flex-col gap-2 absolute bottom-0 bg-white shadow-dim-weak backdrop-blur-40 rounded-xl safe-bottom">
-        <Link to="/onboarding/interests">
-          <Button variant={isFilled ? "primary" : "disabled"}>다음</Button>
-        </Link>
+        <Button
+          variant={isFilled ? "primary" : "disabled"}
+          onClick={onClickNext}
+        >
+          다음
+        </Button>
 
         {!isFilled && (
           <span className="text-center text-assistive text-xs font-normal">

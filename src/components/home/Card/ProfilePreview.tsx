@@ -14,6 +14,7 @@ import { checkUserProfile, fetchMyProfile } from "../../../api/auth";
 import type { NormalizedProfile } from "../../../types/User";
 import { normalizeProfile } from "../../../lib/normalizers/normalizeProfile";
 import { MockPeople } from "../../../constants/mockPeople";
+import mixpanel from "mixpanel-browser";
 
 export const ProfilePreview = () => {
   const navigate = useNavigate();
@@ -47,6 +48,10 @@ export const ProfilePreview = () => {
     }
 
     if (response.success) {
+      mixpanel.track("Chat_Start", {
+        entry_point: "map",
+        chat_id: response.data.chatRoomId,
+      });
       navigate(`/chat/${response.data.chatRoomId}`);
     } else toast.warn(response.message);
   };
