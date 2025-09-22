@@ -130,7 +130,7 @@ export const ProfilePreview = () => {
             <HashTagWrapper key={item.detailLabel} interest={item} />
           ))}
         </div>
-        <div className="flex py-2.5">
+        <div className="flex py-2.5 safe-bottom">
           <Button
             children={selectedUserId === -1 ? "수정하기" : "채팅하기"}
             onClick={() => handleClick(selectedUserId)}

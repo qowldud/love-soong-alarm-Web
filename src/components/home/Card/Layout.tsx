@@ -4,6 +4,7 @@ import { useHomeStore } from "../../../store/homeStore";
 import { useAuthStore } from "../../../store/authStore";
 import { useChatStore } from "../../../store/chatStore";
 import { useSelectedUserStore } from "../../../store/useSelectedUserStore";
+import clsx from "clsx";
 
 type BottomSheetProps = {
   branch:
@@ -16,6 +17,7 @@ type BottomSheetProps = {
     | "excesschat"
     | "ignoreuser";
   children: React.ReactNode;
+  className?: string;
 };
 
 const BRANCH_CONST = {
@@ -45,7 +47,11 @@ const BRANCH_CONST = {
   },
 };
 
-export const CardLayout = ({ branch, children }: BottomSheetProps) => {
+export const CardLayout = ({
+  branch,
+  children,
+  className,
+}: BottomSheetProps) => {
   const maxHeightPct = BRANCH_CONST[branch].maxHeightPct;
 
   const login = useAuthStore((state) => state.isModalOpen);
@@ -140,7 +146,10 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
             }}
           >
             <div
-              className="mx-auto w-full rounded-t-2xl bg-white flex flex-col"
+              className={clsx(
+                "mx-auto w-full rounded-t-2xl bg-white flex flex-col",
+                className
+              )}
               style={{ maxHeight: `calc(${maxHeightPct}vh)` }}
             >
               <div className="flex items-center justify-center pt-2.5 pb-0.5 shrink-0">

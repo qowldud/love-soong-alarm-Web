@@ -15,15 +15,15 @@ export const PrivateLayout = () => {
   const accessToken = localStorage.getItem("accessToken");
   const { isAuth } = useAuthStore();
 
-  useEffect(() => {
-    if (!isAuth || !accessToken) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("auth-store");
-      localStorage.removeItem("chat-store");
-      sessionStorage.removeItem("home-store");
-      navigate("/");
-    }
-  }, [accessToken, isAuth]);
+  // useEffect(() => {
+  //   if (!isAuth || !accessToken) {
+  //     localStorage.removeItem("accessToken");
+  //     localStorage.removeItem("auth-store");
+  //     localStorage.removeItem("chat-store");
+  //     sessionStorage.removeItem("home-store");
+  //     navigate("/");
+  //   }
+  // }, [accessToken, isAuth]);
 
   const { handleEnter, handleExit, handleSend } =
     useOutletContext<SocketActions>();
@@ -42,7 +42,7 @@ export const PrivateLayout = () => {
       : "";
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden">
+    <div className="flex h-dvh flex-col overflow-hidden safe-bottom">
       <div className="flex flex-col items-center gap-4 shrink-0">
         {HEADER_TEXT && <Header title={HEADER_TEXT} />}
       </div>

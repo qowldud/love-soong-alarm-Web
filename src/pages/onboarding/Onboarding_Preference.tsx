@@ -134,7 +134,7 @@ export const Onboarding_Preference = () => {
         </div>
       </div>
 
-      <div className="px-4 pb-2.5 pt-5.5 flex flex-col gap-2 shadow-dim-weak backdrop-blur-40 rounded-xl">
+      <div className="px-4 pb-2.5 pt-5.5 flex flex-col gap-2 shadow-dim-weak backdrop-blur-40 rounded-xl safe-bottom">
         <Button
           variant={isFilled ? "primary" : "disabled"}
           onClick={handleNext}

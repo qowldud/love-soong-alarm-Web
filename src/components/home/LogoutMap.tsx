@@ -176,12 +176,12 @@ export function LogoutMap() {
 
   return (
     <div
-      className="w-full h-full overflow-hidden"
-      style={{ height: isPWA && !isOpen ? "calc(100% + 34px)" : "100%" }}
+      className="h-full overflow-hidden nagative-bottom"
+      // style={{ height: isPWA && !isOpen ? "calc(100% + 34px)" : "100%" }}
     >
       <div
         id="map"
-        className="inset-0 w-full h-full transform-gpu"
+        className="w-full h-full transform-gpu"
         style={{
           transformOrigin: "center center",
           height: isPWA && !isOpen ? "calc(100% + 34px)" : "100%",

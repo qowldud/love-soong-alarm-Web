@@ -14,7 +14,7 @@ const RenderCard = () => (
       <LoginCard />
     </CardLayout>
 
-    <CardLayout branch="profile">
+    <CardLayout branch="profile" className="absolute bottom-0">
       <ProfilePreview />
     </CardLayout>
 
@@ -26,12 +26,13 @@ const RenderCard = () => (
 
 export const LoggedOutView = () => {
   const [isLogin, setLogin] = useState(false);
+
   return (
-    <>
+    <div className="h-full relative">
       {isLogin && (
         <LoginModal type="button" handleClose={() => setLogin(false)} />
       )}
-      <div className="w-full h-full flex flex-col z-10">
+      <div className="absolute top-0 left-0 right-0 z-40 bg-white">
         <div className="w-full px-4 pt-4 pb-6 flex justify-between items-center h-15">
           <img src={Logo} alt={"Logo"} className="size-12" />
           <img
@@ -41,11 +42,12 @@ export const LoggedOutView = () => {
             onClick={() => setLogin(true)}
           />
         </div>
-
-        <LogoutMap />
-
-        <RenderCard />
       </div>
-    </>
+
+      <div className="w-full h-full">
+        <LogoutMap />
+      </div>
+      <RenderCard />
+    </div>
   );
 };

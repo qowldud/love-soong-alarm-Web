@@ -63,7 +63,7 @@ export const Setting = () => {
 
   return (
     <>
-      <div className="flex flex-col w-full h-full justify-between">
+      <div className="flex flex-col w-full h-full justify-between ">
         <div className="w-full flex flex-col ">
           <Link to="/edit">
             <List img={Edit} title="내 프로필 수정" />
