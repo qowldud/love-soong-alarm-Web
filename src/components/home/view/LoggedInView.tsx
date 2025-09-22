@@ -123,28 +123,30 @@ export const LoggedInView = ({
   });
 
   return (
-    <>
-      <div className="w-full">
+    <div className="h-full relative">
+      <div className="w-full h-full">
+        {locationData ? (
+          <MapCanvas
+            users={locationData?.data?.nearbyUsersInformation}
+            ref={mapRef}
+            myProfile={myProfile?.data}
+          />
+        ) : (
+          <OutOfBoundsNotice />
+        )}
+      </div>
+
+      <div className="absolute top-0 left-0 right-0 z-40">
         <ProfileCard
           userCount={locationData?.data?.nearbyUsersInformation?.length ?? 0}
         />
       </div>
 
-      {locationData ? (
-        <MapCanvas
-          users={locationData?.data?.nearbyUsersInformation}
-          ref={mapRef}
-          myProfile={myProfile?.data}
-        />
-      ) : (
-        <OutOfBoundsNotice />
-      )}
-
-      <div
+      {/* <div
         className={`${
           isAuth ? "top-57" : "top-62"
         } absolute flex flex-row gap-x-2 left-4 right-4 z-30 justify-between`}
-      />
+      /> */}
 
       <div className="absolute flex flex-row gap-x-2 left-4 right-4 bottom-2 z-30 items-center">
         <Button onClick={handleMoveToCurrentLocation}>
@@ -177,6 +179,6 @@ export const LoggedInView = ({
       <RenderCard />
 
       {reachMax && <ReachMaxModal />}
-    </>
+    </div>
   );
 };
