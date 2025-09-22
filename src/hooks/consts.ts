@@ -26,7 +26,7 @@ export const HOME_CONST = {
   yes: {
     key: "yes",
     title: ["근처에 일치하는 이성이", "명 있어요"],
-    label: "클릭하여 확인하기",
+    label: "클릭하여 랜덤으로 확인하기",
   },
 };
 

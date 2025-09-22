@@ -25,10 +25,16 @@ export const PrivateLayout = () => {
     }
   }, [accessToken, isAuth]);
 
-  const { handleEnter, handleExit, handleSend } =
+  const { handleEnter, handleExit, handleSend, handleBlock, handleUnblock } =
     useOutletContext<SocketActions>();
 
-  const ctx: SocketActions = { handleEnter, handleExit, handleSend };
+  const ctx: SocketActions = {
+    handleEnter,
+    handleExit,
+    handleSend,
+    handleBlock,
+    handleUnblock,
+  };
 
   const HEADER_TEXT =
     pathname === "/coin"

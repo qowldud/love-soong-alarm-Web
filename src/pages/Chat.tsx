@@ -11,19 +11,9 @@ import { IgnoreUser } from "../components/home/Card/IgnoreUser";
 import { getPrevChat } from "../api/chat";
 import type { RecentMessage } from "../types/chat";
 
-const RenderCard = () => (
-  <>
-    <CardLayout branch="excesschat">
-      <ExcessChat />
-    </CardLayout>
-    <CardLayout branch="ignoreuser">
-      <IgnoreUser />
-    </CardLayout>
-  </>
-);
-
 export const Chat = () => {
-  const { handleEnter, handleExit, chatDetail } = useOutletContext<Context>();
+  const { handleEnter, handleExit, handleBlock, handleUnblock, chatDetail } =
+    useOutletContext<Context>();
   const { chatRoomId } = useParams<{ chatRoomId: string }>();
   const id = Number(chatRoomId);
 
@@ -120,6 +110,21 @@ export const Chat = () => {
       return () => clearTimeout(t);
     }
   }, [inView]);
+
+  const RenderCard = () => (
+    <>
+      <CardLayout branch="excesschat">
+        <ExcessChat />
+      </CardLayout>
+      <CardLayout branch="ignoreuser">
+        <IgnoreUser
+          handleBlock={handleBlock!}
+          handleUnblock={handleUnblock!}
+          isBlocked={chatDetail?.isPartnerBlocked}
+        />
+      </CardLayout>
+    </>
+  );
 
   return (
     <>

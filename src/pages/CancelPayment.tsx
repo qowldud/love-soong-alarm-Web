@@ -1,9 +1,9 @@
 import { Button } from "../common/Button";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ErrorIcon from "@/assets/icons/error.svg?url";
 
 export const CancelPayment = () => {
-  const navigate = useNavigate();
+  const path = sessionStorage.getItem("Redirect_PATH") ?? "/";
 
   return (
     <div className="w-full h-full flex flex-col justify-between ">
@@ -18,9 +18,9 @@ export const CancelPayment = () => {
       </div>
 
       <div className="w-full px-4 py-2.5">
-        <Button variant="primary" onClick={() => navigate(-2)}>
-          이전 페이지로 가기
-        </Button>
+        <Link to={`${path}`}>
+          <Button variant="primary">이전 페이지로 가기</Button>
+        </Link>
       </div>
     </div>
   );

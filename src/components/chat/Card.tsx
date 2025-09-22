@@ -4,13 +4,7 @@ import { Hashtag_v2, ProfileLabel } from "../Common";
 import { useChatStore } from "../../store/chatStore";
 import type { ChatDetail } from "../../types/chat";
 
-export const ChatCard = ({
-  chatDetail,
-}: {
-  chatDetail: ChatDetail;
-  handleBlock: (chatRoomId: number) => void;
-  handleUnblock: (hatRoomId: number) => void;
-}) => {
+export const ChatCard = ({ chatDetail }: { chatDetail: ChatDetail }) => {
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
 
   return (

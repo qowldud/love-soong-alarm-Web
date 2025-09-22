@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../../common/Button";
 
 import Ticket from "@/assets/icons/ic_ticket.svg";
@@ -12,6 +12,10 @@ export const ExcessChat = () => {
   const { postData } = useApi();
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
+
   const { chatRoomId } = useParams<{ chatRoomId: string }>();
   const setExcessChat = useChatStore((state) => state.setExcessChat);
 
@@ -75,7 +79,10 @@ export const ExcessChat = () => {
           <Button
             variant="primary"
             children="구매하기"
-            onClick={() => navigate("/coin")}
+            onClick={() => {
+              sessionStorage.setItem("Redirect_PATH", location.pathname);
+              navigate("/coin");
+            }}
           />
         </div>
       </div>

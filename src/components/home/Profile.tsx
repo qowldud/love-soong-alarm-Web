@@ -52,7 +52,10 @@ export const ProfileCard = ({ userCount }: { userCount: number }) => {
               src={Coin}
               alt={"Coin"}
               className="w-6 h-6 cursor-pointer"
-              onClick={() => navigate("/coin")}
+              onClick={() => {
+                sessionStorage.setItem("Redirect_PATH", "/");
+                navigate("/coin");
+              }}
             />
             <img
               src={`${isNoticeAlarm ? Alarm_Notice : Alarm}`}

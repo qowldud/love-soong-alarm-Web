@@ -21,6 +21,7 @@ import { useChatStore } from "../store/chatStore";
 
 import { useMessageStore } from "../store/messageStore";
 import { useHomeStore } from "../store/homeStore";
+import { toast } from "react-toastify";
 
 export const useWebSocket = () => {
   const setExcessChat = useChatStore((state) => state.setExcessChat);
@@ -93,10 +94,14 @@ export const useWebSocket = () => {
 
   const handleBlockUser = (data: BlockUser) => {
     console.log("BLOCK_USER: ", data);
+    toast.info("차단되었습니다.");
+    window.dispatchEvent(new CustomEvent("revalidate:chat"));
   };
 
   const handleUnblockUser = (data: UnblockUser) => {
     console.log("UNBLOCK_USER: ", data);
+    toast.info("차단이 해제되었습니다.");
+    window.dispatchEvent(new CustomEvent("revalidate:chat"));
   };
 
   const handleReadAllNotificatino = (data: ReadAllNotification) => {

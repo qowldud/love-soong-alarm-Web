@@ -1,13 +1,32 @@
-import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 import { Button } from "../../../common/Button";
 import { useChatStore } from "../../../store/chatStore";
 import { CardHeader } from "../../Common";
 
-export const IgnoreUser = () => {
+export const IgnoreUser = ({
+  handleBlock,
+  handleUnblock,
+  isBlocked,
+}: {
+  handleBlock: (chatRoodId: number) => void;
+  handleUnblock: (chatRoodId: number) => void;
+  isBlocked: boolean;
+}) => {
+  const { chatRoomId } = useParams();
+
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
 
   const handleIgnore = () => {
-    toast.warn("준비중입니다.");
+    if (chatRoomId === undefined) return;
+
+    handleBlock(Number(chatRoomId));
+    setIgnoreUser(false);
+  };
+
+  const handleUnignore = () => {
+    if (chatRoomId === undefined) return;
+
+    handleUnblock(Number(chatRoomId));
     setIgnoreUser(false);
   };
 
@@ -21,11 +40,19 @@ export const IgnoreUser = () => {
           children="취소"
           onClick={() => setIgnoreUser(false)}
         />
-        <Button
-          variant="primary"
-          children="차단하기"
-          onClick={() => handleIgnore()}
-        />
+        {isBlocked ? (
+          <Button
+            variant="primary"
+            children="차단 해제하기"
+            onClick={() => handleUnignore()}
+          />
+        ) : (
+          <Button
+            variant="primary"
+            children="차단하기"
+            onClick={() => handleIgnore()}
+          />
+        )}
       </div>
     </div>
   );

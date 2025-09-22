@@ -1,9 +1,9 @@
 import CheckIcon from "@/assets/icons/check.svg?url";
 import { Button } from "../common/Button";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const CoinCallback = () => {
-  const navigate = useNavigate();
+  const path = sessionStorage.getItem("Redirect_PATH") ?? "/";
 
   return (
     <div className="w-full h-full flex flex-col justify-between ">
@@ -15,9 +15,9 @@ export const CoinCallback = () => {
       </div>
 
       <div className="w-full px-4 py-2.5">
-        <Button variant="primary" onClick={() => navigate(-2)}>
-          이전 페이지로 가기
-        </Button>
+        <Link to={`${path}`}>
+          <Button variant="primary">이전 페이지로 가기</Button>
+        </Link>
       </div>
     </div>
   );
