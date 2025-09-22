@@ -81,7 +81,7 @@ export const LoggedInView = ({
         <LoginCard />
       </CardLayout>
 
-      <CardLayout branch="profile">
+      <CardLayout branch="profile" className="absolute bottom-0">
         <ProfilePreview />
       </CardLayout>
 

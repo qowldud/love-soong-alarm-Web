@@ -273,8 +273,8 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
 
     return (
       <div
-        className="h-full z-0 overflow-hidden"
-        style={{ height: isPWA && !isOpen ? "calc(100% + 34px)" : "100%" }}
+        className="h-full z-0 overflow-hidden nagative-bottom"
+        // style={{ height: isPWA && !isOpen ? "calc(100% + 34px)" : "100%" }}
       >
         <div
           id="map"
