@@ -89,7 +89,7 @@ body::-webkit-scrollbar,
 }
 
 body {
-  height: 100dvh;
+  height: 100vh;
   background-color: lightgray;
   display: flex;
   align-items: center;

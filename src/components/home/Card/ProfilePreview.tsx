@@ -80,7 +80,7 @@ export const ProfilePreview = () => {
   };
 
   useEffect(() => {
-    if (selectedUserId && selectedUserId < 0) {
+    if (selectedUserId && selectedUserId < -5) {
       const mockUser = MockPeople.find(
         (user) => user.userId === selectedUserId
       );

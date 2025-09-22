@@ -2,19 +2,22 @@ import Ticket from "@/assets/icons/ic_ticket.svg";
 import { useState, type ReactNode } from "react";
 import { Button } from "../common/Button";
 import { useLoaderData } from "react-router-dom";
+import clsx from "clsx";
+import { getPaymentUrl } from "../api/payment";
 
-type Payment = {
+interface Payment {
   id: number;
-  content: string;
-  value: number;
-};
+  label: string;
+  value: string;
+  price: number;
+}
 
 const PAYMENT_CONST = [
-  { id: 1, content: "슬롯 1개 열기", value: 1000 },
-  { id: 2, content: "슬롯 2개 열기", value: 1200 },
-  { id: 3, content: "슬롯 3개 열기", value: 1300 },
-  { id: 4, content: "티켓 1개", value: 1500 },
-  { id: 5, content: "무제한 패스", value: 3900 },
+  { id: 1, label: "슬롯 1개 열기", value: "SLOT_1", price: 1000 },
+  { id: 2, label: "슬롯 2개 열기", value: "SLOT_2", price: 1200 },
+  { id: 3, label: "슬롯 3개 열기", value: "SLOT_3", price: 1300 },
+  { id: 4, label: "티켓 1개", value: "CHAT_TICKET", price: 1500 },
+  { id: 5, label: "무제한 패스", value: "PREPASS", price: 3900 },
 ];
 
 const Header = ({ children }: { children: ReactNode }) => {
@@ -64,28 +67,22 @@ const List = ({
         className="peer hidden"
         checked={checked}
         onChange={() => onSelect(item)}
-        aria-label={item.content}
+        aria-label={item.label}
       />
+
       <span
-        className="
-          w-5 h-5 rounded-full flex items-center justify-center
-          border border-outline-regular
-          peer-checked:bg-main1
-          transition
-        "
+        className={clsx(
+          "w-6 h-6 rounded-full flex items-center justify-center transition-all",
+          checked ? "bg-main1" : "border border-outline-regular"
+        )}
       >
-        <span
-          className="
-            w-2.5 h-2.5 rounded-full bg-white
-            hidden peer-checked:block
-          "
-        />
+        <span className="w-3 h-3 bg-white rounded-full" />
       </span>
 
       <div className="flex flex-col gap-y-0.5">
-        <div className="text-[16px] text-base">{item.content}</div>
+        <div className="text-[16px] text-base">{item.label}</div>
         <div className="text-[12px] font-light text-additive">
-          {item.value}원
+          {item.price}원
         </div>
       </div>
     </label>
@@ -97,15 +94,25 @@ export const Coin = () => {
   const [select, setSelect] = useState<Payment | null>(null);
 
   const handleSelect = (item: Payment) => setSelect(item);
-  const onPay = () => {
+  const onPay = async () => {
     if (!select) return alert("결제 옵션을 선택해주세요.");
     const chosen = PAYMENT_CONST.find((p) => p.id === select.id)!;
-    console.log("결제 선택:", chosen);
+    try {
+      const res1 = await getPaymentUrl({ item: chosen.value });
+      console.log(res1.data);
+
+      if (res1.success) {
+        const url = res1.data.url;
+        window.location.href = url;
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-1 overflow-y-auto flex flex-col w-full gap-y-1 px-0 pb-24">
+      <div className=" overflow-y-auto flex flex-col w-full gap-y-1 px-0 pb-17">
         <Header>
           <div className="flex flex-row gap-x-2 pt-2.5">
             <img src={Ticket} alt="Ticket" />
@@ -156,14 +163,15 @@ export const Coin = () => {
         </Wrapper>
       </div>
 
-      <div className="sticky bottom-3 px-4 py-2.5 bg-white border-t border-[#EDEBF2] pb-[env(safe-area-inset-bottom)] ">
-        {select ? (
-          <Button variant="primary" onClick={onPay}>
-            {select.value}원 결제하기
-          </Button>
-        ) : (
-          <Button variant="secondary">결제하기</Button>
-        )}
+      <div className="sticky w-full bottom-0 px-4 py-2.5 bg-white border-t border-[#EDEBF2]">
+        <Button
+          variant={`${select ? "primary" : "disabled"}`}
+          onClick={onPay}
+          disabled={!select}
+        >
+          {select && `${select.price}원`}
+          결제하기
+        </Button>
       </div>
     </div>
   );

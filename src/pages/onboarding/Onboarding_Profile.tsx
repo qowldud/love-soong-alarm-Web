@@ -111,7 +111,7 @@ export const Onboarding_Profile = () => {
           </div>
 
           <Input
-            label="생년월일"
+            label="출생연도"
             placeholder="예시) 2006"
             value={birthDate}
             onClear={() => setBirthDate("")}

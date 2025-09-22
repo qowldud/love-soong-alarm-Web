@@ -27,6 +27,7 @@ import { CoinCallback } from "./pages/CoinCallback";
 import { Splash } from "./pages/Splash";
 import { SocketLayout } from "./components/Layout/SocketLayout";
 import { LocationGuide } from "./pages/LocationGuide";
+import { CancelPayment } from "./pages/CancelPayment";
 
 export const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ export const router = createBrowserRouter([
               {
                 path: "/coin/callback",
                 element: <CoinCallback />,
+              },
+              {
+                path: "/coin/cancel/callback",
+                element: <CancelPayment />,
               },
 
               {
