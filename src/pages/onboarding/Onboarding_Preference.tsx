@@ -104,7 +104,10 @@ export const Onboarding_Preference = () => {
         </Description>
 
         <div className="px-4">
-          <SectionHeader title="자세한 취향 분류" />
+          <SectionHeader
+            title="자세한 취향 분류"
+            subTitle="가장 좋아하는 한 가지만 선택해주세요!"
+          />
           <ChipStack>
             {genres.map((genre) => (
               <Chip

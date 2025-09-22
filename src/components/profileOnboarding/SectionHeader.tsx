@@ -14,9 +14,11 @@ export const SectionHeader = ({ title, subTitle, className }: Props) => {
         className
       )}
     >
-      <span className="px-1 text-lg font-bold text-content-base">{title}</span>
+      <span className="px-1 text-lg font-bold text-content-base whitespace-nowrap">
+        {title}
+      </span>
       {subTitle && (
-        <span className="px-1 text-sm font-normal text-assistive">
+        <span className="px-1 text-sm font-normal text-assistive whitespace-nowrap">
           {subTitle}
         </span>
       )}

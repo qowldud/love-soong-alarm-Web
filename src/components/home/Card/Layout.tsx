@@ -131,7 +131,7 @@ export const CardLayout = ({ branch, children }: BottomSheetProps) => {
             transition={{ type: "spring", stiffness: 430, damping: 36 }}
             drag="y"
             dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={0.12}
+            dragElastic={0}
             onDragEnd={(_, info) => {
               if (info.offset.y > 120 || info.velocity.y > 800) {
                 if (branch === "profile") resetSelected();

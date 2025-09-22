@@ -20,7 +20,7 @@ export const UserMarker = ({ user, isSelected }: Props) => {
       <img src={MarkerIcon} alt="marker_icon" className="w-12 h-15" />
 
       <div className="absolute top-3 flex flex-col justify-center items-center gap-1">
-        <span className="text-sm z-10">{user.emoji}</span>
+        <span className="text-lg z-10">{user.emoji}</span>
 
         {user.lastSeen && (
           <span

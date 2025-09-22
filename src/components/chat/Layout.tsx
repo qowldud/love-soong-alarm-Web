@@ -38,15 +38,14 @@ export const ChatLayout = () => {
   }, [revalidator]);
 
   return (
-    <div className="flex h-dvh max-w-dvw flex-col overflow-hidden">
+    <div className="flex h-vh max-w-dvw flex-col overflow-hidden">
       <div className="flex flex-col items-center gap-4 shrink-0">
         <ChatCard chatDetail={chatDetail?.data} />
       </div>
-
       <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
         <Outlet context={ctx} />
       </div>
-
+      ß
       <div className="shrink-0">
         <ChatInput handleSend={handleSend!} />
       </div>
