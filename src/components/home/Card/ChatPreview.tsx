@@ -14,7 +14,6 @@ const List = ({ item }: { item: ChatRoom }) => {
   const navigate = useNavigate();
 
   const tsRaw = item?.lastMessageInfo?.timestamp;
-  console.log(tsRaw);
   const tsText = tsRaw ? formatRelativeKo(tsRaw) : "";
 
   return (

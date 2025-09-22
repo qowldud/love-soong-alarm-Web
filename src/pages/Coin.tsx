@@ -99,7 +99,6 @@ export const Coin = () => {
     const chosen = PAYMENT_CONST.find((p) => p.id === select.id)!;
     try {
       const res1 = await getPaymentUrl({ item: chosen.value });
-      console.log(res1.data);
 
       if (res1.success) {
         const url = res1.data.url;

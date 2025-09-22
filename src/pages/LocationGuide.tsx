@@ -20,9 +20,6 @@ export const LocationGuide = () => {
 
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
-
-      console.log(latitude, longitude);
-
       const res = await postLocation({ latitude, longitude });
       console.log(res);
 

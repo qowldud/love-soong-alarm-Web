@@ -57,7 +57,6 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
     const isModalOpen = useAuthStore((state) => state.isModalOpen);
     const { selectedUserId } = useSelectedUserStore();
     const isOpen = isModalOpen;
-    console.log(users);
 
     const moveToCurrentLocation = () => {
       if (!mapRef.current || !currentLocationRef.current) return;
@@ -125,7 +124,6 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
         const userLatLng = new kakao.maps.LatLng(user.latitude, user.longitude);
 
         const isSelected = selectedUserId === user.userId;
-        console.log(user);
 
         const htmlString = ReactDOMServer.renderToString(
           <UserMarker user={user} isSelected={isSelected} />

@@ -121,6 +121,7 @@ export const Chat = () => {
           handleBlock={handleBlock!}
           handleUnblock={handleUnblock!}
           isBlocked={chatDetail?.isPartnerBlocked}
+          partnerName={chatDetail?.partner.nickname}
         />
       </CardLayout>
     </>

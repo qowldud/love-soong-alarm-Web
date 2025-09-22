@@ -41,7 +41,6 @@ export const EditPage = () => {
   };
 
   useEffect(() => {
-    console.log(data);
     if (data?.data) {
       const user = data.data;
       initialize({

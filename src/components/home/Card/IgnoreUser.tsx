@@ -7,12 +7,15 @@ export const IgnoreUser = ({
   handleBlock,
   handleUnblock,
   isBlocked,
+  partnerName,
 }: {
   handleBlock: (chatRoodId: number) => void;
   handleUnblock: (chatRoodId: number) => void;
   isBlocked: boolean;
+  partnerName: string;
 }) => {
   const { chatRoomId } = useParams();
+  console.log(partnerName);
 
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
 
@@ -32,7 +35,7 @@ export const IgnoreUser = ({
 
   return (
     <div className="relative">
-      <CardHeader title="한시오분님을 차단할까요?" />
+      <CardHeader title={`${partnerName} 님을 차단할까요?`} isChat={true} />
 
       <div className="flex flex-row gap-x-2 py-2.5 w-full">
         <Button

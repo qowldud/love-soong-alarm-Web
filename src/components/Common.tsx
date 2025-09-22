@@ -5,21 +5,28 @@ import Close from "@/assets/icons/ic_close.svg";
 import { useSelectedUserStore } from "../store/useSelectedUserStore";
 import clsx from "clsx";
 import type { ChatDetail } from "../types/chat";
+import { useChatStore } from "../store/chatStore";
 
 export const CardHeader = ({
   branch,
   title,
+  isChat = false,
 }: {
   branch?: "profile" | "chat";
   title: string;
+  isChat?: boolean;
 }) => {
   const setResetHome = useHomeStore((state) => state.setReset);
   const setResetAuth = useAuthStore((state) => state.setReset);
+  const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
+
   const { resetSelected } = useSelectedUserStore();
 
   const handleReset = () => {
     setResetHome(branch);
     setResetAuth();
+
+    if (isChat) setIgnoreUser(false);
 
     if (branch === "profile") {
       resetSelected();
