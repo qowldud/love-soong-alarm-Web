@@ -13,6 +13,7 @@ import { useAuthStore } from "../../../store/authStore";
 import { checkUserProfile, fetchMyProfile } from "../../../api/auth";
 import type { NormalizedProfile } from "../../../types/User";
 import { normalizeProfile } from "../../../lib/normalizers/normalizeProfile";
+import { MockPeople } from "../../../constants/mockPeople";
 
 export const ProfilePreview = () => {
   const navigate = useNavigate();
@@ -79,6 +80,23 @@ export const ProfilePreview = () => {
   };
 
   useEffect(() => {
+    if (selectedUserId && selectedUserId < 0) {
+      const mockUser = MockPeople.find(
+        (user) => user.userId === selectedUserId
+      );
+      if (mockUser) {
+        const userObj = {
+          ...mockUser,
+          id: mockUser.userId,
+          lastSeen:
+            typeof mockUser.lastSeen === "string" ? mockUser.lastSeen : "",
+        };
+        const user = normalizeProfile(userObj, "user");
+        setSelectUser(user);
+      }
+      return;
+    }
+
     if (selectedUserId === -1) {
       getMyProfile();
     } else {

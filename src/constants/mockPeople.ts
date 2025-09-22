@@ -1,6 +1,6 @@
 export const MockPeople = [
   {
-    userId: -1,
+    userId: -7,
     name: "숭실대카리나",
     age: 21,
     major: "화학공학과",
@@ -21,7 +21,7 @@ export const MockPeople = [
     longitude: 126.95569373423322,
   },
   {
-    userId: -2,
+    userId: -8,
     name: "조휴일",
     age: 23,
     major: "영화예술전공",
@@ -42,7 +42,7 @@ export const MockPeople = [
     longitude: 126.95648522188095,
   },
   {
-    userId: -3,
+    userId: -9,
     name: "지존라이더1",
     age: 22,
     major: "불어불문학과",
@@ -63,7 +63,7 @@ export const MockPeople = [
     longitude: 126.9588147892906,
   },
   {
-    userId: -4,
+    userId: -10,
     name: "티라노사우르스",
     age: 26,
     major: "경영학부",
@@ -84,7 +84,7 @@ export const MockPeople = [
     longitude: 126.96022887473148,
   },
   {
-    userId: -5,
+    userId: -11,
     name: "숭솦간판",
     age: 25,
     major: "소프트웨어학부",
@@ -105,7 +105,7 @@ export const MockPeople = [
     longitude: 126.95971473409674,
   },
   {
-    userId: -6,
+    userId: -12,
     name: "중대에서왔어요",
     age: 22,
     major: "사회복지학부",

@@ -105,7 +105,7 @@ export const Hashtag = ({
 export const HashTagWrapper = ({
   interest,
 }: {
-  interest: { label: string; detailLabel: string; hashTags: string[] };
+  interest: { label?: string; detailLabel: string; hashTags: string[] };
 }) => (
   <div className="flex gap-2">
     <Hashtag label={interest.detailLabel} isHashTag={false} />

@@ -32,7 +32,7 @@ export interface NormalizedProfile {
   gender?: "MALE" | "FEMALE";
   lastSeen?: string;
   interests: {
-    label: string;
+    label?: string;
     detailLabel: string;
     hashTags: string[];
   }[];
