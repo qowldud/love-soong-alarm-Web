@@ -15,15 +15,15 @@ export const PrivateLayout = () => {
   const accessToken = localStorage.getItem("accessToken");
   const { isAuth } = useAuthStore();
 
-  // useEffect(() => {
-  //   if (!isAuth || !accessToken) {
-  //     localStorage.removeItem("accessToken");
-  //     localStorage.removeItem("auth-store");
-  //     localStorage.removeItem("chat-store");
-  //     sessionStorage.removeItem("home-store");
-  //     navigate("/");
-  //   }
-  // }, [accessToken, isAuth]);
+  useEffect(() => {
+    if (!isAuth || !accessToken) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("auth-store");
+      localStorage.removeItem("chat-store");
+      sessionStorage.removeItem("home-store");
+      navigate("/");
+    }
+  }, [accessToken, isAuth]);
 
   const { handleEnter, handleExit, handleSend } =
     useOutletContext<SocketActions>();
