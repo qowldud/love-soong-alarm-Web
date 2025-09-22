@@ -26,6 +26,8 @@ import { ReachMaxModal } from "../../../hooks/modal";
 import { useQuery } from "@tanstack/react-query";
 import { useApi } from "../../../api/api";
 import type { UserProfile } from "../../../types/User";
+import { useSelectedUserStore } from "../../../store/useSelectedUserStore";
+import { SelectRandom } from "../../../hooks/utils";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -65,6 +67,9 @@ export const LoggedInView = ({
   const setIsModalOpen = useAuthStore((state) => state.setIsModalOpen);
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
   const setCheckChat = useHomeStore((state) => state.setCheckChat);
+  const setSelectedUserId = useSelectedUserStore(
+    (state) => state.setSelectedUserId
+  );
 
   const handleMoveToCurrentLocation = () => {
     mapRef.current?.moveToCurrentLocation();
@@ -160,6 +165,9 @@ export const LoggedInView = ({
               setIsModalOpen({ flag: true, type: "edit" });
               return;
             }
+            setSelectedUserId(
+              SelectRandom(locationData.data.nearbyUsersInformation)
+            );
             setCheckProfile(true);
           }}
         />

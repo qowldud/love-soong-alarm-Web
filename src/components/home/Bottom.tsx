@@ -72,7 +72,7 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
     );
   } else {
     return (
-      <div className="flex flex-1 flex-col justify-center items-center bg-fill-interactive px-4 py-2.5 rounded-xl shadow-dim-regular backdrop-blur-2xl">
+      <div className="flex flex-1 flex-col justify-center items-center bg-fill-interactive px-4 py-2.5 rounded-xl shadow-dim-regular backdrop-blur-2xl pointer-events-none">
         <div className="text-content-base text-sm font-bold whitespace-nowrap">{`${HOME_CONST.no.title}`}</div>
         <div className="text-additive text-xs font-light">{`${HOME_CONST.no.label}`}</div>
       </div>

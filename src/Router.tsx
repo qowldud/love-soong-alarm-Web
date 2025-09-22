@@ -101,7 +101,6 @@ export const router = createBrowserRouter([
                 path: "/coin/cancel/callback",
                 element: <CancelPayment />,
               },
-
               {
                 path: "/alarm",
                 element: <Alarm />,

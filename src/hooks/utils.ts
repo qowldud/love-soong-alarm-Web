@@ -1,6 +1,8 @@
 // 위치 계산하는 로직
 // 현재 직선 5m 이동시에 update 하기 위해 직선거리 계산
 
+import type { NearbyUserMarker } from "../types/User";
+
 export const toRad = (deg: number) => (deg * Math.PI) / 180;
 
 export const distanceMeters = (
@@ -51,3 +53,10 @@ export function formatRelativeKo(input?: string | Date | null): string {
   if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
   return `${Math.floor(diff / 86400)}일 전`;
 }
+
+export const SelectRandom = (lists: NearbyUserMarker[]): number => {
+  const candidates = lists.filter((u) => u.isMatching);
+
+  const idx = Math.floor(Math.random() * candidates.length);
+  return candidates[idx].userId;
+};

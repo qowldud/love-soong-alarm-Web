@@ -4,7 +4,13 @@ import { Hashtag_v2, ProfileLabel } from "../Common";
 import { useChatStore } from "../../store/chatStore";
 import type { ChatDetail } from "../../types/chat";
 
-export const ChatCard = ({ chatDetail }: { chatDetail: ChatDetail }) => {
+export const ChatCard = ({
+  chatDetail,
+}: {
+  chatDetail: ChatDetail;
+  handleBlock: (chatRoomId: number) => void;
+  handleUnblock: (hatRoomId: number) => void;
+}) => {
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
 
   return (
@@ -12,7 +18,7 @@ export const ChatCard = ({ chatDetail }: { chatDetail: ChatDetail }) => {
       <div className="flex flex-row justify-between items-center py-2.5">
         <ProfileLabel chatDetail={chatDetail} />
         {chatDetail?.isPartnerBlocked ? (
-          <Button_v2 branch="BLOCK" onClick={() => setIgnoreUser(false)} />
+          <Button_v2 branch="UNBLOCK" onClick={() => setIgnoreUser(true)} />
         ) : (
           <Button_v2 branch="BLOCK" onClick={() => setIgnoreUser(true)} />
         )}
