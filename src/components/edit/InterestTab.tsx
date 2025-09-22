@@ -8,6 +8,7 @@ import { INTEREST_OPTIONS } from "../../constants/interests";
 import { GENRE_OPTIONS } from "../../constants/genres";
 import { useEditProfileStore } from "../../store/EditProfileState";
 import { useApi } from "../../api/api";
+import mixpanel from "mixpanel-browser";
 
 interface InterestTabProps {
   index: number;
@@ -91,6 +92,10 @@ export const InterestTab = ({ index }: InterestTabProps) => {
     try {
       const res = await putData("/api/users/me", payload);
       if (res.success) {
+        const allHashtags = payload.interests.flatMap((i) => i.hashTags);
+        mixpanel.track("Tag_Select", {
+          tags_selected: allHashtags,
+        });
         console.log("수정성공");
         initialize(not_convert_payload);
       }

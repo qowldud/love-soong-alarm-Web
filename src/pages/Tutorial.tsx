@@ -32,6 +32,8 @@ export const Tutorial = ({
 }: {
   setIsTutorial: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  // 배포오류 안나도록 임시 코드
+  console.log(setIsTutorial);
   return (
     <div className="w-full h-full relative">
       <ScreenOverlay />
