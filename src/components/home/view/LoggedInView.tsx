@@ -109,7 +109,7 @@ export const LoggedInView = ({
 
   useStepLocationUpdate({
     enabled: isAuth,
-    intervalMs: 1000000,
+    intervalMs: 10000,
     thresholdMeters: 0,
     getCurrent: () => latestRef.current,
     post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),

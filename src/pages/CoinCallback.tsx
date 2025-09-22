@@ -15,7 +15,7 @@ export const CoinCallback = () => {
         </span>
       </div>
 
-      <div className="w-full px-4 pt-2.5 pb-10.5">
+      <div className="w-full px-4 py-2.5">
         <Link to="/">
           <Button variant="primary">홈으로 가기</Button>
         </Link>
