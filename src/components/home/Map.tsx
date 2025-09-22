@@ -7,7 +7,7 @@ import {
   type JSX,
 } from "react";
 import { useAuthStore } from "../../store/authStore";
-import type { User, UserProfile } from "../../types/User";
+import type { NearbyUserMarker, UserProfile } from "../../types/User";
 import { useSelectedUserStore } from "../../store/useSelectedUserStore";
 import { useHomeStore } from "../../store/homeStore";
 import { UserMarker } from "./UserMarker";
@@ -40,7 +40,7 @@ interface MapCanvasRef {
 }
 
 interface Props {
-  users?: User[];
+  users?: NearbyUserMarker[];
   myProfile?: UserProfile;
 }
 
@@ -55,7 +55,7 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
     );
     const [isPWA, setIsPWA] = useState(false);
     const isModalOpen = useAuthStore((state) => state.isModalOpen);
-    const { selectedUser } = useSelectedUserStore();
+    const { selectedUserId } = useSelectedUserStore();
     const isOpen = isModalOpen;
     console.log(users);
 
@@ -92,9 +92,9 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
 
       const markerContent = wrapper.firstElementChild as HTMLElement;
       markerContent.addEventListener("click", () => {
-        const { setSelectedMy } = useSelectedUserStore.getState();
+        const { setSelectedUserId } = useSelectedUserStore.getState();
         const { setCheckProfile } = useHomeStore.getState();
-        setSelectedMy(myProfile);
+        setSelectedUserId(-1);
         setCheckProfile(true);
       });
 
@@ -124,7 +124,8 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
       users?.forEach((user) => {
         const userLatLng = new kakao.maps.LatLng(user.latitude, user.longitude);
 
-        const isSelected = selectedUser?.userId === user.userId;
+        const isSelected = selectedUserId === user.userId;
+        console.log(user);
 
         const htmlString = ReactDOMServer.renderToString(
           <UserMarker user={user} isSelected={isSelected} />
@@ -148,10 +149,10 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
           markerContent.style.cursor = "pointer";
 
           markerContent.addEventListener("click", () => {
-            const { setSelectedUser } = useSelectedUserStore.getState();
+            const { setSelectedUserId } = useSelectedUserStore.getState();
             const { setCheckProfile } = useHomeStore.getState();
 
-            setSelectedUser(user);
+            setSelectedUserId(user.userId);
             setCheckProfile(true);
 
             if (mapRef.current) {
@@ -196,8 +197,8 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
           mapRef.current = map;
 
           kakao.maps.event.addListener(map, "click", () => {
-            const { setSelectedUser } = useSelectedUserStore.getState();
-            setSelectedUser(null);
+            const { setSelectedUserId } = useSelectedUserStore.getState();
+            setSelectedUserId(null);
           });
 
           createMyMarker(kakao, map);
@@ -270,7 +271,7 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
       userMarkerRef.current.forEach((marker) => marker.setMap(null));
       userMarkerRef.current = [];
       renderUserMarkers(window.kakao, mapRef.current);
-    }, [selectedUser]);
+    }, [selectedUserId]);
 
     return (
       <div

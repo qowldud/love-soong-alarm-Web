@@ -13,7 +13,6 @@ import {
 import { toast } from "react-toastify";
 import type { Notice } from "../types/notice";
 import { useSelectedUserStore } from "../store/useSelectedUserStore";
-import { getUserProfile } from "../api/auth";
 
 const CheckLabel = (type: "before" | "after") => {
   if (type === "before")
@@ -62,9 +61,7 @@ const List = ({ item, type }: { item: Notice; type: "before" | "after" }) => {
   const navigate = useNavigate();
 
   const setCheckProfile = useHomeStore((state) => state.setCheckProfile);
-  const setSelectedUser = useSelectedUserStore(
-    (state) => state.setSelectedUser
-  );
+  const { setSelectedUserId } = useSelectedUserStore();
 
   const handleClick = async ({
     id,
@@ -75,21 +72,16 @@ const List = ({ item, type }: { item: Notice; type: "before" | "after" }) => {
   }) => {
     if (type === "before") {
       const response = await readIndivAlarm({ notificationId: id });
-      const res = await getUserProfile({ userId: userId });
 
-      if (response!.success && res!.success) {
-        navigate("/");
-        setSelectedUser(res?.data!);
-
+      if (response!.success) {
+        setSelectedUserId(userId);
         setCheckProfile(true);
+        navigate("/");
       }
     } else {
-      const res = await getUserProfile({ userId: userId });
-
-      setSelectedUser(res?.data!);
-
-      navigate("/");
+      setSelectedUserId(userId);
       setCheckProfile(true);
+      navigate("/");
     }
   };
 

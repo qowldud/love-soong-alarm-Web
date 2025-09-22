@@ -1,4 +1,4 @@
-import type { User } from "../types/User";
+import { type UserProfile, type User } from "../types/User";
 import { useApi } from "./api";
 
 const { getData, postData, putData, patchData, deleteData } = useApi();
@@ -14,19 +14,19 @@ export const updateUserProfile = async ({ id }: { id: number }) => {
 
 export const checkUserProfile = async ({ userId }: { userId: number }) => {
   try {
-    const response = await patchData(`/api/users/${userId}`, {});
+    const response = await getData<User>(`/api/users/${userId}`);
     return response;
   } catch (error: any) {
     console.log(error);
   }
 };
 
-export const getUserProfile = async ({ userId }: { userId: number }) => {
+export const fetchMyProfile = async () => {
   try {
-    const response = await getData<User>(`/api/users/${userId}`, {});
+    const response = await getData<UserProfile>("/api/users/me");
     return response;
-  } catch (error: any) {
-    console.log(error);
+  } catch (err) {
+    console.error(err);
   }
 };
 

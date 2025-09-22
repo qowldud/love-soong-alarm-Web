@@ -7,27 +7,31 @@ import { useApi } from "../../../api/api";
 import type { MakeChat } from "../../../types/chat";
 import { toast } from "react-toastify";
 import { useChatStore } from "../../../store/chatStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginModal } from "../LoginModal";
 import { useAuthStore } from "../../../store/authStore";
+import { checkUserProfile, fetchMyProfile } from "../../../api/auth";
+import type { NormalizedProfile } from "../../../types/User";
+import { normalizeProfile } from "../../../lib/normalizers/normalizeProfile";
 
 export const ProfilePreview = () => {
   const navigate = useNavigate();
   const { postData } = useApi();
-  const { selectedUser, selectedMy } = useSelectedUserStore();
+  const { selectedUserId } = useSelectedUserStore();
   const { isAuth } = useAuthStore();
   const [loginModal, setLoginModal] = useState(false);
+  const [selectUser, setSelectUser] = useState<NormalizedProfile | null>(null);
 
   const accessToken = localStorage.getItem("accessToken");
   const setReachMax = useChatStore((state) => state.setReachMax);
 
-  const handleClick = async (userId?: number) => {
+  const handleClick = async (userId?: number | null) => {
     if (!isAuth || !accessToken) {
       setLoginModal(true);
       return;
     }
 
-    if (selectedMy) {
+    if (selectedUserId === -1) {
       navigate("/edit");
       return;
     }
@@ -46,29 +50,72 @@ export const ProfilePreview = () => {
     } else toast.warn(response.message);
   };
 
+  const getUserProfile = async (userId: number) => {
+    try {
+      const res = await checkUserProfile({ userId });
+      console.log(res);
+
+      if (res?.data) {
+        const user = normalizeProfile(res.data, "user");
+        setSelectUser(user);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getMyProfile = async () => {
+    try {
+      const res = await fetchMyProfile();
+      console.log(res);
+
+      if (res?.data) {
+        const user = normalizeProfile(res.data, "my");
+        setSelectUser(user);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedUserId === -1) {
+      getMyProfile();
+    } else {
+      if (selectedUserId) {
+        getUserProfile(selectedUserId);
+      }
+    }
+  }, [selectedUserId]);
+
   return (
     <>
       {loginModal && (
         <LoginModal type="chat" handleClose={() => setLoginModal(false)} />
       )}
       <div className="relative">
-        <CardHeader branch="profile" title="프로필 보기" />
+        <CardHeader
+          branch="profile"
+          title={selectedUserId === -1 ? "내 프로필 보기" : "프로필 보기"}
+        />
         <div className="mb-3 flex items-start gap-3">
-          <Profile />
+          <Profile
+            emoji={selectUser?.emoji ?? ""}
+            name={selectUser?.name ?? ""}
+            age={selectUser?.age ?? 0}
+            major={selectUser?.major ?? ""}
+            lastSeen={selectUser?.lastSeen ?? ""}
+          />
         </div>
         <div className="flex gap-2 pb-2 overflow-x-auto scrollbar-none">
-          {selectedUser
-            ? selectedUser?.interests.map((item) => (
-                <HashTagWrapper key={item.detailLabel} interest={item} />
-              ))
-            : selectedMy?.interests.map((item) => (
-                <HashTagWrapper key={item.detailLabel} interest={item} />
-              ))}
+          {selectUser?.interests.map((item) => (
+            <HashTagWrapper key={item.detailLabel} interest={item} />
+          ))}
         </div>
         <div className="flex py-2.5">
           <Button
-            children={selectedUser ? "채팅하기" : "수정하기"}
-            onClick={() => handleClick(selectedUser?.userId)}
+            children={selectedUserId === -1 ? "수정하기" : "채팅하기"}
+            onClick={() => handleClick(selectedUserId)}
           />
         </div>
       </div>

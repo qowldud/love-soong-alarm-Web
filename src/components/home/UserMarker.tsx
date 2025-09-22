@@ -1,10 +1,10 @@
 import Marker from "@/assets/icons/Vector_lb.svg?url";
 import MatchMarker from "@/assets/icons/Vector_match.svg?url";
 import SelectMarker from "@/assets/icons/Vector_Select.svg?url";
-import type { User } from "../../types/User";
+import type { NearbyUserMarker } from "../../types/User";
 import clsx from "clsx";
 interface Props {
-  user: User;
+  user: NearbyUserMarker;
   isSelected?: boolean;
 }
 

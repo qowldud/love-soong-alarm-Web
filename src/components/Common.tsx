@@ -3,7 +3,6 @@ import { useHomeStore } from "../store/homeStore";
 
 import Close from "@/assets/icons/ic_close.svg";
 import { useSelectedUserStore } from "../store/useSelectedUserStore";
-import type { Interest, UserInterest } from "../types/User";
 import clsx from "clsx";
 import type { ChatDetail } from "../types/chat";
 
@@ -106,7 +105,7 @@ export const Hashtag = ({
 export const HashTagWrapper = ({
   interest,
 }: {
-  interest: UserInterest | Interest;
+  interest: { label: string; detailLabel: string; hashTags: string[] };
 }) => (
   <div className="flex gap-2">
     <Hashtag label={interest.detailLabel} isHashTag={false} />
@@ -117,34 +116,34 @@ export const HashTagWrapper = ({
   </div>
 );
 
-const getAgeFromBirthYear = (birthYear: number): number => {
-  const currentYear = new Date().getFullYear();
-  return currentYear - birthYear + 1;
-};
+interface Props {
+  emoji: string;
+  name: string;
+  age: number;
+  major: string;
+  lastSeen: string;
+}
 
-export const Profile = () => {
-  const { selectedUser, selectedMy } = useSelectedUserStore();
+export const Profile = ({ emoji, name, age, major, lastSeen }: Props) => {
+  const { selectedUserId } = useSelectedUserStore();
 
   return (
     <div className="flex gap-2 items-center py-2.5 w-full">
-      <div>{selectedUser ? selectedUser?.emoji : selectedMy?.emoji}</div>
+      <div>{emoji}</div>
       <div className="flex flex-col flex-1 px-1">
-        <div className="text-lg">
-          {selectedUser ? selectedUser?.name : selectedMy?.name}
-        </div>
+        <div className="text-lg">{name}</div>
         <div className="text-xs text-additive">
-          {selectedUser
-            ? selectedUser?.age
-            : getAgeFromBirthYear(Number(selectedMy?.birthDate))}
-          세 | {selectedUser ? selectedUser?.major : selectedMy?.major}
+          {age}세 | {major}
         </div>
       </div>
 
-      <div className="px-1.5 py-0.5 rounded-sm bg-success-regular">
-        <span className="text-success-strong text-xs font-medium leading-4.5 tracking-[-0.24px]">
-          {selectedUser?.lastSeen}
-        </span>
-      </div>
+      {selectedUserId !== -1 && (
+        <div className="px-1.5 py-0.5 rounded-sm bg-success-regular">
+          <span className="text-success-strong text-xs font-medium leading-4.5 tracking-[-0.24px]">
+            {lastSeen}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

@@ -35,7 +35,7 @@ export function LogoutMap() {
   const watchIdRef = useRef<number | null>(null);
   const [isPWA, setIsPWA] = useState(false);
   const isModalOpen = useAuthStore((state) => state.isModalOpen);
-  const { selectedUser } = useSelectedUserStore();
+  const { selectedUserId } = useSelectedUserStore();
   const isOpen = isModalOpen;
   console.log(isOpen);
 
@@ -56,7 +56,7 @@ export function LogoutMap() {
     MockPeople.forEach((user) => {
       const userLatLng = new kakao.maps.LatLng(user.latitude, user.longitude);
 
-      const isSelected = selectedUser?.userId === user.userId;
+      const isSelected = selectedUserId === user.userId;
 
       const htmlString = ReactDOMServer.renderToString(
         <UserMarker user={user} isSelected={isSelected} />
@@ -80,10 +80,10 @@ export function LogoutMap() {
         markerContent.style.cursor = "pointer";
 
         markerContent.addEventListener("click", () => {
-          const { setSelectedUser } = useSelectedUserStore.getState();
+          const { setSelectedUserId } = useSelectedUserStore.getState();
           const { setCheckProfile } = useHomeStore.getState();
 
-          setSelectedUser(user);
+          setSelectedUserId(user.userId);
           setCheckProfile(true);
 
           if (mapRef.current) {
@@ -129,8 +129,8 @@ export function LogoutMap() {
         mapRef.current = map;
 
         kakao.maps.event.addListener(map, "click", () => {
-          const { setSelectedUser } = useSelectedUserStore.getState();
-          setSelectedUser(null);
+          const { setSelectedUserId } = useSelectedUserStore.getState();
+          setSelectedUserId(null);
         });
 
         const initialPos = new kakao.maps.LatLng(
@@ -172,7 +172,7 @@ export function LogoutMap() {
     userMarkerRef.current.forEach((marker) => marker.setMap(null));
     userMarkerRef.current = [];
     renderUserMarkers(window.kakao, mapRef.current);
-  }, [selectedUser]);
+  }, [selectedUserId]);
 
   return (
     <div

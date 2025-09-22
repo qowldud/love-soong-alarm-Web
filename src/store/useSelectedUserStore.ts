@@ -1,32 +1,15 @@
 import { create } from "zustand";
-import type { User, UserProfile } from "../types/User";
 
 interface SelectedUserState {
-  selectedUser: User | null;
-  selectedMy: UserProfile | null;
-  setSelectedUser: (user: User | null) => void;
-  setSelectedMy: (my: UserProfile | null) => void;
+  selectedUserId: number | null;
+  setSelectedUserId: (id: number | null) => void;
   resetSelected: () => void;
 }
 
 export const useSelectedUserStore = create<SelectedUserState>()((set) => ({
-  selectedUser: null,
-  selectedMy: null,
-  setSelectedUser: (user) =>
-    set({
-      selectedUser: user,
-      selectedMy: null,
-    }),
+  selectedUserId: null,
 
-  setSelectedMy: (my) =>
-    set({
-      selectedUser: null,
-      selectedMy: my,
-    }),
+  setSelectedUserId: (id) => set({ selectedUserId: id }),
 
-  resetSelected: () =>
-    set({
-      selectedUser: null,
-      selectedMy: null,
-    }),
+  resetSelected: () => set({ selectedUserId: null }),
 }));
