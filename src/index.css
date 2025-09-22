@@ -42,6 +42,10 @@
     scrollbar-width: none;
     overscroll-behavior: none;
   }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 @layer base {
@@ -57,14 +61,12 @@
       }
     }
 
-    /* iPhone Xs, 13 mini 등 노치 + 작은 기기 */
     @media screen and (width: 375px) and (min-height: 700px) {
       #root {
         padding-bottom: 34px;
       }
     }
 
-    /* iPhone 14 Pro 이상 */
     @media screen and (min-width: 393px) {
       #root {
         padding-bottom: 34px;

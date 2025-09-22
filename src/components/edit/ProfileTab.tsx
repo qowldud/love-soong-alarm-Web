@@ -62,8 +62,8 @@ export const ProfileTab = () => {
   };
 
   return (
-    <div className="h-full flex flex-col justify-between">
-      <div className="flex flex-1 min-h-0 flex-col px-4 overflow-y-auto pb-40">
+    <div className="h-full flex flex-col">
+      <div className="flex flex-col flex-1 px-4 overflow-y-auto">
         <SectionHeader title="필수 프로필" className="pt-4 pb-2.5" />
 
         <div className="flex flex-col gap-4 ">
@@ -140,7 +140,7 @@ export const ProfileTab = () => {
         </div>
       </div>
 
-      <div className="sticky bottom-0 max-w-[444px] w-full flex flex-col bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
+      <div className="sticky bottom-0 w-full bg-white shadow-dim-weak backdrop-blur-40 pt-5.5 px-5 pb-2.5 rounded-xl">
         <Button
           variant={isModified() && isFilled ? "primary" : "disabled"}
           disabled={!isModified() || !isFilled}

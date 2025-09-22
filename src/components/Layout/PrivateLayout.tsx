@@ -42,7 +42,7 @@ export const PrivateLayout = () => {
       : "";
 
   return (
-    <div className="flex h-vh flex-col overflow-hidden">
+    <div className="flex h-dvh flex-col overflow-hidden">
       <div className="flex flex-col items-center gap-4 shrink-0">
         {HEADER_TEXT && <Header title={HEADER_TEXT} />}
       </div>
