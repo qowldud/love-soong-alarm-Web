@@ -41,7 +41,7 @@ export const getUserMaxSlots = async () => {
 
 export const getUserTickets = async () => {
   try {
-    const response = await getData<{ chatTicket: number }>(
+    const response = await getData<{ chatTicket: number; isPrepass: boolean }>(
       "/api/users/tickets"
     );
     return response;

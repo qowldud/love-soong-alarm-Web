@@ -2,8 +2,17 @@ import { Outlet } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
+import mixpanel from "mixpanel-browser";
 
 export const Layout = () => {
+  mixpanel.init(`${import.meta.env.VITE_MIX_PANEL}`, {
+    debug: true,
+    track_pageview: true,
+    persistence: "localStorage",
+    record_sessions_percent: 1,
+    record_heatmap_data: true,
+  });
+
   return (
     <AnimatePresence>
       <motion.div

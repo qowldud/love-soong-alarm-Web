@@ -48,10 +48,12 @@ const List = ({
   item,
   select,
   onSelect,
+  isFreePass,
 }: {
   item: Payment;
   select: Payment | null;
   onSelect: (item: Payment) => void;
+  isFreePass: boolean;
 }) => {
   const checked = select?.id === item.id;
 
@@ -68,6 +70,7 @@ const List = ({
         checked={checked}
         onChange={() => onSelect(item)}
         aria-label={item.label}
+        disabled={isFreePass}
       />
 
       <span
@@ -92,6 +95,8 @@ const List = ({
 export const Coin = () => {
   const { ticketNumber } = useLoaderData();
   const [select, setSelect] = useState<Payment | null>(null);
+
+  const isFreePass = ticketNumber?.data?.isPrepass;
 
   const handleSelect = (item: Payment) => setSelect(item);
   const onPay = async () => {
@@ -131,7 +136,13 @@ export const Coin = () => {
             채팅 슬롯 잠금을 풀어 여러 상대와 대화할 수 있어요
           </div>
           {PAYMENT_CONST.slice(0, 3).map((p) => (
-            <List key={p.id} item={p} select={select} onSelect={handleSelect} />
+            <List
+              key={p.id}
+              item={p}
+              select={select}
+              onSelect={handleSelect}
+              isFreePass={isFreePass}
+            />
           ))}
         </Wrapper>
         <Border />
@@ -145,6 +156,7 @@ export const Coin = () => {
             item={PAYMENT_CONST[3]}
             select={select}
             onSelect={handleSelect}
+            isFreePass={isFreePass}
           />
         </Wrapper>
         <Border />
@@ -158,6 +170,7 @@ export const Coin = () => {
             item={PAYMENT_CONST[4]}
             select={select}
             onSelect={handleSelect}
+            isFreePass={isFreePass}
           />
         </Wrapper>
       </div>
@@ -168,8 +181,9 @@ export const Coin = () => {
           onClick={onPay}
           disabled={!select}
         >
-          {select && `${select.price}원`}
-          결제하기
+          {isFreePass
+            ? "프리패스 사용자입니다"
+            : `${select && `${select.price}원`} 결제하기`}
         </Button>
       </div>
     </div>

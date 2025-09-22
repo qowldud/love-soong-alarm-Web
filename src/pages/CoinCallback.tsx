@@ -15,7 +15,7 @@ export const CoinCallback = () => {
       </div>
 
       <div className="w-full px-4 py-2.5">
-        <Link to={`${path}`}>
+        <Link to={`${path}`} replace>
           <Button variant="primary">이전 페이지로 가기</Button>
         </Link>
       </div>
