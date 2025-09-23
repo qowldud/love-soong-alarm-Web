@@ -55,8 +55,38 @@ export const ChatInput = ({
     };
   }, []);
 
+  useEffect(() => {
+    const wrapper = document.getElementById("chat-input-wrapper");
+    if (!window.visualViewport || !wrapper) return;
+
+    const onResize = () => {
+      const visualViewport = window.visualViewport;
+      const keyboardHeight = visualViewport
+        ? window.innerHeight - visualViewport.height
+        : 0;
+
+      if (keyboardHeight > 0) {
+        wrapper.style.position = "absolute";
+        wrapper.style.bottom = `${keyboardHeight}px`;
+      } else {
+        wrapper.style.position = "relative";
+        wrapper.style.bottom = "0px";
+      }
+    };
+
+    window.visualViewport.addEventListener("resize", onResize);
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", onResize);
+      }
+    };
+  }, []);
+
   return (
-    <div className="flex w-full py-3 px-4 border-t-[#9A92AD]/16 border-t-[1px]">
+    <div
+      id="chat-input-wrapper"
+      className="flex w-full py-3 px-4 border-t-[#9A92AD]/16 border-t-[1px]"
+    >
       <div className="flex w-full py-2 bg-[#9A92AD]/8 rounded-[12px]">
         <div className="flex flex-row w-full px-4 py-2 gap-x-2">
           <input

@@ -2,7 +2,7 @@ import { useNavigate, useRevalidator } from "react-router-dom";
 
 import { useAuthStore } from "../../store/authStore";
 
-import Logo from "@/assets/icons/ic_lovin.svg";
+import Logo from "@/assets/icons/purple_logo.svg?url";
 import Coin from "@/assets/icons/ic_coin.svg";
 import Alarm from "@/assets/icons/ic_alarm.svg";
 import Alarm_Notice from "@/assets/icons/ic_unread_notice.svg";

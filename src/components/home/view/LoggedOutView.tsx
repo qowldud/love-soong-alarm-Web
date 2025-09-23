@@ -1,4 +1,4 @@
-import Logo from "@/assets/icons/Logo.svg?url";
+import Logo from "@/assets/icons/purple_logo.svg?url";
 import LoginIcon from "@/assets/icons/Login.svg?url";
 import { LogoutMap } from "../LogoutMap";
 import { CardLayout } from "../Card/Layout";
@@ -40,7 +40,7 @@ export const LoggedOutView = () => {
       )}
       <div className="absolute top-0 left-0 right-0 z-40 bg-white">
         <div className="w-full px-4 pt-4 pb-6 flex justify-between items-center h-15">
-          <img src={Logo} alt={"Logo"} className="size-12" />
+          <img src={Logo} alt={"Logo"} />
           <div className="flex flex-row gap-x-2">
             <img
               src={LoginIcon}
