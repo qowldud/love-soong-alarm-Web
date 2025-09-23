@@ -52,6 +52,7 @@ axiosInstance.interceptors.response.use(
 
         const newAccessToken = refreshResponse.data.data.accessToken;
         localStorage.setItem("accessToken", newAccessToken);
+        console.log("재발급 완료!");
 
         // 원래 요청에 새 토큰 붙이고 재요청
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

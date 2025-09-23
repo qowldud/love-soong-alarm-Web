@@ -43,9 +43,9 @@ export const PrivateLayout = () => {
       ? "알림"
       : pathname === "/setting"
       ? "설정"
-      : // : pathname.startsWith("/chat")
-        // ? "채팅"
-        "";
+      : pathname.startsWith("/chat")
+      ? "채팅"
+      : "";
 
   const handleClick = () => {
     if (pathname.startsWith("/chat")) navigate("/");
