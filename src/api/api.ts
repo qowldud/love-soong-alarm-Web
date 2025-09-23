@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from "axios";
-import { useAuthStore } from "../store/authStore";
+// import { useAuthStore } from "../store/authStore";
 
 interface BasicResponse<T> {
   data: T;
@@ -32,7 +32,7 @@ axiosInstance.interceptors.request.use(
 
 // 리프레시
 
-const { logout } = useAuthStore.getState();
+// const { logout } = useAuthStore.getState();
 
 axiosInstance.interceptors.response.use(
   (response) => response,

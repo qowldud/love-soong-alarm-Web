@@ -198,6 +198,71 @@ export const PrivacyPolicy = () => {
           제한될 수 있습니다.
         </p>
       </Description>
+
+      <Description title="제6조 (개인정보의 안전성 확보조치)">
+        <p className="text-sm mb-2">
+          운영팀은 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고
+          있습니다.
+        </p>
+        <ul className="list-disc pl-5 space-y-1 text-sm leading-relaxed">
+          <li>
+            <strong>관리적 조치:</strong> 내부 관리계획 수립·시행
+          </li>
+          <li>
+            <strong>기술적 조치:</strong> 개인정보처리시스템에 대한 접근 권한의
+            관리, 접속기록의 보관 및 점검, 개인정보처리시스템의 취약점 점검 및
+            보완
+          </li>
+        </ul>
+      </Description>
+
+      <Description title="제7조 (개인정보 자동 수집 장치의 설치, 운영 및 거부)">
+        <p className="text-sm mb-2">
+          운영팀은 정보주체에게 개별적인 서비스와 편의를 제공하기 위해
+          이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용합니다.
+        </p>
+        <p className="text-sm mb-2">
+          쿠키는 웹사이트 운영에 이용되는 서버(http)가 정보주체의 브라우저에
+          보내는 소량의 정보로서 정보주체의 컴퓨터 또는 모바일에 저장되며,
+          웹사이트 접속 시 정보주체의 브라우저에서 서버로 자동 전송됩니다.
+        </p>
+        <p className="text-sm mb-2">
+          정보주체는 브라우저 옵션 설정을 통해 쿠키 허용, 차단 등의 설정을 할 수
+          있습니다.
+        </p>
+
+        <p className="text-sm font-medium mt-3">
+          1. 웹 브라우저에서 쿠키 허용/차단
+        </p>
+        <ul className="list-disc pl-5 text-sm mb-2 space-y-1">
+          <li>
+            크롬(Chrome): 웹 브라우저 설정 &gt; 개인정보 보호 및 보안 &gt;
+            인터넷 사용 기록 삭제
+          </li>
+          <li>
+            엣지(Edge): 웹 브라우저 설정 &gt; 쿠키 및 사이트 권한 &gt; 쿠키 및
+            사이트 데이터 관리 및 삭제
+          </li>
+        </ul>
+
+        <p className="text-sm font-medium mt-3">
+          2. 모바일 브라우저에서 쿠키 허용/차단
+        </p>
+        <ul className="list-disc pl-5 text-sm space-y-1">
+          <li>
+            크롬(Chrome): 모바일 브라우저 설정 &gt; 개인정보 보호 및 보안 &gt;
+            인터넷 사용 기록 삭제
+          </li>
+          <li>
+            사파리(Safari): 모바일 기기 설정 &gt; 사파리(Safari) &gt; 고급 &gt;
+            모든 쿠키 차단
+          </li>
+          <li>
+            삼성 인터넷: 모바일 브라우저 설정 &gt; 인터넷 사용 기록 &gt; 인터넷
+            사용 기록 삭제
+          </li>
+        </ul>
+      </Description>
     </div>
   );
 };
