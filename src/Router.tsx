@@ -76,6 +76,7 @@ export const router = createBrowserRouter([
       {
         path: "/preview",
       },
+
       {
         element: <SocketLayout />,
         children: [

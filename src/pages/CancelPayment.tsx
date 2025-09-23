@@ -1,9 +1,14 @@
 import { Button } from "../common/Button";
 import { Link } from "react-router-dom";
 import ErrorIcon from "@/assets/icons/error.svg?url";
+import { useEffect } from "react";
 
 export const CancelPayment = () => {
   const path = sessionStorage.getItem("Redirect_PATH") ?? "/";
+
+  useEffect(() => {
+    sessionStorage.removeItem("pay");
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col justify-between ">
