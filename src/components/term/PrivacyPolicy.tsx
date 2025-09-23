@@ -38,6 +38,7 @@ export const PrivacyPolicy = () => {
           같은 필요한 조치를 이행할 예정입니다.
         </p>
       </Description>
+      <Divider className="px-4" />
 
       <Description title="제2조 (개인정보 수집의 항목)">
         <p className="text-sm mb-2">
@@ -91,6 +92,8 @@ export const PrivacyPolicy = () => {
         </p>
       </Description>
 
+      <Divider className="px-4" />
+
       <Description title="제3조 (개인정보의 처리 및 보유기간)">
         <p className="text-sm mb-2">
           ① 운영팀은 법령에 따른 개인정보 보유·이용 기간 또는 정보주체로부터
@@ -120,6 +123,8 @@ export const PrivacyPolicy = () => {
         </ul>
       </Description>
 
+      <Divider className="px-4" />
+
       <Description title="제4조 (개인정보의 파기 절차 및 방법)">
         <p className="text-sm mb-2">
           ① 운영팀은 개인정보 보유기간의 경과, 서비스 이용계약 해지(탈퇴),
@@ -142,6 +147,8 @@ export const PrivacyPolicy = () => {
           </li>
         </ul>
       </Description>
+
+      <Divider className="px-4" />
 
       <Description title="제5조 (개인정보 처리의 위탁)">
         <p className="text-sm mb-2">
@@ -199,6 +206,8 @@ export const PrivacyPolicy = () => {
         </p>
       </Description>
 
+      <Divider className="px-4" />
+
       <Description title="제6조 (개인정보의 안전성 확보조치)">
         <p className="text-sm mb-2">
           운영팀은 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고
@@ -215,6 +224,7 @@ export const PrivacyPolicy = () => {
           </li>
         </ul>
       </Description>
+      <Divider className="px-4" />
 
       <Description title="제7조 (개인정보 자동 수집 장치의 설치, 운영 및 거부)">
         <p className="text-sm mb-2">
@@ -262,6 +272,101 @@ export const PrivacyPolicy = () => {
             사용 기록 삭제
           </li>
         </ul>
+      </Description>
+      <Divider className="px-4" />
+
+      <Description title="제8조 (개인정보 보호 책임자)">
+        <p className="text-sm mb-2">
+          운영팀은 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보
+          처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이
+          개인정보 보호책임자를 지정하고 있습니다.
+        </p>
+
+        <div className="text-sm mb-4">
+          <p className="font-medium">• 개인정보 보호책임자</p>
+          <ul className="list-none pl-5 space-y-1 mt-1">
+            <li>
+              <span className="inline-block w-16 font-normal">성명</span>:
+              좋아하면 숭리는 PM팀 김경하
+            </li>
+            <li>
+              <span className="inline-block w-16 font-normal">연락처</span>:
+              duroodu@gmail.com
+            </li>
+          </ul>
+        </div>
+
+        <p className="text-sm">
+          정보주체는 운영진의 서비스를 이용하시면서 발생한 모든 개인정보 보호
+          관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및
+          개인정보 보호 담당부서로 문의할 수 있습니다.
+        </p>
+      </Description>
+
+      <Divider className="px-4" />
+
+      <Description title="제9조 (이용자의 권익침해에 대한 구제방법)">
+        <p className="text-sm mb-2">
+          이용자는 개인정보 침해로 인한 구제를 받기 위하여
+          개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에
+          분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보
+          침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.
+        </p>
+
+        <ul className="text-sm list-none pl-2 space-y-1 mb-2">
+          <li>
+            • 개인정보분쟁조정위원회: (국번없이) 1833-6972 (
+            <a
+              href="https://www.kopico.go.kr"
+              target="_blank"
+              className="underline"
+            >
+              www.kopico.go.kr
+            </a>
+            )
+          </li>
+          <li>
+            • 개인정보침해신고센터: (국번없이) 118 (
+            <a
+              href="https://privacy.kisa.or.kr"
+              target="_blank"
+              className="underline"
+            >
+              privacy.kisa.or.kr
+            </a>
+            )
+          </li>
+          <li>
+            • 대검찰청: (국번없이) 1301 (
+            <a
+              href="https://www.spo.go.kr"
+              target="_blank"
+              className="underline"
+            >
+              www.spo.go.kr
+            </a>
+            )
+          </li>
+          <li>
+            • 경찰청: (국번없이) 182 (
+            <a
+              href="https://ecrm.cyber.go.kr"
+              target="_blank"
+              className="underline"
+            >
+              ecrm.cyber.go.kr
+            </a>
+            )
+          </li>
+        </ul>
+      </Description>
+      <Divider className="px-4" />
+
+      <Description title="부칙">
+        <p className="text-sm">
+          본 개인정보처리방침은 <strong>2025년 9월 23일부터</strong> 적용됩니다.
+          다만, 신규 회원에 대해서는 회원 가입 시부터 본 약관이 적용됩니다.
+        </p>
       </Description>
     </div>
   );

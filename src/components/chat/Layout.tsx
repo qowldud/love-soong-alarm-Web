@@ -45,7 +45,7 @@ export const ChatLayout = () => {
   }, [revalidator]);
 
   return (
-    <div className="flex max-w-dvw flex-col overflow-hidden touch-manipulation">
+    <div className="flex h-dvh max-w-dvw flex-col overflow-hidden touch-manipulation">
       <div className="flex flex-col items-center gap-4 shrink-0">
         <ChatCard chatDetail={chatDetail?.data} />
       </div>
