@@ -29,7 +29,7 @@ export const LoggedOutView = () => {
   const [isTutorial, setIsTutorial] = useState(true);
   const [isLogin, setLogin] = useState(false);
 
-  if (!isTutorial) {
+  if (isTutorial) {
     return <Tutorial setIsTutorial={setIsTutorial} />;
   }
 

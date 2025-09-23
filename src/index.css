@@ -60,6 +60,15 @@
   }
 }
 
+:root {
+  --app-height: 100dvh;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+
 html,
 body {
   height: 100%;

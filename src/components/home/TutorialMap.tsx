@@ -55,7 +55,7 @@ export function TutorialMap() {
 
         const map = new kakao.maps.Map(container, {
           center: new kakao.maps.LatLng(SSU_LOCATION.lat, SSU_LOCATION.lng),
-          level: 4,
+          level: 3,
           draggable: true,
           scrollwheel: true,
         });
