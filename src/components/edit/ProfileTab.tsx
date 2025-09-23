@@ -28,6 +28,7 @@ export const ProfileTab = () => {
     isModified,
     toPayload,
     initialize,
+    original,
   } = useEditProfileStore();
 
   const { putData } = useApi();
@@ -39,21 +40,23 @@ export const ProfileTab = () => {
     const payload = toPayload(true);
     const clientPayload = toPayload(false);
 
-    const check = await checkDuplicate(nickname);
-
-    if (check?.data.available) {
-      try {
-        const res = await putData("/api/users/me", payload);
-        if (res.success) {
-          toast.success("수정 완료 되었습니다.", {
-            autoClose: 1000,
-          });
-          initialize(clientPayload);
-        }
-      } catch (err) {}
-    } else {
-      toast.error("중복된 닉네임입니다.");
+    if (nickname !== original?.nickname) {
+      const check = await checkDuplicate(nickname);
+      if (!check?.data.available) {
+        toast.error("중복된 닉네임입니다.");
+        return;
+      }
     }
+
+    try {
+      const res = await putData("/api/users/me", payload);
+      if (res.success) {
+        toast.success("수정 완료 되었습니다.", {
+          autoClose: 1000,
+        });
+        initialize(clientPayload);
+      }
+    } catch (err) {}
   };
 
   const onChangeEmoji = (e: ChangeEvent<HTMLInputElement>) => {

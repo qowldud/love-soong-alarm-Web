@@ -37,16 +37,16 @@ export const MemberOutcard = () => {
 
       <div className="flex flex-row gap-x-2 px-4 py-2.5 w-full">
         <div
-          className="flex py-4 w-[50%] rounded-[12px] bg-main1 text-white justify-center items-center cursor-pointer"
-          onClick={deleteAccount}
-        >
-          탈퇴
-        </div>
-        <div
           className="flex py-4 w-[50%] rounded-[12px] bg-main3 text-main1 justify-center items-center cursor-pointer"
           onClick={() => setMemberout(false)}
         >
           취소
+        </div>
+        <div
+          className="flex py-4 w-[50%] rounded-[12px] bg-main1 text-white justify-center items-center cursor-pointer"
+          onClick={deleteAccount}
+        >
+          탈퇴
         </div>
       </div>
     </div>

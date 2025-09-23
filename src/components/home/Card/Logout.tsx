@@ -13,7 +13,11 @@ export const LogoutCard = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/logout`);
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
 
       logout();
       localStorage.clear();

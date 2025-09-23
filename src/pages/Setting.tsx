@@ -85,7 +85,7 @@ export const Setting = () => {
           <List
             onClick={() =>
               (window.location.href =
-                "https://www.instagram.com/love_sonng_alarm?igsh=MXhreHFzcDQzZDUzbw%3D%3D&utm_source=qr")
+                "https://www.instagram.com/love_soong_alarm?igsh=MXhreHFzcDQzZDUzbw%3D%3D&utm_source=qr")
             }
             img={Insta}
             title="인스타그램 문의"
