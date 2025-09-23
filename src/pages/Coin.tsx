@@ -114,7 +114,7 @@ export const Coin = () => {
         const url = res1.data.url;
         window.location.href = url;
       }
-    } catch () {}
+    } catch (err) {}
   };
 
   return (

@@ -189,5 +189,5 @@ export const healthCheck = async () => {
   try {
     const response = await getData("/api/v1/health-check");
     return response;
-  } catch () {}
+  } catch (err) {}
 };

@@ -19,8 +19,7 @@ export const LogoutCard = () => {
       localStorage.clear();
       sessionStorage.clear();
       navigate("/");
-    } catch () {
-    }
+    } catch (err) {}
   };
 
   return (
