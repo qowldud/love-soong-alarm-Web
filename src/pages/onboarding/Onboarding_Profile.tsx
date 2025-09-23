@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useOnboardingStore } from "../../store/onboardingStore";
 import type { ChangeEvent } from "react";
 import mixpanel from "mixpanel-browser";
+import { checkDuplicate } from "../../api/auth";
+import { toast } from "react-toastify";
 
 const GENDER_OPTIONS = [
   { label: "남성", value: "MALE" },
@@ -43,11 +45,17 @@ export const Onboarding_Profile = () => {
     setEmoji(emojiOnly);
   };
 
-  const onClickNext = () => {
-    mixpanel.track("Profile_Create", {
-      profile_completion_pct: 30,
-    });
-    navigate("/onboarding/interests");
+  const onClickNext = async () => {
+    const res = await checkDuplicate(nickname);
+
+    if (res?.data.available) {
+      mixpanel.track("Profile_Create", {
+        profile_completion_pct: 30,
+      });
+      navigate("/onboarding/interests");
+    } else {
+      toast.error("사용 불가한 닉네임입니다.");
+    }
   };
 
   return (

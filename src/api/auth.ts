@@ -76,3 +76,17 @@ export const withdrawUser = async () => {
     console.log(error);
   }
 };
+
+export const checkDuplicate = async (nickname: string) => {
+  try {
+    const response = await getData<{ available: boolean }>(
+      `/api/users/nickname/check`,
+      {
+        nickname: nickname,
+      }
+    );
+    return response;
+  } catch (error: any) {
+    console.log(error);
+  }
+};

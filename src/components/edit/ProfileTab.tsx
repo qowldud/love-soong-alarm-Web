@@ -6,6 +6,7 @@ import { useEditProfileStore } from "../../store/EditProfileState";
 import { useApi } from "../../api/api";
 import type { ChangeEvent } from "react";
 import { toast } from "react-toastify";
+import { checkDuplicate } from "../../api/auth";
 
 const GENDER_OPTIONS = [
   { label: "남성", value: "MALE" },
@@ -37,16 +38,23 @@ export const ProfileTab = () => {
   const handleEdit = async () => {
     const payload = toPayload(true);
     const clientPayload = toPayload(false);
-    try {
-      const res = await putData("/api/users/me", payload);
-      if (res.success) {
-        toast.success("수정 완료 되었습니다.", {
-          autoClose: 1000,
-        });
-        initialize(clientPayload);
+
+    const check = await checkDuplicate(nickname);
+
+    if (check?.data.available) {
+      try {
+        const res = await putData("/api/users/me", payload);
+        if (res.success) {
+          toast.success("수정 완료 되었습니다.", {
+            autoClose: 1000,
+          });
+          initialize(clientPayload);
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
+    } else {
+      toast.error("중복된 아이디입니다.");
     }
   };
 
