@@ -13,6 +13,7 @@ export default defineConfig({
       devOptions: {
         enabled: true,
       },
+      mode: "production",
       manifest: {
         name: "좋아하면 숭리는",
         short_name: "좋아하면 숭리는",

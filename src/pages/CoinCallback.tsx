@@ -8,17 +8,22 @@ export const CoinCallback = () => {
   const path = sessionStorage.getItem("Redirect_PATH") ?? "/";
 
   useEffect(() => {
-    const raw = sessionStorage.getItem("pay");
+    mixpanel.init(import.meta.env.VITE_MIX_PANEL, {
+      debug: true,
+      track_pageview: false,
+    });
+
+    const raw = localStorage.getItem("pay");
     const pay = raw ? JSON.parse(raw) : null;
 
     if (!pay) return;
 
     mixpanel.track("Purchase", {
       total_price: pay.price,
-      items: pay.value,
+      item: pay.value,
     });
 
-    sessionStorage.removeItem("pay");
+    localStorage.removeItem("pay");
   }, []);
 
   return (

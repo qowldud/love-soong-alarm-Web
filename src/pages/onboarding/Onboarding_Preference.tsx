@@ -68,6 +68,8 @@ export const Onboarding_Preference = () => {
         sessionStorage.removeItem("onboarding-storage");
         login(accessToken);
 
+        console.log(data);
+
         // mixpanel 사용자 식별
         mixpanel.track("SignUp");
         mixpanel.identify(String(data.data.userId));

@@ -4,6 +4,7 @@ import { HOME_CONST } from "../../hooks/consts";
 import { useAuthStore } from "../../store/authStore";
 import { useLoaderData, useRevalidator } from "react-router-dom";
 import { postLocation } from "../../api/location";
+import { toast } from "react-toastify";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   count: number;
@@ -26,6 +27,9 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
 
       const res = await postLocation({ latitude, longitude });
       console.log(res);
+      toast.success("새로고침 되었어요", {
+        autoClose: 1000,
+      });
       revalidate();
     });
   };

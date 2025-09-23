@@ -18,13 +18,19 @@ export const LocationGuide = () => {
       return;
     }
 
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude, longitude } = pos.coords;
-      const res = await postLocation({ latitude, longitude });
-      console.log(res);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        const res = await postLocation({ latitude, longitude });
+        console.log(res);
 
-      navigate("/splash");
-    });
+        navigate("/splash");
+      },
+      (error) => {
+        console.error("위치 권한 거부 또는 실패: ", error);
+        navigate("/splash");
+      }
+    );
   };
   return (
     <div className="flex flex-col justify-between h-full">
