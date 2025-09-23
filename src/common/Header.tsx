@@ -1,4 +1,4 @@
-import Arrow_Back from "@/assets/icons/arrow_back.svg?url";
+import Arrow_Back from "@/assets/icons/arrow_back.svg";
 import { useNavigate } from "react-router-dom";
 
 interface Props {

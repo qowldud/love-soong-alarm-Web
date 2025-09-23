@@ -13,7 +13,8 @@ export const LogoutCard = () => {
 
   const handleLogout = async () => {
     try {
-      const data = await axios.post("/api/auth/logout");
+      const data = await axios.get("/api/auth/logout");
+      console.log(data);
       if (data.data.success) {
         logout();
         localStorage.clear();
