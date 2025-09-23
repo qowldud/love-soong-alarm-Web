@@ -102,7 +102,7 @@ export const GENRE_FLAT_OPTIONS: { label: string; value: string }[] = [
 
   // FASHION
   { label: "서브컬쳐", value: "SUBCULTURE" },
-  { label: "클래식", value: "FASHION_CLASSIC" },
+  { label: "캐주얼", value: "CASUAL" },
   { label: "빈티지", value: "VINTAGE" },
   { label: "스트릿", value: "STREET" },
 

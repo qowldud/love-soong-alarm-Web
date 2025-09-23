@@ -130,7 +130,7 @@ export const LoggedInView = ({
   return (
     <div className="h-full relative">
       <div className="w-full h-full">
-        {locationData ? (
+        {locationData?.data ? (
           <MapCanvas
             users={locationData?.data?.nearbyUsersInformation}
             ref={mapRef}

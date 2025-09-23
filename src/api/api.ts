@@ -1,4 +1,5 @@
 import axios, { type AxiosResponse } from "axios";
+import { useAuthStore } from "../store/authStore";
 
 interface BasicResponse<T> {
   data: T;
@@ -25,6 +26,47 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// 리프레시
+
+const { logout } = useAuthStore.getState();
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    // accessToken 만료로 인한 401 에러 + 재시도 안했으면
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/api/auth/reissue") // 무한루프 방지
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshResponse = await axiosInstance.post("/api/auth/reissue");
+
+        const newAccessToken = refreshResponse.data.data.accessToken;
+        localStorage.setItem("accessToken", newAccessToken);
+
+        // 원래 요청에 새 토큰 붙이고 재요청
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error("토큰 재발급 실패", refreshError);
+        localStorage.clear();
+        sessionStorage.clear();
+        logout();
+        window.location.href = "/";
+
+        return Promise.reject(refreshError);
+      }
+    }
+
     return Promise.reject(error);
   }
 );

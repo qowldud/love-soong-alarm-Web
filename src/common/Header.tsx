@@ -10,7 +10,7 @@ export const Header = ({ title, onClick }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-4 bg-white">
       <div className="flex justify-between items-center">
         <img
           src={Arrow_Back}

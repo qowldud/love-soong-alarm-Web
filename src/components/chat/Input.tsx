@@ -19,7 +19,7 @@ export const ChatInput = ({
     handleSend(Number(chatRoomId), message);
     setMessage("");
 
-    inputRef.current?.blur();
+    inputRef.current?.focus({ preventScroll: true });
   };
 
   useEffect(() => {
@@ -56,7 +56,10 @@ export const ChatInput = ({
   }, []);
 
   return (
-    <div className="flex w-full py-3 px-4 border-t-[#9A92AD]/16 border-t-[1px]">
+    <div
+      id="chat-input-wrapper"
+      className="flex w-full py-3 px-4 border-t-[#9A92AD]/16 border-t-[1px]"
+    >
       <div className="flex w-full py-2 bg-[#9A92AD]/8 rounded-[12px]">
         <div className="flex flex-row w-full px-4 py-2 gap-x-2">
           <input
