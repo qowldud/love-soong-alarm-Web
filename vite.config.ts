@@ -25,7 +25,7 @@ export default defineConfig({
         lang: "ko",
         icons: [
           {
-            src: "icons/Logo.png",
+            src: "icons/Logo_purple.png",
             sizes: "192x192",
             type: "image/png",
             purpose: "any maskable",

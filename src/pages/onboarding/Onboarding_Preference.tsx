@@ -57,7 +57,11 @@ export const Onboarding_Preference = () => {
     };
 
     try {
-      const data = await patchData("/api/users/on-boarding", payload);
+      const data = (await patchData("/api/users/on-boarding", payload)) as {
+        success: boolean;
+        message: string;
+        data: { userId?: string };
+      };
       const accessToken = localStorage.getItem("accessToken");
       if (data.success && accessToken) {
         reset();
@@ -66,7 +70,7 @@ export const Onboarding_Preference = () => {
 
         // mixpanel 사용자 식별
         mixpanel.track("SignUp");
-        mixpanel.identify("user_test");
+        mixpanel.identify(String(data.data.userId));
         mixpanel.track("Profile_Create", {
           profile_completion_pct: 100,
         });

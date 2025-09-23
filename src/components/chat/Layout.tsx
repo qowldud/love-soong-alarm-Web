@@ -41,32 +41,8 @@ export const ChatLayout = () => {
     };
   }, [revalidator]);
 
-  useEffect(() => {
-    // 뷰포트 높이를 설정하는 함수
-    const setViewportHeight = () => {
-      // 뷰포트의 실제 높이를 가져옴
-      const viewportHeight = window.innerHeight;
-      // CSS 변수로 설정
-      document.documentElement.style.setProperty("--vh", `${viewportHeight}px`);
-    };
-
-    // 처음 렌더링 시 높이 설정
-    setViewportHeight();
-
-    // 창 크기 변경 및 리사이즈 이벤트에 따라 높이 재설정
-    window.addEventListener("resize", setViewportHeight);
-
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("resize", setViewportHeight);
-    };
-  }, []);
-
   return (
-    <div
-      className="flex max-w-dvw flex-col overflow-hidden"
-      style={{ height: "var(--vh)" }}
-    >
+    <div className="flex h-dvh max-w-dvw flex-col overflow-hidden">
       <div className="flex flex-col items-center gap-4 shrink-0">
         <ChatCard chatDetail={chatDetail?.data} />
       </div>
