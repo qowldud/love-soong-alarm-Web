@@ -59,29 +59,23 @@ export const ProfilePreview = () => {
   const getUserProfile = async (userId: number) => {
     try {
       const res = await checkUserProfile({ userId });
-      console.log(res);
 
       if (res?.data) {
         const user = normalizeProfile(res.data, "user");
         setSelectUser(user);
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   const getMyProfile = async () => {
     try {
       const res = await fetchMyProfile();
-      console.log(res);
 
       if (res?.data) {
         const user = normalizeProfile(res.data, "my");
         setSelectUser(user);
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {

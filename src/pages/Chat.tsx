@@ -96,7 +96,6 @@ export const Chat = () => {
         el2.scrollTop += after - before;
       }
     } catch (e) {
-      console.error(e);
     } finally {
       setLoadingPrev(false);
     }

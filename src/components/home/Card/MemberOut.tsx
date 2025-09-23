@@ -19,9 +19,7 @@ export const MemberOutcard = () => {
         sessionStorage.clear();
         navigate("/");
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   return (

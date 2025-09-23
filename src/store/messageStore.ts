@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import type { ChatRoom, RecentMessage } from "../types/chat";
 import type { ListUpdate, NewChatUpdate } from "../types/socket";
-import { toast } from "react-toastify";
 
 type MessageStore = {
   newMessage: RecentMessage[];
@@ -58,7 +57,6 @@ export const useMessageStore = create<MessageStore>()((set) => ({
       };
 
       if (idx === -1) {
-        toast.error("아직 없는 채팅방입니다.");
         return { newChats: s.newChats };
       }
 

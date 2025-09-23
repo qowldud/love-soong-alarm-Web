@@ -37,7 +37,6 @@ export function LogoutMap() {
   const isModalOpen = useAuthStore((state) => state.isModalOpen);
   const { selectedUserId } = useSelectedUserStore();
   const isOpen = isModalOpen;
-  console.log(isOpen);
 
   // 커스텀 마커 HTML
   const markerHtml = `
@@ -154,9 +153,7 @@ export function LogoutMap() {
       if (watchIdRef.current !== null) {
         try {
           navigator.geolocation.clearWatch(watchIdRef.current);
-        } catch (err) {
-          console.error(err);
-        }
+        } catch (err) {}
       }
       if (markerRef.current) markerRef.current.setMap(null);
       if (mapRef.current) mapRef.current = null;

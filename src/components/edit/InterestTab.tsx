@@ -88,7 +88,6 @@ export const InterestTab = ({ index }: InterestTabProps) => {
 
     const payload = toPayload(true);
     const not_convert_payload = toPayload(false);
-    console.log(payload);
     try {
       const res = await putData("/api/users/me", payload);
       if (res.success) {
@@ -96,12 +95,9 @@ export const InterestTab = ({ index }: InterestTabProps) => {
         mixpanel.track("Tag_Select", {
           tags_selected: allHashtags,
         });
-        console.log("수정성공");
         initialize(not_convert_payload);
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   return (

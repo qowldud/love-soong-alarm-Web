@@ -231,9 +231,8 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
               (p) => {
                 updatePosition(p.coords.latitude, p.coords.longitude);
               },
-              (err) => {
+              () => {
                 // 권한 거부/타임아웃 등 에러는 콘솔로만
-                console.warn("watchPosition error:", err);
               },
               {
                 timeout: 15_000,
@@ -242,7 +241,6 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
             );
             watchIdRef.current = id as unknown as number;
           } else {
-            console.warn("Geolocation not supported.");
           }
         });
       })();
@@ -251,9 +249,7 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
         if (watchIdRef.current !== null) {
           try {
             navigator.geolocation.clearWatch(watchIdRef.current);
-          } catch (err) {
-            console.error(err);
-          }
+          } catch (err) {}
         }
         if (markerRef.current) markerRef.current.setMap(null);
         if (mapRef.current) mapRef.current = null;

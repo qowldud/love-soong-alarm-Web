@@ -16,9 +16,7 @@ export const postLocation = async ({
       longitude: longitude,
     });
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const getLocation = async () => {
@@ -31,7 +29,6 @@ export const getLocation = async () => {
     if (axiosError.response?.status === 400) {
       return null;
     } else {
-      console.error(error);
     }
   }
 };

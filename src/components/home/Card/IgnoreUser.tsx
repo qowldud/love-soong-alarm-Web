@@ -15,7 +15,6 @@ export const IgnoreUser = ({
   partnerName: string;
 }) => {
   const { chatRoomId } = useParams();
-  console.log(partnerName);
 
   const setIgnoreUser = useChatStore((state) => state.setIgnoreUser);
 

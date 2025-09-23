@@ -55,8 +55,6 @@ axiosInstance.interceptors.response.use(
         );
         console.log(refreshResponse);
 
-        console.log("재발급 완료!");
-
         const newAccessToken = refreshResponse.data.data.data.accessToken;
         localStorage.setItem("accessToken", newAccessToken);
 
@@ -64,12 +62,6 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        console.error("토큰 재발급 실패", refreshError);
-        // localStorage.clear();
-        // sessionStorage.clear();
-        // logout();
-        // window.location.href = "/";
-
         return Promise.reject(refreshError);
       }
     }
@@ -167,12 +159,9 @@ export const useApi = () => {
   // Handle API Errors
   const handleApiError = (error: any) => {
     if (error.response) {
-      console.log(error.resopnse);
       return error.response.data;
     } else if (error.request) {
-      console.log("API Error Request:", error.request);
     } else {
-      console.log("API Error Message:", error.message);
     }
   };
 
@@ -191,7 +180,5 @@ export const healthCheck = async () => {
   try {
     const response = await getData("/api/v1/health-check");
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };

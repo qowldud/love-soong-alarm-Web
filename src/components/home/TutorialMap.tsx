@@ -32,7 +32,6 @@ export function TutorialMap() {
   const [isPWA, setIsPWA] = useState(false);
   const isModalOpen = useAuthStore((state) => state.isModalOpen);
   const isOpen = isModalOpen;
-  console.log(isOpen);
 
   useEffect(() => {
     const checkPWA = () => {
@@ -72,9 +71,7 @@ export function TutorialMap() {
       if (watchIdRef.current !== null) {
         try {
           navigator.geolocation.clearWatch(watchIdRef.current);
-        } catch (err) {
-          console.error(err);
-        }
+        } catch (err) {}
       }
       if (markerRef.current) markerRef.current.setMap(null);
       if (mapRef.current) mapRef.current = null;

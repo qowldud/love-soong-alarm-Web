@@ -145,7 +145,6 @@ export function useReliableSocket(
         ws.send(typeof data === "string" ? data : JSON.stringify(data));
       } else {
         connect();
-        console.warn("소켓이 열려 있지 않습니다. 재연결을 시도했습니다.");
       }
     },
     [connect]

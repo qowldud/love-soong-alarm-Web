@@ -68,8 +68,6 @@ export const Onboarding_Preference = () => {
         sessionStorage.removeItem("onboarding-storage");
         login(accessToken);
 
-        console.log(data);
-
         // mixpanel 사용자 식별
         mixpanel.track("SignUp");
         mixpanel.identify(String(data.data.userId));
@@ -78,12 +76,9 @@ export const Onboarding_Preference = () => {
         });
         navigate("/guide");
       } else {
-        console.log("accessToken이 없습니다.");
         navigate("/");
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   const handleNext = () => {

@@ -50,11 +50,9 @@ export const ProfileTab = () => {
           });
           initialize(clientPayload);
         }
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) {}
     } else {
-      toast.error("중복된 아이디입니다.");
+      toast.error("중복된 닉네임입니다.");
     }
   };
 

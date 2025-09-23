@@ -14,8 +14,6 @@ export const ExcessChat = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
-
   const { chatRoomId } = useParams<{ chatRoomId: string }>();
   const setExcessChat = useChatStore((state) => state.setExcessChat);
 
@@ -26,9 +24,7 @@ export const ExcessChat = () => {
       try {
         const res = await getUserTickets();
         setTickets(res?.data.chatTicket ?? 0);
-      } catch (err) {
-        console.error("티켓 개수 불러오기 실패:", err);
-      }
+      } catch (err) {}
     })();
   }, []);
 

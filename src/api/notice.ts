@@ -14,36 +14,28 @@ export const readIndivAlarm = async ({
       {}
     );
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const readAllAlarm = async () => {
   try {
     const response = await patchData<string>("/api/notifications/read-all", {});
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const getNotifications = async () => {
   try {
     const response = await getData<Notice[]>("/api/notifications");
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const deleteAllAlarm = async () => {
   try {
     const response = await deleteData<string>("/api/notifications");
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const deleteIndivAlarm = async ({
@@ -56,7 +48,5 @@ export const deleteIndivAlarm = async ({
       `/api/notifications/${notificationId}`
     );
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };

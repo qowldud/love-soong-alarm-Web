@@ -151,9 +151,7 @@ export const ChatPreview = ({
           setRemainSlot(res.data.userSlotInfo.remainingSlot ?? 0);
           setInitLists({ chatRooms: res.data.chatRooms });
         }
-      } catch (err) {
-        console.error("채팅 리스트 불러오기 실패:", err);
-      }
+      } catch (err) {}
     })();
 
     handleSendSubscribeList();

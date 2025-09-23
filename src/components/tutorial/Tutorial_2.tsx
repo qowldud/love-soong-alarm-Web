@@ -112,7 +112,7 @@ export const Tutorial_2 = () => (
           <div className="flex flex-row items-center gap-x-1">
             <img src={View} alt={"View"} className="w-4 h-4" />
             <div className="text-[14px] font-light text-assistive">
-              6 명의 사용자가 표시되고 있어요
+              6 명의 이성이 표시되고 있어요 (최대 6명 표시)
             </div>
           </div>
           <div className="flex flex-row items-center gap-x-1 cursor-pointer">
@@ -129,7 +129,7 @@ export const Tutorial_2 = () => (
       <div className="flex flex-col w-full gap-y-2 items-center">
         <img src={Up_Arrow} alt={"up"} className="w-5 h-5" />
         <div className="text-base font-bold text-main1">
-          내 주변에 있는 사용자들과 채팅해보세요
+          내 주변에 있는 이성들과 채팅해보세요
         </div>
       </div>
     </CenterGuide>

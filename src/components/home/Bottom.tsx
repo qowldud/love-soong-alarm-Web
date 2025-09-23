@@ -16,10 +16,7 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
   const { revalidate } = useRevalidator();
 
   const onRefresh = async () => {
-    if (!navigator.geolocation) {
-      console.log("이 브라우저는 위치 정보를 지원하지 않아요!");
-      return;
-    }
+    if (!navigator.geolocation) return;
 
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;

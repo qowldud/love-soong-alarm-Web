@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { useWebSocket } from "../../hooks/useWebSocket";
 import { useReliableSocket } from "../../hooks/useReliableSocket";
-// import { toast } from "react-toastify";
 
 export interface SocketActions {
   handlePlainType?: (type: string, chatRoomId: number) => void;
@@ -56,7 +55,6 @@ export const SocketLayout = () => {
 
   const { sendMessage } = useReliableSocket(urlFactory, {
     onOpen: () => {
-      console.log("✅ WebSocket 연결됨");
       for (const id of activeRoomsRef.current) {
         sendMessage({ type: "SUBSCRIBE", chatRoomId: id });
       }
@@ -65,50 +63,48 @@ export const SocketLayout = () => {
     onMessage: (data) => {
       switch (data.type) {
         case "CONNECTION_SUCCESS":
-          return handleConnectionSuccess(data);
+          return handleConnectionSuccess();
         case "UNREAD_BADGE_UPDATE":
           return handleUnreadBadgeUpdate(data);
         case "SUBSCRIBE":
-          return handleSubscribe(data);
+          return handleSubscribe();
         case "UNSUBSCRIBE":
-          return handleUnsubscribe(data);
+          return handleUnsubscribe();
         case "MESSAGE_READ":
-          return handleMessageRead(data);
+          return handleMessageRead();
         case "CHAT_MESSAGE":
-          return handleChatMessage(data);
+          return handleChatMessage();
         case "MESSAGE_COUNT_LIMIT":
-          return handleExcessChat(data);
+          return handleExcessChat();
         case "CHAT_LIST_UPDATE":
           return handleChatListUpdate(data);
         case "CHAT_LIST_SUBSCRIBE":
-          return handleSubscribeList(data);
+          return handleSubscribeList();
         case "CHAT_LIST_UNSUBSCRIBE":
-          return handleUnsubscribeList(data);
+          return handleUnsubscribeList();
         case "NEW_CHAT_ROOM_CREATED":
           return handleNewUserChat();
         case "BLOCK_USER":
-          return handleBlockUser(data);
+          return handleBlockUser();
         case "UNBLOCK_USER":
-          return handleUnblockUser(data);
+          return handleUnblockUser();
         case "NOTIFICATION":
-          return handleNotification(data);
+          return handleNotification();
         case "UNREAD_NOTIFICATION_BADGE_UPDATE":
           return handleNotifiactionAlarm(data);
         case "READ_NOTIFICATION":
-          return handleReadNotification(data);
+          return handleReadNotification();
         case "READ_ALL_NOTIFICATION":
-          return handleReadAllNotificatino(data);
+          return handleReadAllNotificatino();
         case "ERROR":
-          return handleError(data);
+          return handleError();
         default:
-          console.log(data);
           return;
       }
     },
 
-    onError: (e) => console.error("❌ WebSocket 에러:", e),
+    onError: () => {},
     onClose: () => {},
-    // toast.warn("WebSocket 닫힘"),
   });
 
   const handlePlainType = (type: string, chatRoomId: number) => {

@@ -64,7 +64,6 @@ export const Hashtag_v2 = ({
 }: {
   item: { label: string; hashtags: string[] };
 }) => {
-  console.log(item.label);
   return (
     <div className="flex items-center gap-x-1.5 shrink-0">
       <span className="inline-flex shrink-0 whitespace-nowrap text-main1 bg-main3 text-[12px] px-1.5 py-0.5 rounded-[4px]">

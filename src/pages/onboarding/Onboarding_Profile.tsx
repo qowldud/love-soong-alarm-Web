@@ -54,7 +54,7 @@ export const Onboarding_Profile = () => {
       });
       navigate("/onboarding/interests");
     } else {
-      toast.error("사용 불가한 닉네임입니다.");
+      toast.error("중복된 닉네임입니다.");
     }
   };
 

@@ -8,9 +8,7 @@ export const getChatLists = async () => {
     const response = await getData<ChatRooms>("/api/chats");
 
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const enjoyChat = async ({ targetUserId }: { targetUserId: number }) => {
@@ -19,9 +17,7 @@ export const enjoyChat = async ({ targetUserId }: { targetUserId: number }) => {
       targetUserId: targetUserId,
     });
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const getDetailChat = async ({ chatRoomId }: { chatRoomId: number }) => {
@@ -30,9 +26,7 @@ export const getDetailChat = async ({ chatRoomId }: { chatRoomId: number }) => {
       `/api/chats/rooms/${chatRoomId}`
     );
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };
 
 export const getPrevChat = async ({
@@ -50,7 +44,5 @@ export const getPrevChat = async ({
       { roomId: roomId, size: size || 50, lastMessageId: lastMessageId }
     );
     return response;
-  } catch (error: any) {
-    console.log(error);
-  }
+  } catch (error: any) {}
 };

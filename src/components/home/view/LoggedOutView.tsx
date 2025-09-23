@@ -41,13 +41,11 @@ export const LoggedOutView = () => {
       <div className="absolute top-0 left-0 right-0 z-40 bg-white">
         <div className="w-full px-4 pt-4 pb-6 flex justify-between items-center h-15">
           <img src={Logo} alt={"Logo"} />
-          <div className="flex flex-row gap-x-2">
-            <img
-              src={LoginIcon}
-              alt="login_icon"
-              className="cursor-pointer"
-              onClick={() => setLogin(true)}
-            />
+          <div
+            className="flex flex-row gap-x-2 cursor-pointer"
+            onClick={() => setLogin(true)}
+          >
+            <img src={LoginIcon} alt="login_icon" />
             <div className="text-base font-normal text-content-base">
               시작하기
             </div>

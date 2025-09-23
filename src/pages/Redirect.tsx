@@ -12,7 +12,6 @@ export const Redirect = () => {
     const accessToken = searchParams.get("access_token");
 
     if (!accessToken) {
-      console.error("엑세스 토큰 없음");
       navigate("/");
       return;
     }

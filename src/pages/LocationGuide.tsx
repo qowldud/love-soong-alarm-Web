@@ -12,11 +12,7 @@ export const LocationGuide = () => {
   const navigate = useNavigate();
 
   const onClickStart = async () => {
-    console.log(navigator.geolocation);
-    if (!navigator.geolocation) {
-      console.log("이 브라우저는 위치 정보를 지원하지 않아요!");
-      return;
-    }
+    if (!navigator.geolocation) return;
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
