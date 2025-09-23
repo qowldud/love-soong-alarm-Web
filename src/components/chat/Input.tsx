@@ -21,7 +21,8 @@ export const ChatInput = ({
     }
     handleSend(Number(chatRoomId), message);
     setMessage("");
-    inputRef.current?.focus();
+
+    inputRef.current?.focus({ preventScroll: true });
   };
 
   useEffect(() => {
