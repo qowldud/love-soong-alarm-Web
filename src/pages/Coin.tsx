@@ -17,7 +17,7 @@ const PAYMENT_CONST = [
   { id: 2, label: "슬롯 2개 열기", value: "SLOT_2", price: 1200 },
   { id: 3, label: "슬롯 3개 열기", value: "SLOT_3", price: 1300 },
   { id: 4, label: "티켓 1개", value: "CHAT_TICKET", price: 1500 },
-  { id: 5, label: "무제한 패스", value: "PREPASS", price: 3900 },
+  { id: 5, label: "무제한 패스", value: "PREPASS", price: 5900 },
 ];
 
 const Header = ({ children }: { children: ReactNode }) => {

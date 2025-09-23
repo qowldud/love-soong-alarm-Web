@@ -48,21 +48,27 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshResponse = await axiosInstance.post("/api/auth/reissue");
+        const refreshResponse = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/auth/reissue`,
+          {},
+          { withCredentials: true }
+        );
+        console.log(refreshResponse);
 
-        const newAccessToken = refreshResponse.data.data.accessToken;
-        localStorage.setItem("accessToken", newAccessToken);
         console.log("재발급 완료!");
+
+        const newAccessToken = refreshResponse.data.data.data.accessToken;
+        localStorage.setItem("accessToken", newAccessToken);
 
         // 원래 요청에 새 토큰 붙이고 재요청
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("토큰 재발급 실패", refreshError);
-        localStorage.clear();
-        sessionStorage.clear();
-        logout();
-        window.location.href = "/";
+        // localStorage.clear();
+        // sessionStorage.clear();
+        // logout();
+        // window.location.href = "/";
 
         return Promise.reject(refreshError);
       }

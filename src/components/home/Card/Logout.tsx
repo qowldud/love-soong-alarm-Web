@@ -13,7 +13,7 @@ export const LogoutCard = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("/api/auth/logout");
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/logout`);
 
       logout();
       localStorage.clear();
