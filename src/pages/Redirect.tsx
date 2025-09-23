@@ -18,6 +18,7 @@ export const Redirect = () => {
 
     if (isRegistered === "true") {
       login(accessToken);
+
       navigate("/splash");
     } else {
       localStorage.setItem("accessToken", accessToken);

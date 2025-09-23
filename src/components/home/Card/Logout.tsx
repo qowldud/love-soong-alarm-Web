@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 // import { axiosInstance, useApi } from "../../../api/api";
 import { useAuthStore } from "../../../store/authStore";
 import { CardHeader } from "../../Common";
-import axios from "axios";
+// import axios from "axios";
+// import { toast } from "react-toastify";
 
 export const LogoutCard = () => {
   const setLogout = useAuthStore((state) => state.setIsLogoutOpen);
@@ -12,18 +13,20 @@ export const LogoutCard = () => {
   // const { postData } = useApi();
 
   const handleLogout = async () => {
-    try {
-      await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/auth/logout`,
-        {},
-        { withCredentials: true }
-      );
+    // try {
+    // await axios.post(
+    //   `${import.meta.env.VITE_BASE_URL}/api/auth/logout`,
+    //   {},
+    //   { withCredentials: true }
+    // );
 
-      logout();
-      localStorage.clear();
-      sessionStorage.clear();
-      navigate("/");
-    } catch (err) {}
+    logout();
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate("/");
+    // } catch (err) {
+    //   toast.error(err);
+    // }
   };
 
   return (
