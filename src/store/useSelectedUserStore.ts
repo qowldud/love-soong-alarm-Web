@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 interface SelectedUserState {
-  selectedUserId: number | number[] | null;
-  setSelectedUserId: (id: number | number[] | null) => void;
+  selectedUserId: number | null;
+  setSelectedUserId: (id: number | null) => void;
   resetSelected: () => void;
 }
 
