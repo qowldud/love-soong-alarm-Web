@@ -53,9 +53,6 @@ axiosInstance.interceptors.response.use(
           {},
           { withCredentials: true }
         );
-        console.log(refreshResponse);
-
-        console.log("재발급 완료!");
 
         const newAccessToken = refreshResponse.data.data.accessToken;
         localStorage.setItem("accessToken", newAccessToken);

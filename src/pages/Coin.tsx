@@ -120,12 +120,12 @@ export const Coin = () => {
   return (
     <div className="flex h-full flex-col">
       <div className=" overflow-y-auto flex flex-col w-full gap-y-1 px-0 pb-17">
+        <div className="pt-2.5 pb-1 px-4 w-full">
+          <span className="px-1 text-[#989898] text-[13px] font-medium leading-7 tracking-[-0.26px] whitespace-nowrap">
+            축제 운영기간(9.24~9.26) 이후에는 사용이 불가해요!
+          </span>
+        </div>
         <Header>
-          <div className="pt-2.5 pb-1 px-4 w-full">
-            <span className="px-1 text-[#989898] text-[13px] font-medium leading-7 tracking-[-0.26px]">
-              축제 운영기간(9.24~9.26) 이후에는 사용이 불가해요!
-            </span>
-          </div>
           <div className="flex flex-row gap-x-2 pt-2.5">
             <img src={Ticket} alt="Ticket" />
             <div className="text-assistive font-light text-base">
@@ -133,7 +133,7 @@ export const Coin = () => {
             </div>
           </div>
           <div className=" text-additive text-base pt-2.5">
-            {ticketNumber.data.chatTicket} 개
+            {ticketNumber?.data.chatTicket} 개
           </div>
         </Header>
         <Border />
