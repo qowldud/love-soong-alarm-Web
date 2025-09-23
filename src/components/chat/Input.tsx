@@ -1,8 +1,6 @@
-import Add from "@/assets/icons/ic_add.svg";
 import Send from "@/assets/icons/ic_send.svg";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export const ChatInput = ({
   handleSend,
@@ -16,7 +14,6 @@ export const ChatInput = ({
 
   const handleMessage = () => {
     if (!message.trim()) {
-      toast.warn("메세지를 입력해주세요!");
       return;
     }
     handleSend(Number(chatRoomId), message);
@@ -62,12 +59,6 @@ export const ChatInput = ({
     <div className="flex w-full py-3 px-4 border-t-[#9A92AD]/16 border-t-[1px]">
       <div className="flex w-full py-2 bg-[#9A92AD]/8 rounded-[12px]">
         <div className="flex flex-row w-full px-4 py-2 gap-x-2">
-          <img
-            src={Add}
-            alt={"add"}
-            className="w-6 h-6 p-1 cursor-pointer"
-            onClick={() => toast.warn("아직 준비중입니다.")}
-          />
           <input
             ref={inputRef}
             value={message}

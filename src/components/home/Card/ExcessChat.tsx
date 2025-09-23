@@ -3,7 +3,7 @@ import { Button } from "../../../common/Button";
 
 import Ticket from "@/assets/icons/ic_ticket.svg";
 import { useApi } from "../../../api/api";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { useChatStore } from "../../../store/chatStore";
 import { getUserTickets } from "../../../api/auth";
 import { useEffect, useState } from "react";
@@ -40,7 +40,7 @@ export const ExcessChat = () => {
 
     if (response.success) {
       setExcessChat(false);
-      toast.success(response.message);
+      // toast.success(response.message);
     }
   };
 
