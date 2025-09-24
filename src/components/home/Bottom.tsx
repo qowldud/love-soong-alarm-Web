@@ -21,8 +21,6 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
 
-      console.log("📍 최초 위치 획득:", latitude, longitude);
-
       const res = await postLocation({ latitude, longitude });
       console.log(res);
       toast.success("새로고침 되었어요", {
