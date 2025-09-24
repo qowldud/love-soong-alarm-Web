@@ -75,11 +75,11 @@ export const ProfileCard = ({ userCount }: { userCount: number }) => {
         <div className="flex flex-row items-center justify-between py-2.5 px-4">
           <div className="flex flex-row items-center gap-x-1">
             <img src={View} alt={"View"} className="w-4 h-4" />
-            <div className="text-[14px] font-light text-assistive">
+            <div className="text-[14px] font-light text-assistive whitespace-nowrap">
               {userCount} 명의 이성이 표시되고 있어요 (최대 6명 표시)
             </div>
           </div>
-          <div className="flex flex-row items-center gap-x-1 cursor-pointer">
+          <div className="flex flex-row items-center gap-x-1 cursor-pointer whitespace-nowrap">
             <img src={Reload} alt={"Reload"} className="w-5 h-5" />
             <div
               className="text-[14px] font-normal text-additive underline"
