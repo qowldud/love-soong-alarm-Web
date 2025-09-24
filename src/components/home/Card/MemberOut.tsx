@@ -17,7 +17,7 @@ export const MemberOutcard = () => {
         logout();
         localStorage.clear();
         sessionStorage.clear();
-        navigate("/");
+        navigate("/login");
       }
     } catch (err) {}
   };

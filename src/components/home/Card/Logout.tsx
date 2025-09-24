@@ -16,7 +16,7 @@ export const LogoutCard = () => {
     logout();
     localStorage.clear();
     sessionStorage.clear();
-    navigate("/");
+    navigate("/login");
   };
 
   return (

@@ -39,7 +39,7 @@ export function useStepLocationUpdate({
 
       if (!savedRef.current) {
         savedRef.current = { lat: cur.lat, lng: cur.lng };
-        // savedRef.current = { lat: 37.4945402275658, lng: 126.95977107078 };
+        // savedRef.current = { lat: 37.494688777977565, lng: 126.95738519540517 };
         return;
       }
 
@@ -50,8 +50,8 @@ export function useStepLocationUpdate({
         try {
           await post({ latitude: cur.lat, longitude: cur.lng });
           // await post({
-          //   latitude: 37.4945402275658,
-          //   longitude: 126.95977107078,
+          //   latitude: 37.494688777977565,
+          //   longitude: 126.95738519540517,
           // });
           savedRef.current = { lat: cur.lat, lng: cur.lng };
         } catch (e) {
