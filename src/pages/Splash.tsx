@@ -18,7 +18,7 @@ export const Splash = () => {
     setIsModalOpen({ flag: false });
     setReset();
 
-    navigate("/?login=true");
+    navigate("/");
   };
 
   useEffect(() => {

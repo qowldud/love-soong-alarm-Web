@@ -28,6 +28,7 @@ import { Splash } from "./pages/Splash";
 import { SocketLayout } from "./components/Layout/SocketLayout";
 import { LocationGuide } from "./pages/LocationGuide";
 import { CancelPayment } from "./pages/CancelPayment";
+import { LoginPage } from "./pages/LoginPage";
 
 export const router = createBrowserRouter([
   {
@@ -76,7 +77,10 @@ export const router = createBrowserRouter([
       {
         path: "/preview",
       },
-
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
       {
         element: <SocketLayout />,
         children: [

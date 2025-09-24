@@ -7,6 +7,7 @@ import { Divider } from "../common/Divider";
 import { Button } from "../common/Button";
 import { postLocation } from "../api/location";
 import { useNavigate } from "react-router-dom";
+import { requestPermission } from "../firebase/FCM";
 
 export const LocationGuide = () => {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ export const LocationGuide = () => {
         navigate("/splash");
       }
     );
+
+    await requestPermission();
   };
   return (
     <div className="flex flex-col justify-between h-full">

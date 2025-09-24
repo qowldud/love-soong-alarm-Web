@@ -17,11 +17,9 @@ export const PrivateLayout = () => {
 
   useEffect(() => {
     if (!isAuth || !accessToken) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("auth-store");
-      localStorage.removeItem("chat-store");
-      sessionStorage.removeItem("home-store");
-      navigate("/");
+      localStorage.clear();
+      sessionStorage.clear();
+      navigate("/login");
     }
   }, [accessToken, isAuth]);
 
