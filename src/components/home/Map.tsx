@@ -188,7 +188,7 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
 
           const map = new kakao.maps.Map(container, {
             center: new kakao.maps.LatLng(SSU_LOCATION.lat, SSU_LOCATION.lng),
-            level: 4,
+            level: 2,
             draggable: true,
             scrollwheel: true,
           });
