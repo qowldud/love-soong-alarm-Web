@@ -1,11 +1,29 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import type { UserProfile } from "../types/User";
+import { useApi } from "../api/api";
+import mixpanel from "mixpanel-browser";
 
 export const Redirect = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
+
+  const { getData } = useApi();
+
+  const getMy = async () => {
+    try {
+      const res = await getData<UserProfile>("/api/users/me");
+      const userId = res.data.userId;
+
+      mixpanel.track("SignUp");
+      mixpanel.identify(String(userId));
+    } catch (err) {
+      console.error(err);
+      navigate("/splash");
+    }
+  };
 
   useEffect(() => {
     const isRegistered = searchParams.get("isRegistered");
@@ -19,7 +37,9 @@ export const Redirect = () => {
     if (isRegistered === "true") {
       login(accessToken);
 
-      navigate("/splash");
+      getMy().finally(() => {
+        navigate("/splash");
+      });
     } else {
       localStorage.setItem("accessToken", accessToken);
       navigate("/onboarding/profile");

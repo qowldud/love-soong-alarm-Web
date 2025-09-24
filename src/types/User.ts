@@ -12,6 +12,7 @@ export interface User {
 }
 
 export interface UserProfile {
+  userId: number;
   name: string;
   birthDate: number;
   major: string;

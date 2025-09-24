@@ -15,11 +15,11 @@ import Right_Button from "@/assets/icons/ic_right_button.svg";
 
 const RenderCard = () => (
   <>
-    <CardLayout branch="logout">
+    <CardLayout branch="logout" className="safe-bottom">
       <LogoutCard />
     </CardLayout>
 
-    <CardLayout branch="memberout">
+    <CardLayout branch="memberout" className="safe-bottom">
       <MemberOutcard />
     </CardLayout>
   </>
@@ -63,7 +63,7 @@ export const Setting = () => {
 
   return (
     <>
-      <div className="flex flex-col w-full h-full justify-between ">
+      <div className="flex flex-col w-full h-full justify-between safe-bottom">
         <div className="w-full flex flex-col ">
           <Link to="/edit">
             <List img={Edit} title="내 프로필 수정" />

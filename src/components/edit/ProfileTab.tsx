@@ -71,7 +71,7 @@ export const ProfileTab = () => {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col relative">
       <div className="flex flex-col flex-1 px-4 overflow-y-auto pb-40">
         <SectionHeader title="필수 프로필" className="pt-4 pb-2.5" />
 
