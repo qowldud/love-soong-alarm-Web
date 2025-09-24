@@ -265,7 +265,7 @@ export const MapCanvas = forwardRef<MapCanvasRef, Props>(
       userMarkerRef.current.forEach((marker) => marker.setMap(null));
       userMarkerRef.current = [];
       renderUserMarkers(window.kakao, mapRef.current);
-    }, [selectedUserId]);
+    }, [users, selectedUserId]);
 
     return (
       <div
