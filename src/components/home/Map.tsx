@@ -22,7 +22,7 @@ declare global {
 const API_KEY = import.meta.env.VITE_KAKAO_MAP_KEY;
 const KAKAO_URL = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${API_KEY}&libraries=services&autoload=false`;
 
-const SSU_LOCATION = { lat: 37.37344496460528, lng: 126.96159700684552 };
+const SSU_LOCATION = { lat: 37.49633624811768, lng: 126.95373729746164 };
 
 const loadKakaoMap = () =>
   new Promise<typeof window.kakao>((resolve, reject) => {
