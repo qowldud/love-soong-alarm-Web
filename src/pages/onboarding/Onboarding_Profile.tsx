@@ -32,7 +32,12 @@ export const Onboarding_Profile = () => {
   } = useOnboardingStore();
 
   const isFilled =
-    emoji && nickname && gender && major && birthDate && birthDate.length === 4;
+    emoji &&
+    nickname &&
+    gender &&
+    major &&
+    Number(birthDate) < 2025 &&
+    birthDate.length === 4;
 
   const onChangeEmoji = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
