@@ -1,6 +1,11 @@
 import type { ReactNode, ButtonHTMLAttributes } from "react";
 import { useEffect, useRef } from "react";
-import { useLoaderData, useRevalidator } from "react-router-dom";
+import {
+  useLoaderData,
+  useLocation as useRouterLocation,
+  useRevalidator,
+  useNavigate,
+} from "react-router-dom";
 
 import Location from "@/assets/icons/ic_location.svg";
 import Chat from "@/assets/icons/ic_chat.svg";
@@ -28,6 +33,7 @@ import { useApi } from "../../../api/api";
 import type { UserProfile } from "../../../types/User";
 import { useSelectedUserStore } from "../../../store/useSelectedUserStore";
 import { SelectRandom } from "../../../hooks/utils";
+import { requestPermission } from "../../../firebase/FCM";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -54,6 +60,8 @@ export const LoggedInView = ({
   handleSendUnsubscribeList: () => void;
 }) => {
   const revalidator = useRevalidator();
+  const routerLocation = useRouterLocation();
+  const navigate = useNavigate();
 
   const mapRef = useRef<{ moveToCurrentLocation: () => void }>(null);
 
@@ -119,6 +127,28 @@ export const LoggedInView = ({
     getCurrent: () => latestRef.current,
     post: ({ latitude, longitude }) => postLocation({ latitude, longitude }),
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(routerLocation.search);
+    const isLogin = params.get("login");
+
+    const run = async () => {
+      if (isLogin === "true") {
+        await requestPermission();
+
+        params.delete("login");
+        navigate(
+          {
+            pathname: routerLocation.pathname,
+            search: "",
+          },
+          { replace: true }
+        );
+      }
+    };
+
+    run();
+  }, [routerLocation, navigate]);
 
   const { getData } = useApi();
 

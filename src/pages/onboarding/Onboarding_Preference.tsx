@@ -14,7 +14,6 @@ import { useApi } from "../../api/api";
 import { INTEREST_OPTIONS } from "../../constants/interests";
 import { useAuthStore } from "../../store/authStore";
 import mixpanel from "mixpanel-browser";
-import { requestPermission } from "../../firebase/FCM";
 
 export const Onboarding_Preference = () => {
   const { step } = useParams();
@@ -68,8 +67,6 @@ export const Onboarding_Preference = () => {
         reset();
         sessionStorage.removeItem("onboarding-storage");
         login(accessToken);
-
-        await requestPermission();
 
         // mixpanel 사용자 식별
         mixpanel.track("SignUp");
