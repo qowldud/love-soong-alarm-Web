@@ -17,9 +17,9 @@ export const Redirect = () => {
     try {
       const res = await getData<UserProfile>("/api/users/me");
       const userId = res.data.userId;
-
       mixpanel.track("SignUp");
       mixpanel.identify(String(userId));
+      await requestPermission();
     } catch (err) {
       console.error(err);
       navigate("/splash");
@@ -38,8 +38,6 @@ export const Redirect = () => {
     const handleLoginFlow = async () => {
       if (isRegistered === "true") {
         login(accessToken);
-
-        await requestPermission();
 
         getMy().finally(() => {
           navigate("/splash");

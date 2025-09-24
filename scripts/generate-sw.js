@@ -20,4 +20,3 @@ template = template
   .replace("__APP_ID__", process.env.VITE_FIREBASE_APP_ID);
 
 fs.writeFileSync(outputPath, template);
-console.log("✅ firebase-messaging-sw.js 생성 완료");

@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-
 import { ToastContainer } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
 import mixpanel from "mixpanel-browser";
