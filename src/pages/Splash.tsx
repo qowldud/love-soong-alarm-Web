@@ -6,6 +6,7 @@ import Logo from "@/assets/icons/ic_lovin.svg";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import { useHomeStore } from "../store/homeStore";
+import { requestPermission } from "../firebase/FCM";
 
 export const Splash = () => {
   const navigate = useNavigate();
@@ -22,11 +23,20 @@ export const Splash = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      handleLogin();
-    }, 3000);
+    let timer: ReturnType<typeof setTimeout>;
 
-    return () => clearTimeout(timer);
+    const run = async () => {
+      await requestPermission();
+      timer = setTimeout(() => {
+        handleLogin();
+      }, 3000);
+    };
+
+    run();
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, [navigate]);
 
   return (

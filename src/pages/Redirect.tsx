@@ -4,7 +4,6 @@ import { useAuthStore } from "../store/authStore";
 import type { UserProfile } from "../types/User";
 import { useApi } from "../api/api";
 import mixpanel from "mixpanel-browser";
-import { requestPermission } from "../firebase/FCM";
 
 export const Redirect = () => {
   const [searchParams] = useSearchParams();
@@ -19,7 +18,6 @@ export const Redirect = () => {
       const userId = res.data.userId;
       mixpanel.track("SignUp");
       mixpanel.identify(String(userId));
-      await requestPermission();
     } catch (err) {
       console.error(err);
       navigate("/splash");

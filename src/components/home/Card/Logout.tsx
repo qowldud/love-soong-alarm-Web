@@ -13,20 +13,10 @@ export const LogoutCard = () => {
   // const { postData } = useApi();
 
   const handleLogout = async () => {
-    // try {
-    // await axios.post(
-    //   `${import.meta.env.VITE_BASE_URL}/api/auth/logout`,
-    //   {},
-    //   { withCredentials: true }
-    // );
-
     logout();
     localStorage.clear();
     sessionStorage.clear();
     navigate("/");
-    // } catch (err) {
-    //   toast.error(err);
-    // }
   };
 
   return (
