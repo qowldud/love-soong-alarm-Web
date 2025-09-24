@@ -21,6 +21,8 @@ export const HomeBottom = ({ count, ...props }: ButtonProps) => {
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
 
+      console.log("현재 위치: ", latitude, longitude);
+
       const res = await postLocation({ latitude, longitude });
       console.log(res);
       toast.success("새로고침 되었어요", {
