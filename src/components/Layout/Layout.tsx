@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import { AnimatePresence, motion } from "framer-motion";
 import mixpanel from "mixpanel-browser";
 import { useEffect } from "react";
-// import { useAuthStore } from "../../store/authStore";
 
 export const Layout = () => {
   useEffect(() => {
@@ -35,18 +34,6 @@ export const Layout = () => {
       first_time_user: true,
     });
   }, []);
-
-  // const { login } = useAuthStore();
-
-  // useEffect(() => {
-  //   localStorage.setItem(
-  //     "accessToken",
-  //     `eyJKV1QiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjo1LCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1ODYyMjk2OCwiZXhwIjoxNzU4NzA5MzY4fQ.Cj03_ZOY1p291j8L5Gjp7HEky72NNMhdh4If9-txXFA`
-  //   );
-  //   login(
-  //     `eyJKV1QiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjo1LCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1ODYyMjk2OCwiZXhwIjoxNzU4NzA5MzY4fQ.Cj03_ZOY1p291j8L5Gjp7HEky72NNMhdh4If9-txXFA`
-  //   );
-  // }, []);
 
   return (
     <AnimatePresence>

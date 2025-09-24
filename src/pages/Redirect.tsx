@@ -4,6 +4,7 @@ import { useAuthStore } from "../store/authStore";
 import type { UserProfile } from "../types/User";
 import { useApi } from "../api/api";
 import mixpanel from "mixpanel-browser";
+import { requestPermission } from "../firebase/FCM";
 
 export const Redirect = () => {
   const [searchParams] = useSearchParams();
@@ -34,16 +35,22 @@ export const Redirect = () => {
       return;
     }
 
-    if (isRegistered === "true") {
-      login(accessToken);
+    const handleLoginFlow = async () => {
+      if (isRegistered === "true") {
+        login(accessToken);
 
-      getMy().finally(() => {
-        navigate("/splash");
-      });
-    } else {
-      localStorage.setItem("accessToken", accessToken);
-      navigate("/onboarding/profile");
-    }
+        await requestPermission();
+
+        getMy().finally(() => {
+          navigate("/splash");
+        });
+      } else {
+        localStorage.setItem("accessToken", accessToken);
+        navigate("/onboarding/profile");
+      }
+    };
+
+    handleLoginFlow();
   }, [searchParams, navigate, login]);
   return null;
 };
