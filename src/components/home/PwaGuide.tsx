@@ -34,7 +34,7 @@ export const PwaGuide = ({ onClose }: Props) => {
                 iOS
               </span>
 
-              <img src={Ios_pwa} alt="ios_pwa" />
+              <img src={Ios_pwa} alt="ios_pwa" loading="eager" />
             </div>
 
             <div className="flex flex-col gap-3 items-center">
@@ -42,7 +42,7 @@ export const PwaGuide = ({ onClose }: Props) => {
                 Android
               </span>
 
-              <img src={And_pwa} alt="ios_pwa" />
+              <img src={And_pwa} alt="ios_pwa" loading="eager" />
             </div>
           </div>
         </div>
