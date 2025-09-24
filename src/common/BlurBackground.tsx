@@ -8,7 +8,7 @@ interface Props {
 export const BlurBackground = ({ children, onClick }: Props) => {
   return (
     <div
-      className="absolute inset-0 bg-dim-strong px-3 flex items-center justify-center z-200"
+      className="fixed inset-0 bg-dim-strong px-3 flex items-center justify-center z-50"
       onClick={onClick}
     >
       <div className="max-w-[444px] px-3">{children}</div>
