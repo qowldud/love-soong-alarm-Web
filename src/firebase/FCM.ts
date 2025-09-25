@@ -3,6 +3,11 @@ import { axiosInstance } from "../api/api";
 import { messaging } from "./firebase-config";
 
 export const requestPermission = async () => {
+  // 토큰이 있으면 저장된 토큰 전달
+  const existingToken = localStorage.getItem("fcmToken");
+  if (existingToken) {
+    return existingToken;
+  }
   try {
     const token = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
